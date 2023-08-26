@@ -80,9 +80,21 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / str(os.getenv("NAME")+'.sqlite3'),
+      'Mysql': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nombre_de_la_base_de_datos',
+        'USER': 'nombre_de_usuario',
+        'PASSWORD': 'contraseña',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'postgres':{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nombre_de_la_base_de_datos',
+        'USER': 'nombre_de_usuario',
+        'PASSWORD': 'contraseña',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -109,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-cl'
 
 TIME_ZONE = 'UTC'
 
