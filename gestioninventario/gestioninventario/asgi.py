@@ -1,5 +1,5 @@
 """
-ASGI config for gestorinventario project.
+ASGI config for gestioninventario project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestorinventario.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestioninventario.settings')
 
 application = get_asgi_application()
