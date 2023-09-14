@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles','inventario','prestamos'
+    'django.contrib.staticfiles','inventario','prestamos', 'usuarios'
 ]
 
 MIDDLEWARE = [
@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'gestioninventario.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gestion_inventario',        # Nombre de tu base de datos
-        'USER': 'root',            # Nombre de usuario de MySQL
-        'PASSWORD': 'root',    # Contraseña de MySQL
-        'HOST': 'localhost',         # Host de MySQL (puede ser 'localhost' si está en el mismo servidor)
-        'PORT': '3306',              # Puerto de MySQL (generalmente 3306)
+        'NAME': 'gestion_inventario',       
+        'USER': 'root',          
+        'PASSWORD': 'root',   
+        'HOST': 'localhost',         
+        'PORT': '3306',             
     }
 }
 

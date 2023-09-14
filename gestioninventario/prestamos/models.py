@@ -2,10 +2,11 @@ from django.db import models
 from django.conf import settings
 from datetime import datetime,timedelta
 from inventario.models import Inventario
-
+from usuarios.models import Usuario
 class Prestamo(models.Model):
     id_prestamo = models.BigIntegerField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.PROTECT)
+    persona = models.ForeignKey(Usuario,on_delete=models.PROTECT)
     fecha_creacion = models.DateTimeField(default=datetime.now())
     entregado = models.BooleanField(default=False)
     fecha_plazo = models.DateTimeField(default=datetime.now()+timedelta(days=5))
