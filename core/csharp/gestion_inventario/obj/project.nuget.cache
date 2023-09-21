@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "lXDh02DZ0Wgb3kT3MGaR9aDeM9seP4SDxcp8TMtJAkNKgKpSTMH2pXTGn23J3Yk74vSTiymXEWLS9FQCoPbZHw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\nacho\\Documents\\github\\Gestor-Inventario\\gestoringenrario\\core\\csharp\\gestion_inventario\\gestion_inventario.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nacho\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\nacho\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
