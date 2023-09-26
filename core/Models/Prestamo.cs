@@ -3,18 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gestion_inventario.Models
 {
-    public class TipoProducto
+    public class Prestamo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_tipo_producto { get; set; }
-        [Required]
-        [MaxLength(30)]
-        [Column(TypeName ="varchar(30)")]
-        public string nombre_tipo_producto { get; set; }
-        
+        public long id_prestamo{ get; set; }
+        public string user { get; set; }
+        public string id_persona { get; set; }
+        public Persona personaNavigation { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
-        public List<Producto> productos { get; set; }
+        public bool entregado { get; set; } = false;
+        public DateTime fecha_plazo { get; set; } = DateTime.Now.AddDays(1);
     }
 }
