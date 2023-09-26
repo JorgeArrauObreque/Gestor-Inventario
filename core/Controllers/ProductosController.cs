@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using gestion_inventario.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 namespace gestion_inventario.Controllers
 {
-    public class ProductosController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class ProductosController : ControllerBase
     {
-        public IActionResult Index()
+        [HttpGet]
+        public Producto[] Index()
         {
-            return View();
+            using (DbContextInventario context = new DbContextInventario())
+            {
+
+                return context.productos.Include(r => r.ProveedorNavigation).ToArray(); 
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace gestion_inventario.Models
         public string direccion { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
+        public List<Inventario> inventarios { get; set; }
     }
 }

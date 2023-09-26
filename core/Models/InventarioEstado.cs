@@ -16,5 +16,6 @@ namespace gestion_inventario.Models
         public string nombre_estado_inventario { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
+        public IEnumerable<Inventario> inventarios { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace gestion_inventario.Models
         public DbSet<PrestamoDetalle> prestamo_detalles { get; set; }
         public DbSet<Producto> productos { get; set; }
         public DbSet<Proveedor> proveedores { get; set; }
+        public DbSet<Persona> personas { get; set; }
         public DbContextInventario(DbContextOptions<DbContextInventario> options):base(options) { }
         public DbContextInventario() { }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -27,6 +28,14 @@ namespace gestion_inventario.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Producto>().HasOne(r => r.tipoProductoNavigation).WithMany(r => r.productos).HasForeignKey(r => r.id_tipo_producto);
+            modelBuilder.Entity<Producto>().HasOne(r => r.categoriaNavigation).WithMany(r => r.productos).HasForeignKey(r => r.id_categoria);
+            modelBuilder.Entity<Producto>().HasOne(r => r.ProveedorNavigation).WithMany(r => r.productos).HasForeignKey(r=>r.id_proveedor);
+            modelBuilder.Entity<Inventario>().HasOne(r => r.bodegaNavigation).WithMany(r => r.inventarios).HasForeignKey(r => r.id_bodega);
+            modelBuilder.Entity<Inventario>().HasOne(r => r.InventarioEstadoNavigation).WithMany(r => r.inventarios).HasForeignKey(r=>r.id_inventario_estado);
+            modelBuilder.Entity<Inventario>().HasOne(r => r.productoNavigation).WithMany(r => r.inventarios).HasForeignKey(r => r.id_producto);
+            modelBuilder.Entity<PrestamoDetalle>().HasOne(r => r.prestamoNavigation).WithMany(r => r.prestamo_detalles).HasForeignKey(r => r.id_prestamo);
+            modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.movimientoTipoNavigation).WithMany(r => r.historicos).HasForeignKey(r => r.id_tipo_movimiento);
+            modelBuilder.Entity<Prestamo>().HasOne(r => r.personaNavigation).WithMany(r => r.prestamos).HasForeignKey(r => r.id_persona);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,6 +1,7 @@
 using gestion_inventario.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbContextInventario>();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

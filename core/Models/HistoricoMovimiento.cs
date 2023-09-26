@@ -10,9 +10,11 @@ namespace gestion_inventario.Models
         public int id_movimiento { get; set; }
         [Required]
         public int id_tipo_movimiento { get; set; }
+        [NotMapped]
         public MovimientoTipo movimientoTipoNavigation { get; set; }
         [Required]
         public int id_inventario { get; set; }
+        [NotMapped]
         public Inventario inventarioNavigation { get; set; }
         [Required]
         [MaxLength(150)]

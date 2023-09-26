@@ -7,7 +7,7 @@ namespace gestion_inventario.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_alumno { get; set; }
+        public long id_persona { get; set; }
         [Required]
         [MaxLength(15)]
         [Column(TypeName = "varchar(15)")]
@@ -30,5 +30,6 @@ namespace gestion_inventario.Models
         [MaxLength(20)]
         [Column(TypeName = "varchar(20)")]
         public string genero { get; set; }
+        public List<Prestamo> prestamos { get; set; }
     }
 }

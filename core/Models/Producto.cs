@@ -19,6 +19,7 @@ namespace gestion_inventario.Models
         [Required]
         [NotNull]
         public int? id_proveedor { get; set; }
+        [NotMapped]
         public Proveedor ProveedorNavigation { get; set; }
         [Required]
         [MaxLength(90)]
@@ -33,11 +34,14 @@ namespace gestion_inventario.Models
         [Required]
         [NotNull]
         public int? id_categoria { get; set; }
+        [NotMapped]
         public Categoria categoriaNavigation { get; set; }
         [Required]
         [NotNull]
         public int? id_tipo_producto { get; set; }
+        [NotMapped]
         public TipoProducto tipoProductoNavigation { get; set; }
+        public List<Inventario> inventarios { get; set; }
 
     }
 }

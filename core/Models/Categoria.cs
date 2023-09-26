@@ -15,6 +15,7 @@ namespace gestion_inventario.Models
         public string nombre_categoria { get; set; }
         public DateTime fecha_creacion {get;set;} = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
+        public List<Producto> productos { get; set; }
 
     }
 }
