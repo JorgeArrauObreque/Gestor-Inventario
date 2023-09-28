@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='row'>
-          <div className='col-xxl-2'>
+      <div className='d-flex'>
+          <div className='col-xxl-2 col-xl-3'>
             <Sidebar />
           </div>
           <div className='col'>
