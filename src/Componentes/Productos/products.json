@@ -1,0 +1,102 @@
+[
+    {
+      "id_producto": 7,
+      "nombre_producto": "Router",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 1,
+      "marca": "Cisco",
+      "descripcion": "Router inalámbrico",
+      "id_categoria": 1,
+      "id_tipo_producto": 2
+    },
+    {
+      "id_producto": 8,
+      "nombre_producto": "Baterías notebook/impresoras",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 13,
+      "marca": "Genérico",
+      "descripcion": "Baterías para notebook e impresoras",
+      "id_categoria": 1,
+      "id_tipo_producto": 2
+    },
+    {
+      "id_producto": 9,
+      "nombre_producto": "Impresoras",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 3,
+      "marca": "HP",
+      "descripcion": "Impresoras láser a color",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    },
+    {
+      "id_producto": 10,
+      "nombre_producto": "Teléfonos",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 4,
+      "marca": "Fujitel",
+      "descripcion": "Teléfonos inalámbricos",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    },
+    {
+      "id_producto": 11,
+      "nombre_producto": "Cables fuente de poder",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 13,
+      "marca": "Genérico",
+      "descripcion": "Cables para fuente de poder",
+      "id_categoria": 1,
+      "id_tipo_producto": 2
+    },
+    {
+      "id_producto": 12,
+      "nombre_producto": "Teclados",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 2,
+      "marca": "HP ",
+      "descripcion": "Teclados para computadoras siendo 2 HP",
+      "id_categoria": 1,
+      "id_tipo_producto": 2
+    },
+    {
+      "id_producto": 13,
+      "nombre_producto": "Teclados",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 4,
+      "marca": "Lenovo",
+      "descripcion": "Teclados para computadoras siendo 1 Lenovo",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    },
+    {
+      "id_producto": 14,
+      "nombre_producto": "Tinta impresora",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 2,
+      "marca": "HP",
+      "descripcion": "Tinta para impresoras HP",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    },
+    {
+      "id_producto": 15,
+      "nombre_producto": "Soldadura digital",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 5,
+      "marca": "Display Iron",
+      "descripcion": "Soldadura para componentes electrónicos",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    },
+    {
+      "id_producto": 16,
+      "nombre_producto": "Transformadores",
+      "fecha_actualizacion": "2023-09-26T00:34:58.4133333",
+      "id_proveedor": 13,
+      "marca": "Genérico",
+      "descripcion": "Transformadores eléctricos",
+      "id_categoria": 1,
+      "id_tipo_producto": 1
+    }
+ ]  
