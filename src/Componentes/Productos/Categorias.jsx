@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import categorias from './categorias.json'
 import axios from "axios";
-import { POST } from "../Services";
+import { POST,GET } from "../Services";
 
 function Categorias() {
-  const [data, setData] = useState(categorias);
+  const [data, setData] = useState([]);
 
   const [id, setId] = useState(0);
   const [nombreCategoria, setNombreCategoria] = useState("");
@@ -18,12 +18,20 @@ function Categorias() {
       setNombreCategoria(value);
     }
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:5136/Categorias/api/categoria/all").then((response)=>{
+      console.log(response.data);
+      setData(response.data);
+    });
+  }, []);
+
   function save(){
     let categoriamodel = {
         nombre_categoria: nombreCategoria,
         id_categoria: id,
       };
-      const url = "https://localhost:7020/Categorias/";
+      const url = "http://localhost:5136/Categorias/";
 
      POST(url, categoriamodel);
   }
@@ -67,14 +75,16 @@ function Categorias() {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>fecha Creación</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              {categorias.map((item) => (
+              {data.map((item) => (
                 <tr>
                   <td>{item.id_categoria}</td>
                   <td>{item.nombre_categoria}</td>
                   <td>{item.fecha_creacion}</td>
+                  <td>{new Date(item.fecha_creacion).toLocaleDateString("es-ES")}</td>
                 </tr>
               ))}
             </tbody>

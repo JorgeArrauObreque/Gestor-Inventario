@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle'
 import Productos from './Componentes/Productos/Productos';
 import Categorias from './Componentes/Productos/Categorias.jsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Proveedores from './Componentes/Productos/Proveedores';
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
               <Routes>
                 <Route path='categorias' Component={Categorias} />
                 <Route path='productos' Component={Productos} />
+                <Route path='proveedores' Component={Proveedores} />
               </Routes>
             </BrowserRouter>
           

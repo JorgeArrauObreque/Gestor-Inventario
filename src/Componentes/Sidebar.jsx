@@ -21,9 +21,9 @@ export default function Sidebar() {
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link text-white">
+              <a href="proveedores" className="nav-link text-white">
                 <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table"></use></svg>
-                Categorias
+                proveedores
               </a>
             </li>
             <li>
