@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JwaQgK5nxwoo0GA9K2z6GOUepY6oZ5wAOpEUfAMt3UOO87NmL8PFlmllwHmArh2uWaJ6EJCU20VTzhI06l6csw==",
+  "dgSpecHash": "r65TSr+IMPopgiLap69m4TkDYutkpx/BqXotlj0bmzmw0pI6kbwWR6126C/zie19h4p6OpUyJ8Mj0AEQQTLLKg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
+  "projectFilePath": "c:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nacho\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\nacho\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

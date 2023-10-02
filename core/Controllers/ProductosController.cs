@@ -68,11 +68,23 @@ namespace gestion_inventario.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpPost("api/test")]
-        public string test([FromForm] string Nombre,[FromForm]string apellido)
-        {
-
-            return null;
+        [HttpDelete]
+        public ActionResult Productos(long id_producto){
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.productos.Where(r=>r.id_producto == id_producto).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.productos.Remove(query);
+                    return Ok();
+                } 
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest();
+            }
+      
         }
     }
 }

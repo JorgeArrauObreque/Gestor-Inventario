@@ -24,5 +24,23 @@ namespace gestion_inventario.Controllers
                 return context.inventario.Where(r=>r.id_inventario == id_inventario).FirstOrDefault();
             }
         }
+        [HttpDelete]
+        public ActionResult Delete(long id_inventario){
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.inventario.Where(r=>r.id_inventario == id_inventario).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.inventario.Remove(query);
+                    return Ok();
+                }
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest();
+            }
+         
+        }
     }
 }

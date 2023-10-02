@@ -24,5 +24,22 @@ namespace gestion_inventario.Controllers
                 return context.inventario_estados.Where(r => r.id_inventario_estado == id_inventario_estado).FirstOrDefault();
             }
         }
+        public ActionResult Delete (int id_inventario_estado){
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.inventario_estados.Where(r=>r.id_inventario_estado == id_inventario_estado).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.inventario_estados.Remove(query);
+                    return Ok();
+                }    
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest();
+            }
+            
+        }
     }
 }

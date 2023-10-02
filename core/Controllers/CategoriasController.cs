@@ -22,16 +22,16 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.categorias.Where(r=>r.id_categoria == id_categoria).FirstOrDefault();
+                return context.categorias.Where(r => r.id_categoria == id_categoria).FirstOrDefault();
             }
         }
         [HttpPost]
-        public ActionResult Add_update([FromBody]CategoriaViewModel categoriamodel)
+        public ActionResult Add([FromBody] CategoriaViewModel categoriamodel)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query = context.categorias.Where(r => r.id_categoria == categoriamodel.id_categoria).FirstOrDefault();
-                if (query== null)
+                if (query == null)
                 {
                     Categoria categoria = new Categoria();
                     categoria.nombre_categoria = categoriamodel.nombre_categoria; ;
@@ -40,7 +40,31 @@ namespace gestion_inventario.Controllers
                     return Ok();
                 }
                 return BadRequest();
-            
+
+            }
+        }
+        [HttpDelete]
+        public ActionResult Delete(int id_categoria)
+        {
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.categorias.Where(r => r.id_categoria == id_categoria).FirstOrDefault();
+                    if (query == null)
+                    {
+                        return NotFound("categoria no encontrada");
+                    }
+                    context.categorias.Remove(query);
+                    context.SaveChanges();
+                    return Ok("categoria eliminada correctamente");
+                }
+            }
+
+            catch (System.Exception e)
+            {
+
+                return BadRequest();
             }
         }
     }

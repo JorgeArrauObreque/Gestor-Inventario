@@ -20,13 +20,16 @@ builder.Services.AddCors((options) =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        // Configura las políticas CORS aquí
+        // Configura las polï¿½ticas CORS aquï¿½
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
 });
+var port = 5000;
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

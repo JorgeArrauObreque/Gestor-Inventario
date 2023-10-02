@@ -24,5 +24,22 @@ namespace gestion_inventario.Controllers
                return context.tipos_producto.Where(r => r.id_tipo_producto == id_tipo_producto).FirstOrDefault();
             }
         }
+        [HttpDelete]
+        public ActionResult Delete(int id_tipo_producto){
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.tipos_producto.Where(r=>r.id_tipo_producto == id_tipo_producto).FirstOrDefault();
+                    if (query == null)  return NotFound();
+                    context.tipos_producto.Remove(query);
+                    return Ok();
+                }   
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

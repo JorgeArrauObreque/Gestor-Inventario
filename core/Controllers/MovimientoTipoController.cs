@@ -24,5 +24,24 @@ namespace gestion_inventario.Controllers
                 return context.movimiento_tipos.Where(r => r.id_movimiento_tipo == id_movimiento_tipo).FirstOrDefault();
             }
         }
+        [HttpDelete]
+        public ActionResult Delete(long id_movimiento_tipo){
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.movimiento_tipos.Where(r=>r.id_movimiento_tipo == id_movimiento_tipo).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.movimiento_tipos.Remove(query);
+                    return Ok();
+                }
+            }
+            catch (System.Exception e )
+            {
+                
+                return BadRequest();
+            }
+         
+        }
     }
 }
