@@ -35,7 +35,7 @@ namespace gestion_inventario.Models
             modelBuilder.Entity<Inventario>().HasOne(r => r.productoNavigation).WithMany(r => r.inventarios).HasForeignKey(r => r.id_producto);
             modelBuilder.Entity<PrestamoDetalle>().HasOne(r => r.prestamoNavigation).WithMany(r => r.prestamo_detalles).HasForeignKey(r => r.id_prestamo);
             modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.movimientoTipoNavigation).WithMany(r => r.historicos).HasForeignKey(r => r.id_tipo_movimiento);
-            modelBuilder.Entity<Prestamo>().HasOne(r => r.personaNavigation).WithMany(r => r.prestamos).HasForeignKey(r => r.id_persona);
+            modelBuilder.Entity<Prestamo>().HasOne(r => r.personaNavigation).WithMany(r => r.prestamos).HasForeignKey(r => r.rut);
             base.OnModelCreating(modelBuilder);
         }
     }

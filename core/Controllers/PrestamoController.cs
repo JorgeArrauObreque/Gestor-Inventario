@@ -24,5 +24,40 @@ namespace gestion_inventario.Controllers
                 return context.prestamos.Where(r => r.id_prestamo == id_prestamo).FirstOrDefault();
             }
         }
+        [HttpPost]
+        public ActionResult Add([FromBody] Prestamo prestamo)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.prestamos.Where(r => r.id_prestamo == prestamo.id_prestamo).FirstOrDefault();
+                if (query != null) return NotFound();
+                Prestamo new_prestamo = new Prestamo();
+                new_prestamo.id_prestamo = prestamo.id_prestamo;
+                new_prestamo.rut = prestamo.rut;
+                new_prestamo.entregado = false;
+                new_prestamo.fecha_plazo = prestamo.fecha_plazo;
+                new_prestamo.user = prestamo.user;
+                new_prestamo.fecha_actualizacion = DateTime.Now;
+                new_prestamo.fecha_creacion = DateTime.Now;
+                context.Add(new_prestamo);
+                context.SaveChanges();
+                return Ok();
+            }
+        }
+        public ActionResult Update([FromBody] Prestamo prestamo)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.prestamos.Where(r => r.id_prestamo == prestamo.id_prestamo).FirstOrDefault();
+                if (query != null) return NotFound();
+                query.rut = prestamo.rut;
+                query.entregado = false;
+                query.user = prestamo.user;
+                query.fecha_plazo = prestamo.fecha_plazo;
+                query.fecha_actualizacion = DateTime.Now;
+                context.SaveChanges();
+                return Ok();
+            }
+        }
     }
 }

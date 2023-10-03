@@ -31,15 +31,15 @@ namespace gestion_inventario.Controllers
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query = context.categorias.Where(r => r.id_categoria == categoriamodel.id_categoria).FirstOrDefault();
-                if (query == null)
-                {
+                if (query != null) return BadRequest();
+                
                     Categoria categoria = new Categoria();
                     categoria.nombre_categoria = categoriamodel.nombre_categoria; ;
+                    categoria.fecha_actualizacion = DateTime.Now;
+                    categoria.fecha_creacion = DateTime.Now;
                     context.categorias.Add(categoria);
                     context.SaveChanges();
                     return Ok();
-                }
-                return BadRequest();
 
             }
         }
@@ -67,5 +67,18 @@ namespace gestion_inventario.Controllers
                 return BadRequest();
             }
         }
+        [HttpPut]
+        public ActionResult Update([FromBody]CategoriaViewModel categoria){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.categorias.Where(r=>r.id_categoria == categoria.id_categoria).FirstOrDefault();
+                if (query == null) return NotFound();
+                query.id_categoria = categoria.id_categoria;
+                query.nombre_categoria = categoria.nombre_categoria;
+                query.fecha_actualizacion = DateTime.Now;
+                return Ok();
+            }
+        }
+        
     }
 }

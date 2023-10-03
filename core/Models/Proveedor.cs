@@ -6,7 +6,6 @@ namespace gestion_inventario.Models
     public class Proveedor
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_proveedor { get; set; }
         [Required]
         [MaxLength(50)]

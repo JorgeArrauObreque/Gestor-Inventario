@@ -1,4 +1,5 @@
 ﻿using gestion_inventario.Models;
+using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,39 @@ namespace gestion_inventario.Controllers
                 return BadRequest();
             }
          
+        }
+        public ActionResult Add([FromBody] InventarioViewModel inventario){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.inventario.Where(r=>r.id_inventario == inventario.id_inventario).FirstOrDefault();
+                if (query != null) return BadRequest();
+                Inventario new_inventario = new Inventario();
+                new_inventario.id_inventario = inventario.id_inventario;
+                new_inventario.id_inventario_estado = inventario.id_inventario_estado;
+                new_inventario.id_bodega = inventario.id_bodega;
+                new_inventario.id_producto = inventario.id_producto;
+                new_inventario.fecha_creacion = DateTime.Now;
+                new_inventario.fecha_actualizacion = DateTime.Now;
+                new_inventario.user = inventario.user;
+                context.inventario.Add(new_inventario);
+                context.SaveChanges();
+                return Ok();
+            }
+        }
+        public ActionResult Update([FromBody] InventarioViewModel inventario){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.inventario.Where(r=>r.id_inventario == inventario.id_inventario).FirstOrDefault();
+                if (query == null) return NotFound();
+                query.id_inventario = inventario.id_inventario;
+                query.id_inventario_estado = inventario.id_inventario_estado;
+                query.id_bodega = inventario.id_bodega;
+                query.user = inventario.user;
+                query.id_producto = inventario.id_producto;
+                query.fecha_actualizacion = DateTime.Now;
+                context.SaveChanges();
+                return Ok();
+            }
         }
     }
 }

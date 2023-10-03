@@ -7,7 +7,6 @@ namespace gestion_inventario.Models
     public class Categoria
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_categoria { get; set; }
         [Required]
         [MaxLength(50)]

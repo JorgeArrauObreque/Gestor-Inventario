@@ -9,7 +9,7 @@ namespace gestion_inventario.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_prestamo{ get; set; }
         public string user { get; set; }
-        public long id_persona { get; set; }
+        public string rut { get; set; }
         [NotMapped]
         public Persona personaNavigation { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;

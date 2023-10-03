@@ -7,7 +7,6 @@ namespace gestion_inventario.Models
     public class InventarioEstado
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_inventario_estado { get; set; }
         [Required]
         [NotNull]

@@ -25,12 +25,12 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult Personas(int id_persona){
+        public ActionResult Personas(string rut){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())
                 {
-                    var query = context.personas.Where(r=>r.id_persona == id_persona).FirstOrDefault();        
+                    var query = context.personas.Where(r=>r.rut == rut).FirstOrDefault();        
                     if (query == null) return NotFound();
                     context.personas.Remove(query);
                     return Ok();
@@ -40,6 +40,25 @@ namespace gestion_inventario.Controllers
             {
                 return BadRequest();
             }            
+        }
+        [HttpPost]
+        public ActionResult Add([FromBody] Persona persona){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.personas.Where(r=>r.rut == persona.rut).FirstOrDefault();        
+                if (query != null) return BadRequest();
+                Persona new_persona = new Persona();
+                new_persona.nombres = persona.nombres;
+                new_persona.apellidos = persona.apellidos;
+                new_persona.rut = persona.rut;
+                new_persona.carrera = persona.carrera;
+                new_persona.genero = persona.genero;
+                new_persona.fecha_actualizacion = DateTime.Now;
+                new_persona.fecha_creacion = DateTime.Now;
+                context.personas.Add(persona);
+                context.SaveChanges();
+                return Ok();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gestion_inventario.Models;
 
@@ -11,9 +12,11 @@ using gestion_inventario.Models;
 namespace gestion_inventario.Migrations
 {
     [DbContext(typeof(DbContextInventario))]
-    partial class DbContextInventarioModelSnapshot : ModelSnapshot
+    [Migration("20231003012721_fix_ids")]
+    partial class fix_ids
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
