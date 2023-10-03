@@ -1,4 +1,5 @@
 ﻿using gestion_inventario.Models;
+using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,44 +29,47 @@ namespace gestion_inventario.Controllers
                 return context.productos.Where(r => r.id_producto == id_producto).FirstOrDefault();
             }
         }
-        [HttpPost("api/productos/add_update")]
-        public ActionResult Add_Update([FromBody][Bind("nombre_producto")]Producto producto)
+        [HttpPost]
+        public ActionResult Add([FromBody]ProductoViewModel producto)
         {
-            try
+            using (DbContextInventario context = new DbContextInventario())
             {
-                using (DbContextInventario context = new DbContextInventario())
-                {
-                    if (ModelState.IsValid)
-                    {
-                        var validacion = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
-                        if (validacion == null)
-                        {
-                            context.Add(producto);
-                            context.SaveChanges();
-                            return Ok();
-                        }
-                        else
-                        {
-                            validacion.id_proveedor = producto.id_proveedor;
-                            validacion.id_categoria = producto.id_categoria;
-                            validacion.marca = producto.marca;
-                            validacion.fecha_actualizacion = DateTime.Now;
-                            validacion.nombre_producto = producto.nombre_producto;
-                            validacion.descripcion = producto.descripcion;
-                            validacion.id_tipo_producto = producto.id_tipo_producto;
-                            context.SaveChanges();
-                            return Ok();
-                        }
-                    }
-                    else
-                    {
-                        return BadRequest("el formato de los campos esta incorrecto intentelo nuevamente");
-                    }
-                }
+                var query = context.productos.Where(r=>r.id_producto == producto.id_producto).FirstOrDefault();
+                if(query != null ) return BadRequest();
+                Producto new_producto = new Producto();
+                new_producto.id_producto = producto.id_producto;
+                new_producto.id_proveedor = producto.id_proveedor;
+                new_producto.nombre_producto = producto.nombre_producto;
+                new_producto.fecha_creacion = DateTime.Now;
+                new_producto.id_tipo_producto = producto.id_tipo_producto;
+                new_producto.descripcion = producto.descripcion;
+                new_producto.fecha_actualizacion = DateTime.Now;
+                new_producto.id_categoria = producto.id_categoria;
+                new_producto.marca = producto.marca;
+                context.productos.Add(new_producto);
+                context.SaveChanges();
+                return Ok();
             }
-            catch (Exception e)
+            
+        }
+        [HttpPut]
+        public ActionResult Update([FromBody] ProductoViewModel producto){
+            using (DbContextInventario context = new DbContextInventario())
             {
-                return BadRequest(e.Message);
+                var query = context.productos.Where(r=>r.id_producto == producto.id_producto).FirstOrDefault();
+                if(query == null ) return NotFound();
+                query.id_proveedor = producto.id_proveedor;
+                query.fecha_creacion = DateTime.Now;
+                query.descripcion = producto.descripcion;
+                query.fecha_actualizacion = DateTime.Now;
+                query.nombre_producto = producto.nombre_producto;
+                query.id_categoria = producto.id_categoria;
+                query.id_producto = producto.id_producto;
+                query.id_tipo_producto = producto.id_tipo_producto;
+                query.marca = producto.marca;
+                context.SaveChanges();
+                return Ok();
+
             }
         }
         [HttpDelete]

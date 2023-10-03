@@ -1,4 +1,5 @@
 ﻿using gestion_inventario.Models;
+using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Add([FromBody] Prestamo prestamo)
+        public ActionResult Add([FromBody] PrestamoViewModel prestamo)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -44,7 +45,7 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
-        public ActionResult Update([FromBody] Prestamo prestamo)
+        public ActionResult Update([FromBody] PrestamoViewModel prestamo)
         {
             using (DbContextInventario context = new DbContextInventario())
             {

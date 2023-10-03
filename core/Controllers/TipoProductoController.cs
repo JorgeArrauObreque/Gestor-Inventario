@@ -1,4 +1,5 @@
 ﻿using gestion_inventario.Models;
+using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +40,35 @@ namespace gestion_inventario.Controllers
             catch (System.Exception e)
             {
                 return BadRequest();
+            }
+        }
+        [HttpPost]
+        public ActionResult Add([FromBody] TipoProductoViewModel tipo_producto){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.tipos_producto.Where(r=>r.id_tipo_producto == tipo_producto.id_tipo_producto).FirstOrDefault();
+                if (query != null) return BadRequest();
+                TipoProducto new_tipo_producto = new TipoProducto();
+                new_tipo_producto.id_tipo_producto = query.id_tipo_producto;
+                new_tipo_producto.nombre_tipo_producto = query.nombre_tipo_producto;
+                new_tipo_producto.fecha_creacion = DateTime.Now;
+                new_tipo_producto.fecha_actualizacion = DateTime.Now;
+                context.tipos_producto.Add(new_tipo_producto);
+                context.SaveChanges();
+                return Ok();
+            }
+        }
+        [HttpPut]
+        public ActionResult Update([FromBody] TipoProductoViewModel tipo_producto){
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.tipos_producto.Where(r=>r.id_tipo_producto == tipo_producto.id_tipo_producto).FirstOrDefault();
+                if (query == null) return NotFound();
+                query.id_tipo_producto = tipo_producto.id_tipo_producto;
+                query.nombre_tipo_producto = tipo_producto.nombre_tipo_producto;
+                query.fecha_actualizacion = DateTime.Now;
+                context.SaveChanges();
+                return Ok();
             }
         }
     }
