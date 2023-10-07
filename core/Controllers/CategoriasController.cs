@@ -5,11 +5,11 @@ using gestion_inventario.ViewModels;
 
 namespace gestion_inventario.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        [HttpGet("api/categoria/all")]
+        [HttpGet]
         public List<Categoria> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -34,6 +34,7 @@ namespace gestion_inventario.Controllers
                 if (query != null) return BadRequest();
                 
                     Categoria categoria = new Categoria();
+                    categoria.id_categoria = categoriamodel.id_categoria;
                     categoria.nombre_categoria = categoriamodel.nombre_categoria; ;
                     categoria.fecha_actualizacion = DateTime.Now;
                     categoria.fecha_creacion = DateTime.Now;
@@ -43,7 +44,7 @@ namespace gestion_inventario.Controllers
 
             }
         }
-        [HttpDelete]
+        [HttpDelete("{id_categoria}")]
         public ActionResult Delete(int id_categoria)
         {
             try
@@ -76,6 +77,7 @@ namespace gestion_inventario.Controllers
                 query.id_categoria = categoria.id_categoria;
                 query.nombre_categoria = categoria.nombre_categoria;
                 query.fecha_actualizacion = DateTime.Now;
+                context.SaveChanges();
                 return Ok();
             }
         }

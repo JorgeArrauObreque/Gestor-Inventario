@@ -10,7 +10,7 @@ namespace gestion_inventario.Controllers
     [ApiController]
     public class ProveedoresController : ControllerBase
     {
-        [HttpGet("api/proveedor/all")]
+        [HttpGet]
         public List<Proveedor> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -26,7 +26,7 @@ namespace gestion_inventario.Controllers
                 return context.proveedores.Where(r => r.id_proveedor == id_proveedor).FirstOrDefault();
             }
         }
-        [HttpDelete]
+        [HttpDelete("{id_proveedor}")]
         public ActionResult Delete(int id_proveedor){
             try
             {
@@ -38,6 +38,7 @@ namespace gestion_inventario.Controllers
                         return NotFound("proveedor no encontrado");
                     }  
                     context.Remove(query);
+                    context.SaveChanges();
                     return Ok();
                 } 
             }

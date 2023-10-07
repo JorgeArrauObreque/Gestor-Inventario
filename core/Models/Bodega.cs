@@ -6,6 +6,7 @@ namespace gestion_inventario.Models
     public class Bodega
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id_bodega { get; set; }
         [Required]
         [MaxLength(200)]

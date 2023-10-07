@@ -7,8 +7,8 @@ namespace gestion_inventario.Models
     public class Inventario
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_inventario { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string id_inventario { get; set; }
         [Required]
         [NotNull]
         public int? id_producto { get; set; }

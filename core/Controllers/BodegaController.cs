@@ -9,7 +9,7 @@ namespace gestion_inventario.Controllers
     [ApiController]
     public class BodegaController : ControllerBase
     {
-        [HttpGet("api/bodega/all")]
+        [HttpGet]
         public List<Bodega> Get_All()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -25,13 +25,14 @@ namespace gestion_inventario.Controllers
                 return context.bodegas.Where(r => r.id_bodega == id).FirstOrDefault();
             }
         }
-        [HttpDelete]
+        [HttpDelete("{id_bodega}")]
         public ActionResult Delete(int id_bodega){
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query =context.bodegas.Where(r=>r.id_bodega == id_bodega).FirstOrDefault();
                 if (query == null) return NotFound();
                 context.bodegas.Remove(query);
+                context.SaveChanges();
                 return Ok();
             }
         }

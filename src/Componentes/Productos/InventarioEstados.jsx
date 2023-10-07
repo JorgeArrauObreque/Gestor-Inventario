@@ -3,8 +3,7 @@ import { useEffect, useState,useRef } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
-
-export default function Categorias() {
+export default function InventarioEstados() {
     const [showModal, setShowModal] = useState(false);
 
     const handleShowModal = () => {
@@ -19,12 +18,12 @@ export default function Categorias() {
     const [data, setData] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    const [categoria, setCategoria] = useState({
-        "id_categoria": "",
-        "nombre_categoria": ""
+    const [inventarioEstado, setInventarioEstado] = useState({
+        "id_inventario_estado": "",
+        "nombre_estado_inventario": ""
     });
     const GetData = () => {
-        axios.get("http://localhost:5136/api/Categorias").then(response => {
+        axios.get("http://localhost:5136/api/InventarioEstado").then(response => {
             setData(response.data);
         }).catch(ex => {
             console.log(ex);
@@ -35,13 +34,13 @@ export default function Categorias() {
    
         // También puedes usar la función reset de react-hook-form para reiniciar el formulario
         reset({
-            id_categoria: '',
-            nombre_categoria: ''
+            id_inventario_estado: '',
+            nombre_inventario_estado: ''
         });
     }
     const Delete = (event) => {
-        const id_categoria = event.currentTarget.getAttribute("data-id");
-        axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`).then(()=>{
+        const id_inventario_estado = event.currentTarget.getAttribute("data-id");
+        axios.delete(`http://localhost:5136/api/InventarioEstado/${id_inventario_estado}`).then(()=>{
             GetData();
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
@@ -56,12 +55,12 @@ export default function Categorias() {
         });
     }
     const Update = (event) => {
-        console.log(categoria);
-        const tipo_categoria_guardar = {
-            'id_categoria': categoria.id_categoria,
-            'nombre_categoria': categoria.nombre_categoria
+        console.log(inventarioEstado);
+        const inventario_estado_guardar = {
+            'id_inventario_estado': inventarioEstado.id_inventario_estado,
+            'nombre_estado_inventario': inventarioEstado.nombre_inventario_estado
         };
-        axios.put("http://localhost:5136/api/Categorias/", tipo_categoria_guardar).then(
+        axios.put("http://localhost:5136/api/InventarioEstado/", inventario_estado_guardar).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -78,7 +77,7 @@ export default function Categorias() {
     }
     const onChangeNombre = (event) => {
         let nombre = event.target.value;
-        setCategoria({ ...categoria, "nombre_categoria": nombre })
+        setInventarioEstado({ ...inventarioEstado, "nombre_inventario_estado": nombre })
     }
     useEffect(() => {
         GetData();
@@ -87,19 +86,18 @@ export default function Categorias() {
         let id = event.currentTarget.getAttribute("data-id");
         let nombre = event.currentTarget.getAttribute("data-nombre");
         console.log(id);
-        setCategoria({
-            "id_categoria": id,
-            "nombre_categoria": nombre
+        setInventarioEstado({
+            "id_inventario_estado": id,
+            "nombre_inventario_estado": nombre
         });
         handleShowModal();
     }
     const onSubmit = (data)=>{
-        console.log(data);
-        const categoria_guardar = {
-            'id_categoria': data.id_categoria,
-            'nombre_categoria': data.nombre_categoria
+        const inventario_estado_guardar = {
+            'id_inventario_estado': data.id_inventario_estado,
+            'nombre_estado_inventario': data.nombre_inventario_estado
         };
-        axios.post('http://localhost:5136/api/Categorias/', categoria_guardar, {
+        axios.post('http://localhost:5136/api/InventarioEstado/', inventario_estado_guardar, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -120,7 +118,7 @@ export default function Categorias() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row justify-content-center">
                 <div className="col-xxl-5">
-                    <h1>Categorías</h1>
+                    <h1>Inventario Estados</h1>
                 </div>
                 <div className="col-xxl-1">
                     <button type="submit" className="btn btn-primary">Guardar</button>
@@ -135,13 +133,13 @@ export default function Categorias() {
                 <div className="row justify-content-center">
                     <div className="col-xxl-3">
                         <label htmlFor="">ID</label>
-                        <input type="text" name="" className="form-control"  id="" {...register('id_categoria',{required:true})} />
-                        {errors.id_categoria && (<span className="text-danger">*Campo requerido</span>)}
+                        <input type="text" name="" className="form-control"  id="" {...register('id_inventario_estado',{required:true})} />
+                        {errors.id_inventario_estado && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                     <div className="col-xxl-3">
                         <label htmlFor="">Nombre</label>
-                        <input type="text" name="" className="form-control" id="" {...register('nombre_categoria',{required:true})} />
-                        {errors.nombre_categoria && (<span className="text-danger">*Campo requerido</span>)}
+                        <input type="text" name="" className="form-control" id="" {...register('nombre_inventario_estado',{required:true})} />
+                        {errors.nombre_inventario_estado && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                 </div>
             </form>
@@ -161,15 +159,15 @@ export default function Categorias() {
                     <tbody>
                         {data.map((item, key) => (
                             <tr>
-                                <td>{item.id_categoria}</td>
-                                <td>{item.nombre_categoria}</td>
+                                <td>{item.id_inventario_estado}</td>
+                                <td>{item.nombre_estado_inventario}</td>
                                 <td>{item.fecha_creacion}</td>
                                 <td>{item.fecha_actualizacion}</td>
                                 <td>
-                                    <Button variant="primary" onClick={Editar} data-id={item.id_categoria} data-nombre={item.nombre_categoria}>
+                                    <Button variant="primary" onClick={Editar} data-id={item.id_inventario_estado} data-nombre={item.nombre_estado_inventario}>
                                         <i className="fa fa-edit"></i>
                                     </Button></td>
-                                <td><button className="btn " data-id={item.id_categoria} onClick={Delete}><i className="fa fa-trash text-danger"></i></button></td>
+                                <td><button className="btn " data-id={item.id_inventario_estado} onClick={Delete}><i className="fa fa-trash text-danger"></i></button></td>
                             </tr>
                         ))}
 
@@ -186,11 +184,11 @@ export default function Categorias() {
                         <div className="row">
                             <div className="col">
                                 <label htmlFor=""></label>
-                                <input type="text" name="" readOnly value={categoria.id_categoria} className="form-control" id="" />
+                                <input type="text" name="" readOnly value={inventarioEstado.id_inventario_estado} className="form-control" id="" />
                             </div>
                             <div className="col">
                                 <label htmlFor=""></label>
-                                <input type="text" name="" className="form-control" id="" onChange={onChangeNombre} value={categoria.nombre_categoria} />
+                                <input type="text" name="" className="form-control" id="" onChange={onChangeNombre} value={inventarioEstado.nombre_inventario_estado} />
                             </div>
                         </div>
                     </div>

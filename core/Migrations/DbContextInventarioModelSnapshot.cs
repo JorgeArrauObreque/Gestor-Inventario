@@ -25,10 +25,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Bodega", b =>
                 {
                     b.Property<int>("id_bodega")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_bodega"));
 
                     b.Property<string>("direccion")
                         .IsRequired()
@@ -49,10 +46,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Categoria", b =>
                 {
                     b.Property<int>("id_categoria")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_categoria"));
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -108,11 +102,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Inventario", b =>
                 {
-                    b.Property<long>("id_inventario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_inventario"));
+                    b.Property<string>("id_inventario")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -148,10 +139,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.InventarioEstado", b =>
                 {
                     b.Property<int>("id_inventario_estado")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_inventario_estado"));
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -172,10 +160,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.MovimientoTipo", b =>
                 {
                     b.Property<int>("id_movimiento_tipo")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_movimiento_tipo"));
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -289,10 +274,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Producto", b =>
                 {
                     b.Property<int>("id_producto")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_producto"));
 
                     b.Property<string>("descripcion")
                         .IsRequired()
@@ -341,10 +323,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Proveedor", b =>
                 {
                     b.Property<int>("id_proveedor")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_proveedor"));
 
                     b.Property<string>("correo")
                         .IsRequired()
@@ -373,10 +352,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.TipoProducto", b =>
                 {
                     b.Property<int>("id_tipo_producto")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_tipo_producto"));
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");

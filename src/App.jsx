@@ -4,10 +4,12 @@ import Sidebar from './Componentes/Sidebar'
 import Navbar from './Componentes/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
-import Productos from './Componentes/Productos/Productos';
-import Categorias from './Componentes/Productos/Categorias.jsx';
+import InventarioEstados from './Componentes/Productos/InventarioEstados';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Proveedores from './Componentes/Productos/Proveedores';
+import Bodegas from './Componentes/Productos/Bodegas';
+import TipoProducto from './Componentes/Productos/TipoProducto';
+import Categorias from './Componentes/Productos/Categorias';
 function App() {
   return (
     <>
@@ -19,9 +21,12 @@ function App() {
           <div className='col'>
             <BrowserRouter>
               <Routes>
-                <Route path='categorias' Component={Categorias} />
-                <Route path='productos' Component={Productos} />
+        
                 <Route path='proveedores' Component={Proveedores} />
+                <Route path='estadoinventario' Component={InventarioEstados} />
+                <Route path='bodegas' Component={Bodegas} />
+                <Route path='tipoproducto' Component={TipoProducto} />
+                <Route path='categorias' Component={Categorias} />
               </Routes>
             </BrowserRouter>
           

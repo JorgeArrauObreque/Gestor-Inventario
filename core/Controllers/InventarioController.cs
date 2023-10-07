@@ -18,7 +18,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("api/inventario/get_by_id")]
-        public Inventario Get_by_id(long id_inventario)
+        public Inventario Get_by_id(string id_inventario)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -26,7 +26,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult Delete(long id_inventario){
+        public ActionResult Delete(string id_inventario){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())

@@ -6,6 +6,7 @@ namespace gestion_inventario.Models
     public class MovimientoTipo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id_movimiento_tipo { get; set; }
         [Required]
         [MaxLength(50)]

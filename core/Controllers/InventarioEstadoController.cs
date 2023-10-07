@@ -9,7 +9,7 @@ namespace gestion_inventario.Controllers
     [ApiController]
     public class InventarioEstadoController : ControllerBase
     {
-        [HttpGet("api/inventarioEstado/all")]
+        [HttpGet]
         public List<InventarioEstado> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -17,7 +17,7 @@ namespace gestion_inventario.Controllers
                 return context.inventario_estados.ToList();
             }
         }
-        [HttpGet("api/inventarioEstado/get_by_id")]
+        [HttpGet("get_by_id")]
         public InventarioEstado Get_by_id(int id_inventario_estado)
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -25,6 +25,7 @@ namespace gestion_inventario.Controllers
                 return context.inventario_estados.Where(r => r.id_inventario_estado == id_inventario_estado).FirstOrDefault();
             }
         }
+        [HttpDelete("{id_inventario_estado}")]
         public ActionResult Delete (int id_inventario_estado){
             try
             {
@@ -33,6 +34,7 @@ namespace gestion_inventario.Controllers
                     var query = context.inventario_estados.Where(r=>r.id_inventario_estado == id_inventario_estado).FirstOrDefault();
                     if (query == null) return NotFound();
                     context.inventario_estados.Remove(query);
+                    context.SaveChanges();
                     return Ok();
                 }    
             }
@@ -42,6 +44,7 @@ namespace gestion_inventario.Controllers
             }
             
         }
+        [HttpPost]
         public ActionResult Add([FromBody] InventarioEstadoViewModel inventario_estado){
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -56,6 +59,7 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
+        [HttpPut]
         public ActionResult Update([FromBody] InventarioEstadoViewModel inventario_estado){
             using (DbContextInventario context = new DbContextInventario())
             {

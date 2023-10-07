@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
 
-export default function Categorias() {
-    const [showModal, setShowModal] = useState(false);
 
+
+export default function Bodegas() {
+    const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
         setShowModal(true);
     };
@@ -14,17 +15,15 @@ export default function Categorias() {
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
-
     const [data, setData] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    const [categoria, setCategoria] = useState({
-        "id_categoria": "",
-        "nombre_categoria": ""
+    const [bodega, setBodega] = useState({
+        "id_bodega": "",
+        "direccion": ""
     });
     const GetData = () => {
-        axios.get("http://localhost:5136/api/Categorias").then(response => {
+        axios.get("http://localhost:5136/api/Bodega").then(response => {
             setData(response.data);
         }).catch(ex => {
             console.log(ex);
@@ -35,17 +34,17 @@ export default function Categorias() {
    
         // También puedes usar la función reset de react-hook-form para reiniciar el formulario
         reset({
-            id_categoria: '',
-            nombre_categoria: ''
+            id_bodega: '',
+            direccion: ''
         });
     }
     const Delete = (event) => {
-        const id_categoria = event.currentTarget.getAttribute("data-id");
-        axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`).then(()=>{
+        const id_bodega = event.currentTarget.getAttribute("data-id");
+        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`).then(()=>{
             GetData();
             Swal.fire({
-                position: 'top-end', // Personaliza el ancho de la notificación
-                toast: true, // Activa el modo Toast
+                position: 'top-end', 
+                toast: true, 
                 icon: 'success',
                 title: 'Registro Eliminado con existo',
                 showConfirmButton: false,
@@ -56,12 +55,12 @@ export default function Categorias() {
         });
     }
     const Update = (event) => {
-        console.log(categoria);
-        const tipo_categoria_guardar = {
-            'id_categoria': categoria.id_categoria,
-            'nombre_categoria': categoria.nombre_categoria
+        console.log(bodega);
+        const bodega_guardar = {
+            'id_bodega': bodega.id_bodega,
+            'direccion': bodega.direccion
         };
-        axios.put("http://localhost:5136/api/Categorias/", tipo_categoria_guardar).then(
+        axios.put("http://localhost:5136/api/Bodega/", bodega_guardar).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -78,7 +77,7 @@ export default function Categorias() {
     }
     const onChangeNombre = (event) => {
         let nombre = event.target.value;
-        setCategoria({ ...categoria, "nombre_categoria": nombre })
+        setBodega({ ...bodega, "direccion": nombre })
     }
     useEffect(() => {
         GetData();
@@ -87,19 +86,18 @@ export default function Categorias() {
         let id = event.currentTarget.getAttribute("data-id");
         let nombre = event.currentTarget.getAttribute("data-nombre");
         console.log(id);
-        setCategoria({
-            "id_categoria": id,
-            "nombre_categoria": nombre
+        setBodega({
+            "id_bodega": id,
+            "direccion": nombre
         });
         handleShowModal();
     }
     const onSubmit = (data)=>{
-        console.log(data);
-        const categoria_guardar = {
-            'id_categoria': data.id_categoria,
-            'nombre_categoria': data.nombre_categoria
+        const inventario_estado_guardar = {
+            'id_bodega': data.id_bodega,
+            'direccion': data.direccion
         };
-        axios.post('http://localhost:5136/api/Categorias/', categoria_guardar, {
+        axios.post('http://localhost:5136/api/Bodega/', inventario_estado_guardar, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -120,7 +118,7 @@ export default function Categorias() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row justify-content-center">
                 <div className="col-xxl-5">
-                    <h1>Categorías</h1>
+                    <h1>Bodegas</h1>
                 </div>
                 <div className="col-xxl-1">
                     <button type="submit" className="btn btn-primary">Guardar</button>
@@ -135,13 +133,13 @@ export default function Categorias() {
                 <div className="row justify-content-center">
                     <div className="col-xxl-3">
                         <label htmlFor="">ID</label>
-                        <input type="text" name="" className="form-control"  id="" {...register('id_categoria',{required:true})} />
-                        {errors.id_categoria && (<span className="text-danger">*Campo requerido</span>)}
+                        <input type="text" name="" className="form-control"  id="" {...register('id_bodega',{required:true})} />
+                        {errors.id_bodega && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                     <div className="col-xxl-3">
                         <label htmlFor="">Nombre</label>
-                        <input type="text" name="" className="form-control" id="" {...register('nombre_categoria',{required:true})} />
-                        {errors.nombre_categoria && (<span className="text-danger">*Campo requerido</span>)}
+                        <input type="text" name="" className="form-control" id="" {...register('direccion',{required:true})} />
+                        {errors.direccion && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                 </div>
             </form>
@@ -161,15 +159,15 @@ export default function Categorias() {
                     <tbody>
                         {data.map((item, key) => (
                             <tr>
-                                <td>{item.id_categoria}</td>
-                                <td>{item.nombre_categoria}</td>
+                                <td>{item.id_bodega}</td>
+                                <td>{item.direccion}</td>
                                 <td>{item.fecha_creacion}</td>
                                 <td>{item.fecha_actualizacion}</td>
                                 <td>
-                                    <Button variant="primary" onClick={Editar} data-id={item.id_categoria} data-nombre={item.nombre_categoria}>
+                                    <Button variant="primary" onClick={Editar} data-id={item.id_bodega} data-nombre={item.direccion}>
                                         <i className="fa fa-edit"></i>
                                     </Button></td>
-                                <td><button className="btn " data-id={item.id_categoria} onClick={Delete}><i className="fa fa-trash text-danger"></i></button></td>
+                                <td><button className="btn " data-id={item.id_bodega} onClick={Delete}><i className="fa fa-trash text-danger"></i></button></td>
                             </tr>
                         ))}
 
@@ -185,12 +183,12 @@ export default function Categorias() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <label htmlFor=""></label>
-                                <input type="text" name="" readOnly value={categoria.id_categoria} className="form-control" id="" />
+                                <label htmlFor="">ID</label>
+                                <input type="text" name="" readOnly value={bodega.id_bodega} className="form-control" id="" />
                             </div>
                             <div className="col">
-                                <label htmlFor=""></label>
-                                <input type="text" name="" className="form-control" id="" onChange={onChangeNombre} value={categoria.nombre_categoria} />
+                                <label htmlFor="">Dirección</label>
+                                <input type="text" name="" className="form-control" id="" onChange={onChangeNombre} value={bodega.direccion} />
                             </div>
                         </div>
                     </div>

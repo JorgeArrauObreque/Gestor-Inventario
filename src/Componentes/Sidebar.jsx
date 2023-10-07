@@ -9,11 +9,12 @@ export default function Sidebar() {
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <a href="productos" className="nav-link active" aria-current="page">
+              <a href="bodegas" className="nav-link active" aria-current="page">
                 <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-                productos
+                bodegas
               </a>
             </li>
+            
             <li>
               <a href="categorias" className="nav-link text-white">
                 <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
@@ -27,15 +28,15 @@ export default function Sidebar() {
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link text-white">
+              <a href="estadoinventario" className="nav-link text-white">
                 <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid"></use></svg>
-                Proveedores
+                Estados Inventario
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link text-white">
+              <a href="tipoproducto" className="nav-link text-white">
                 <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-                Customers
+                Tipo Producto
               </a>
             </li>
           </ul>

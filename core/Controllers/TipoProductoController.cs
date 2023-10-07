@@ -9,7 +9,7 @@ namespace gestion_inventario.Controllers
     [ApiController]
     public class TipoProductoController : ControllerBase
     {
-        [HttpGet("api/tipoProducto/all")]
+        [HttpGet]
         public List<TipoProducto> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -25,7 +25,7 @@ namespace gestion_inventario.Controllers
                return context.tipos_producto.Where(r => r.id_tipo_producto == id_tipo_producto).FirstOrDefault();
             }
         }
-        [HttpDelete]
+        [HttpDelete("{id_tipo_producto}")]
         public ActionResult Delete(int id_tipo_producto){
             try
             {
@@ -49,8 +49,8 @@ namespace gestion_inventario.Controllers
                 var query = context.tipos_producto.Where(r=>r.id_tipo_producto == tipo_producto.id_tipo_producto).FirstOrDefault();
                 if (query != null) return BadRequest();
                 TipoProducto new_tipo_producto = new TipoProducto();
-                new_tipo_producto.id_tipo_producto = query.id_tipo_producto;
-                new_tipo_producto.nombre_tipo_producto = query.nombre_tipo_producto;
+                new_tipo_producto.id_tipo_producto = tipo_producto.id_tipo_producto;
+                new_tipo_producto.nombre_tipo_producto = tipo_producto.nombre_tipo_producto;
                 new_tipo_producto.fecha_creacion = DateTime.Now;
                 new_tipo_producto.fecha_actualizacion = DateTime.Now;
                 context.tipos_producto.Add(new_tipo_producto);

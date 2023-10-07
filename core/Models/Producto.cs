@@ -9,6 +9,7 @@ namespace gestion_inventario.Models
     public class Producto
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id_producto { get; set; }
         [Required]
         [MaxLength(50)]
