@@ -9,16 +9,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace gestion_inventario.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductosController : ControllerBase
     {
-        [HttpGet("api/productos/all")]
-        public Producto[] Index()
+        [HttpGet]
+        public dynamic[] Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-
-                return context.productos.Include(r => r.ProveedorNavigation).ToArray(); 
+                return context.productos.Include(r => r.ProveedorNavigation).Include(r=>r.categoriaNavigation).Include(r=>r.tipoProductoNavigation)
+                    .Select(r=> new {id_producto = r.id_producto,nombre_producto = r.nombre_producto
+                    ,fecha_creacion = r.fecha_creacion,fecha_actualizacion = r.fecha_actualizacion,proveedor = r.ProveedorNavigation.nombre_proveedor
+                    ,marca=r.marca,descripcion = r.descripcion,categoria = r.categoriaNavigation.nombre_categoria, 
+                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor=r.id_proveedor, id_categoria = r.id_categoria,id_tipo_producto=r.id_tipo_producto  })
+                    .ToArray(); 
             }
         }
         [HttpGet("api/productos/get")]

@@ -7,6 +7,9 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 export default function Bodegas() {
+    useEffect(()=>{
+        GetData();
+    },[])
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
         setShowModal(true);

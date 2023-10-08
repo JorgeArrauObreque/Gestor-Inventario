@@ -1,61 +1,64 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "./Sidebar.css";
+import React, { useEffect } from "react";
+
 export default function Sidebar() {
-    return (
-      <>
-        <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: "100%", height:"90vh" }}>
-          <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap"></use></svg>
-            <span className="fs-4">Sidebar</span>
-          </a>
-          <hr />
-          <ul className="nav nav-pills flex-column mb-auto">
-            <li className="nav-item">
-              <a href="bodegas" className="nav-link active" aria-current="page">
-                <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-                bodegas
-              </a>
-            </li>
-            
-            <li>
-              <a href="categorias" className="nav-link text-white">
-                <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
-                Categorias
-              </a>
-            </li>
-            <li>
-              <a href="proveedores" className="nav-link text-white">
-                <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table"></use></svg>
-                proveedores
-              </a>
-            </li>
-            <li>
-              <a href="estadoinventario" className="nav-link text-white">
-                <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid"></use></svg>
-                Estados Inventario
-              </a>
-            </li>
-            <li>
-              <a href="tipoproducto" className="nav-link text-white">
-                <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-                Tipo Producto
-              </a>
-            </li>
-          </ul>
-          <hr />
-          <div className="dropdown">
-            <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2" />
-              <strong>mdo</strong>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-              <li><a className="dropdown-item" href="#">New project...</a></li>
-              <li><a className="dropdown-item" href="#">Settings</a></li>
-              <li><a className="dropdown-item" href="#">Profile</a></li>
-              <li><hr className="dropdown-divider" /></li>
-              <li><a className="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div>
-        </div>
-      </>
-    );
-  }
-  
+  const [activeTab, setActiveTab] = useState("bodega");
+  const location = useLocation();
+
+  useEffect(() => {
+    // Actualiza el estado activeTab cuando cambia la ubicación (navegación)
+    const path = location.pathname;
+    setActiveTab(path.substring(1)); // Elimina el "/" inicial del pathname
+  }, [location.pathname]);
+
+  return (
+    <div className="d-flex flex-column flex-shrink-0 p-3 sidebar" style={{ width: "100%", height: "90vh" }}>
+      <ul className="nav nav-pills flex-column mb-auto">
+        <li className="nav-item">
+          <Link to="/bodegas" className={activeTab === "bodegas" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
+            <i className="fa fa-book"></i> Bodegas
+          </Link>
+        </li>
+        <li>
+          <Link to="/categorias" className={activeTab === "categorias" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
+            <i className="fa fa-list"></i> Categorias
+          </Link>
+        </li>
+        <li>
+          <Link to="/proveedores" className={activeTab === "proveedores" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table"></use></svg>
+            Proveedores
+          </Link>
+        </li>
+        <li>
+          <Link to="/estadoinventario" className={activeTab === "estadoinventario" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid"></use></svg>
+            Estados Inventario
+          </Link>
+        </li>
+        <li>
+          <Link to="/personas" className={activeTab === "personas" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            Personas
+          </Link>
+        </li>
+        <li>
+          <Link to="/tipoproducto" className={activeTab === "tipoproducto" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            Tipo Producto
+          </Link>
+        </li>
+        <li>
+          <Link to="/productos" className={activeTab === "productos" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            Productos
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}

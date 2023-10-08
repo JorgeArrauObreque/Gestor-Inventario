@@ -34,6 +34,7 @@ namespace gestion_inventario.Controllers
                     var query = context.tipos_producto.Where(r=>r.id_tipo_producto == id_tipo_producto).FirstOrDefault();
                     if (query == null)  return NotFound();
                     context.tipos_producto.Remove(query);
+                    context.SaveChanges();
                     return Ok();
                 }   
             }

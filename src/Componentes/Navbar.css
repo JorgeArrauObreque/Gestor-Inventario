@@ -1,0 +1,15 @@
+.navbar-institucional{
+    background-color: #012C56 !important;
+}
+.nav-link{
+    color: whitesmoke !important;
+}
+.btn-light{
+    background-color: transparent !important;
+    color: whitesmoke !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+.logo-insitucional{
+    width: 200px;
+}

@@ -1,14 +1,14 @@
 ﻿using gestion_inventario.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using gestion_inventario.ViewModels;
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PersonasController : ControllerBase
     {
-        [HttpGet("api/personas/all")]
+        [HttpGet]
         public List<Persona> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -24,8 +24,8 @@ namespace gestion_inventario.Controllers
                 return context.personas.Where(r => r.rut == rut).FirstOrDefault();
             }
         }
-        [HttpDelete]
-        public ActionResult Personas(string rut){
+        [HttpDelete("{rut}")]
+        public ActionResult Delete(string rut){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())
@@ -33,6 +33,7 @@ namespace gestion_inventario.Controllers
                     var query = context.personas.Where(r=>r.rut == rut).FirstOrDefault();        
                     if (query == null) return NotFound();
                     context.personas.Remove(query);
+                    context.SaveChanges();
                     return Ok();
                 }   
             }
@@ -42,7 +43,7 @@ namespace gestion_inventario.Controllers
             }            
         }
         [HttpPost]
-        public ActionResult Add([FromBody] Persona persona){
+        public ActionResult Add([FromBody] PersonaViewModel persona){
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query = context.personas.Where(r=>r.rut == persona.rut).FirstOrDefault();        
@@ -55,7 +56,24 @@ namespace gestion_inventario.Controllers
                 new_persona.genero = persona.genero;
                 new_persona.fecha_actualizacion = DateTime.Now;
                 new_persona.fecha_creacion = DateTime.Now;
-                context.personas.Add(persona);
+                context.personas.Add(new_persona);
+                context.SaveChanges();
+                return Ok();
+            }
+        }
+        [HttpPut]
+        public ActionResult Update([FromBody] PersonaViewModel persona)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.personas.Where(r => r.rut == persona.rut).FirstOrDefault();
+                if (query == null) return NotFound();
+                query.nombres = persona.nombres;
+                query.apellidos = persona.apellidos;
+                query.carrera = persona.carrera;
+                query.genero = persona.genero;
+                query.fecha_actualizacion = DateTime.Now;
+                query.fecha_creacion = DateTime.Now;
                 context.SaveChanges();
                 return Ok();
             }
