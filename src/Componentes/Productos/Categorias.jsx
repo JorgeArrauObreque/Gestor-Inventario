@@ -28,7 +28,8 @@ export default function Categorias() {
         "id_categoria": "",
         "nombre_categoria": ""
     });
-    const GetData = (token) => {
+    const GetData = () => {
+        let token = localStorage.getItem("token");
         const requestOptions = {
             headers: {
               Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
@@ -91,15 +92,7 @@ export default function Categorias() {
         setCategoria({ ...categoria, "nombre_categoria": nombre })
     }
     useEffect(() => {
-        axios.post("http://localhost:5136/api/Accounts/login","nada",{
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then(response=>{
-            
-            console.log(response.data.token);
-            GetData(response.data.token);
-        })
+        GetData();
         
    
     }, [])

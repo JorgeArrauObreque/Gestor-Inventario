@@ -1,12 +1,43 @@
 import axios from "axios";
 import { useEffect } from "react"
 import { useForm } from 'react-hook-form'
+import Swal from "sweetalert2";
 export default function Login() {
 
     const { register, reset, handleSubmit,formState:{errors} } = useForm();
-    const onSubmit = ()=>{
-        axios.post("");
-        localStorage.setItem("nombre", "Juan");
+    const onSubmit = (data)=>{
+        const credenciales = {
+            "Username":data.username,
+            "PasswordHash":data.password,
+        }
+        console.log(credenciales);
+        axios.post("http://localhost:5136/api/Accounts/login",credenciales,{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(response=>{
+            console.log(response.data.user);
+            console.log(response.data.token);
+            localStorage.setItem("token", response.data.token);
+            Swal.fire({
+                position: 'top-end', // Personaliza el ancho de la notificación
+                toast: true, // Activa el modo Toast
+                icon: 'success',
+                title: 'Bienvenido',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+        }).catch(ex=>{
+            Swal.fire({
+                position: 'top-end', // Personaliza el ancho de la notificación
+                toast: true, // Activa el modo Toast
+                icon: 'error',
+                title: 'Credenciales incorrectas',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+        });
+        
     }
     return <>
         <div className="container" style={{marginTop:"10vh"}}>
@@ -16,10 +47,10 @@ export default function Login() {
                         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="loginName" class="form-control" {...register("user",{required:true})}  />
+                                    <input type="text" id="loginName" class="form-control" {...register("username",{required:true})}  />
                                     
                                     
-                                    {errors.user && (<span className="text-danger">*Campo Requerido</span>)}
+                                    {errors.username && (<span className="text-danger">*Campo Requerido</span>)}
                                 </div>
 
 

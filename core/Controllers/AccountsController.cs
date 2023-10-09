@@ -3,6 +3,7 @@ using gestion_inventario.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,15 +19,17 @@ namespace gestion_inventario.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] ApplicationUser user)
         {
-         
-            if (!IsValidUser(user))
+            bool resultado = IsValidUser(user);
+            if (!resultado)
             {
                 return Unauthorized();
             }
+            else
+            {
+                var token = GenerateToken(user.Username);
 
-            var token = GenerateToken(user.Username);
-
-            return Ok(new { Token = token });
+                return Ok(new { Token = token, user = GetUsuario(user.Username) });
+            }
         }
 
         private string GenerateToken(string username)
@@ -46,12 +49,18 @@ namespace gestion_inventario.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+        public Usuario GetUsuario(string user) {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                return context.usuariosSistema.Include(r=>r.rolNavigation).Where(r => r.username == user).FirstOrDefault();
+            }
+        }
         public bool IsValidUser(ApplicationUser usuario)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                string password = new AESEncryption().Encrypt(usuario.PasswordHash);
-                return context.usuariosSistema.Where(r => r.username == usuario.Username && usuario.PasswordHash == password).FirstOrDefault() != null ? true : false;
+               
+                return context.usuariosSistema.Where(r => r.username == usuario.Username && r.password == usuario.PasswordHash).Any();
             }
         }
         public List<Usuario> Get_all()
@@ -72,7 +81,7 @@ namespace gestion_inventario.Controllers
                 new_usuario.email = usuario.email;
                 new_usuario.username = usuario.username;
                 new_usuario.id_rol = usuario.id_rol;
-                new_usuario.password = new AESEncryption().Encrypt(usuario.password);
+                new_usuario.password =  usuario.password;
                 context.Add(new_usuario);
                 context.SaveChanges();
                 return Ok("Creado correctamente");

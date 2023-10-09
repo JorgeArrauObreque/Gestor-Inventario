@@ -17,7 +17,7 @@ import Login from './Componentes/Login';
 import React, { useState } from 'react';
 import Prestamos from './Componentes/Productos/Prestamos';
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
   return (
     <>
 
