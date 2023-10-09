@@ -12,34 +12,49 @@ import TipoProducto from './Componentes/Productos/TipoProducto';
 import Categorias from './Componentes/Productos/Categorias';
 import Personas from './Componentes/Personas';
 import Productos from './Componentes/Productos/Productos';
+import Inventario from './Componentes/Productos/Inventario';
+import Login from './Componentes/Login';
+import React, { useState } from 'react';
 function App() {
+  const [authenticated, setAuthenticated] = useState(true);
   return (
     <>
-      <Navbar />
+
+
       <BrowserRouter>
-      <div className='d-flex'>
-          <div className='col-xxl-2 col-xl-3'>
-            <Sidebar />
-          </div>
-          <div className='col p-4 mt-4'>
+        {authenticated ? (
+          <>
+           <Navbar />  
+           <div className='d-flex'>
            
-              <Routes>
-        
-                <Route path='proveedores' Component={Proveedores} />
-                <Route path='estadoinventario' Component={InventarioEstados} />
-                <Route path='bodegas' Component={Bodegas} />
-                <Route path='tipoproducto' Component={TipoProducto} />
-                <Route path='categorias' Component={Categorias} />
-                <Route path='personas' Component={Personas} />
-                <Route path='productos' Component={Productos} />
-              </Routes>
-   
-          
-          </div>
-      </div>
+           <div className='col-xxl-2 col-xl-3'>
+             <Sidebar />
+           </div>
+           <div className='col p-4 mt-4'>
+             
+             <Routes>
+               <Route path='proveedores' element={<Proveedores />} />
+               <Route path='estadoinventario' element={<InventarioEstados />} />
+               <Route path='bodegas' element={<Bodegas />} />
+               <Route path='tipoproducto' element={<TipoProducto />} />
+               <Route path='categorias' element={<Categorias />} />
+               <Route path='personas' element={<Personas />} />
+               <Route path='productos' element={<Productos />} />
+               <Route path='inventarios' element={<Inventario />} />
+             </Routes>
+           </div>
+         </div>
+          </>
+     
+        ) : (
+          <Routes>
+            <Route path='login' element={<Login setAuthenticated={setAuthenticated} />} />
+          </Routes>
+        )}
       </BrowserRouter>
-      
     </>
+
+
   );
 }
 

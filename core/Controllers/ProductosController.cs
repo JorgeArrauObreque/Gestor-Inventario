@@ -17,16 +17,16 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.productos.Include(r => r.ProveedorNavigation).Include(r=>r.categoriaNavigation).Include(r=>r.tipoProductoNavigation)
-                    .Select(r=> new {id_producto = r.id_producto,nombre_producto = r.nombre_producto
-                    ,fecha_creacion = r.fecha_creacion,fecha_actualizacion = r.fecha_actualizacion,proveedor = r.ProveedorNavigation.nombre_proveedor
-                    ,marca=r.marca,descripcion = r.descripcion,categoria = r.categoriaNavigation.nombre_categoria, 
-                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor=r.id_proveedor, id_categoria = r.id_categoria,id_tipo_producto=r.id_tipo_producto  })
-                    .ToArray(); 
+                return context.productos.Include(r => r.ProveedorNavigation).Include(r => r.categoriaNavigation).Include(r => r.tipoProductoNavigation)
+                    .Select(r => new { id_producto = r.id_producto, nombre_producto = r.nombre_producto
+                    , fecha_creacion = r.fecha_creacion, fecha_actualizacion = r.fecha_actualizacion, proveedor = r.ProveedorNavigation.nombre_proveedor
+                    , marca = r.marca, descripcion = r.descripcion, categoria = r.categoriaNavigation.nombre_categoria,
+                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor = r.id_proveedor, id_categoria = r.id_categoria, id_tipo_producto = r.id_tipo_producto })
+                    .ToArray();
             }
         }
         [HttpGet("api/productos/get")]
-        public Producto Get(int id_producto) 
+        public Producto Get(int id_producto)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -34,12 +34,12 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Add([FromBody]ProductoViewModel producto)
+        public ActionResult Add([FromBody] ProductoViewModel producto)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.productos.Where(r=>r.id_producto == producto.id_producto).FirstOrDefault();
-                if(query != null ) return BadRequest();
+                var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
+                if (query != null) return BadRequest();
                 Producto new_producto = new Producto();
                 new_producto.id_producto = producto.id_producto;
                 new_producto.id_proveedor = producto.id_proveedor;
@@ -54,14 +54,14 @@ namespace gestion_inventario.Controllers
                 context.SaveChanges();
                 return Ok();
             }
-            
+
         }
         [HttpPut]
-        public ActionResult Update([FromBody] ProductoViewModel producto){
+        public ActionResult Update([FromBody] ProductoViewModel producto) {
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.productos.Where(r=>r.id_producto == producto.id_producto).FirstOrDefault();
-                if(query == null ) return NotFound();
+                var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
+                if (query == null) return NotFound();
                 query.id_proveedor = producto.id_proveedor;
                 query.fecha_creacion = DateTime.Now;
                 query.descripcion = producto.descripcion;
@@ -76,8 +76,8 @@ namespace gestion_inventario.Controllers
 
             }
         }
-        [HttpDelete]
-        public ActionResult Productos(long id_producto){
+        [HttpDelete("{id_producto}")]
+        public ActionResult Delete(long id_producto){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())
@@ -85,6 +85,7 @@ namespace gestion_inventario.Controllers
                     var query = context.productos.Where(r=>r.id_producto == id_producto).FirstOrDefault();
                     if (query == null) return NotFound();
                     context.productos.Remove(query);
+                    context.SaveChanges();
                     return Ok();
                 } 
             }

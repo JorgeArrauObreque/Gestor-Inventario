@@ -1,6 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function Productos() {
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
@@ -22,7 +29,7 @@ export default function Productos() {
 
     });
     const [data, setData] = useState([]);
-
+    const {register,reset,formState:{errors},handleSubmit} = useForm();
     const [proveedores, setProveedores] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [tipoProducto, setTipoProducto] = useState([]);
@@ -89,7 +96,18 @@ export default function Productos() {
 
         handleShowModal();
     }
-
+    const Clean = ()=>{
+        reset({
+            'id_producto': "",
+            'nombre_producto': "",
+            'id_proveedor': "",
+            'marca': "",
+            'descripcion': "",
+            'id_categoria': "",
+            'id_tipo_producto': "",
+    
+        })
+    }
     const onChangeProducto = (event) => {
         const { name, value } = event.target;
         setProducto({
@@ -97,69 +115,134 @@ export default function Productos() {
           [name]: value, // Usar el nombre del campo como clave dinámica
         });
       };
+
+
+      const Delete = (event)=>{
+        const id_producto = event.currentTarget.getAttribute("data-id");
+        axios.delete(`http://localhost:5136/api/Productos/${id_producto}`).then(response=>{
+            Swal.fire({
+                position: 'top-end', // Personaliza el ancho de la notificación
+                toast: true, // Activa el modo Toast
+                icon: 'success',
+                title: 'Registro eliminado con existo',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            GetData();
+        }).catch(ex=>console.log(ex));
+      }
+      const Update = ()=>{
+
+        axios.put("http://localhost:5136/api/Productos",producto,{
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response)=>{
+            Swal.fire({
+                position: 'top-end', // Personaliza el ancho de la notificación
+                toast: true, // Activa el modo Toast
+                icon: 'success',
+                title: 'Registro Actualizado con existo',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            GetData();
+            handleCloseModal();
+        }).catch(ex=>console.log(ex));
+      }
+      const onSubmit=(data)=>{
+        console.log(data);
+        axios.post("http://localhost:5136/api/Productos",data,{
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(response=>{
+            Swal.fire({
+                position: 'top-end', // Personaliza el ancho de la notificación
+                toast: true, // Activa el modo Toast
+                icon: 'success',
+                title: 'Registro creado con existo',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            Clean();
+            GetData();
+        }).catch(ex=>console.log(ex));
+      }
     return (<>
         <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row justify-content-center">
                 <div className="col-xxl-3">
                     <h1>Productos</h1>
                 </div>
                 <div className="col-xxl-2">
-                    <button className="btn btn-primary">Guardar</button>
-                    <button className="btn btn-info">Limpiar</button>
+                    <button type="submit" className="btn btn-primary">Guardar</button>
+                    <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
                 </div>
             </div>
             <div className="row justify-content-center mt-4">
                 <div className="col-xxl-3">
                     <label htmlFor="">ID Producto</label>
-                    <input type="text" name="" id="" className="form-control" />
+                    <input type="text" name="" id="" className="form-control" {...register('id_producto',{required:true})} />
+                    {errors.id_producto && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
                 <div className="col-xxl-3">
                     <label htmlFor="">Nombre Producto</label>
-                    <input type="text" name="" id="" className="form-control" />
+                    <input type="text" name="" id="" className="form-control" {...register('nombre_producto',{required:true})} />
+                    {errors.nombre_producto && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
                 <div className="col-xxl-3">
                     <label htmlFor="">Marca</label>
-                    <input type="text" name="" id="" className="form-control" />
+                    <input type="text" name="" id="" className="form-control" {...register('marca',{required:true})} />
+                    {errors.marca && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
 
             </div>
             <div className="row justify-content-center mt-3">
                 <div className="col-xxl-3">
                     <label htmlFor="">Tipo Producto</label>
-                    <select name="" className="form-control" id="">
+                    <select name="" className="form-control" id="" {...register('id_tipo_producto',{required:true})}>
                         <option value="">Seleccione tipo de producto</option>
                         {tipoProducto.map((item) => (
                             <option value={item.id_tipo_producto}>{item.nombre_tipo_producto}</option>
                         ))}
                     </select>
+                    {errors.id_tipo_producto && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
                 <div className="col-xxl-3">
                     <label htmlFor="">Categoria</label>
-                    <select name="" className="form-control" id="">
+                    <select name="" className="form-control" id="" {...register('id_categoria',{required:true})}>
                         <option value="">Seleccione Categoria</option>
                         {categorias.map((item) => (
                             <option value={item.id_categoria}>{item.nombre_categoria}</option>
                         ))}
                     </select>
+                    {errors.id_categoria && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
                 <div className="col-xxl-3">
                     <label htmlFor="">Proveedor</label>
-                    <select name="" className="form-control" id="">
+                    <select name="" className="form-control" id="" {...register('id_proveedor',{required:true})}>
                         <option value="">Seleccione Proveedor</option>
                         {proveedores.map((item) => (
                             <option value={item.id_proveedor}>{item.nombre_proveedor}</option>
                         ))}
 
                     </select>
+                    {errors.id_proveedor && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
 
             </div>
             <div className="row justify-content-center mt-3">
                 <div className="col-xxl-9">
                     <label htmlFor="">Descripción</label>
-                    <textarea name="" className="form-control" id="" cols="30" rows="3"></textarea>
+                    <textarea name="" className="form-control" id="" cols="30" rows="3" {...register('descripcion',{required:true})}></textarea>
+                    {errors.descripcion && (<span className="text-danger">*Campo Requerido</span>)}
                 </div>
             </div>
+            </form>
+       
+            
             <div className="row mt-3">
                 <table className="table">
                     <thead>
@@ -187,7 +270,7 @@ export default function Productos() {
                                 <td>{item.categoria}</td>
                                 <td><Button variant="primary" data-id={item.id_producto} data-nombre-producto={item.nombre_producto} data-marca={item.marca}
                                     data-descripcion={item.descripcion} data-proveedor={item.id_proveedor} data-tipo-producto={item.id_tipo_producto} data-categoria={item.id_categoria} onClick={Editar}><i className="fa fa-edit"></i></Button></td>
-                                <td><button className="btn"><i className="fa fa-trash text-danger"></i></button></td>
+                                <td><button onClick={Delete} data-id={item.id_producto} className="btn"><i className="fa fa-trash text-danger"></i></button></td>
                             </tr>
                         ))}
 
@@ -256,7 +339,7 @@ export default function Productos() {
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Cerrar
                     </Button>
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={Update} >
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>

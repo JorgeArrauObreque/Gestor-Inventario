@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
-
-
-
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function Bodegas() {
-    useEffect(()=>{
+    useEffect(() => {
         GetData();
-    },[])
+    }, [])
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => {
         setShowModal(true);
@@ -28,13 +29,14 @@ export default function Bodegas() {
     const GetData = () => {
         axios.get("http://localhost:5136/api/Bodega").then(response => {
             setData(response.data);
+            console.log(response.data);
         }).catch(ex => {
             console.log(ex);
         });
     }
 
-    const Clean = ()=>{
-   
+    const Clean = () => {
+
         // También puedes usar la función reset de react-hook-form para reiniciar el formulario
         reset({
             id_bodega: '',
@@ -43,18 +45,18 @@ export default function Bodegas() {
     }
     const Delete = (event) => {
         const id_bodega = event.currentTarget.getAttribute("data-id");
-        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`).then(()=>{
+        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`).then(() => {
             GetData();
             Swal.fire({
-                position: 'top-end', 
-                toast: true, 
+                position: 'top-end',
+                toast: true,
                 icon: 'success',
                 title: 'Registro Eliminado con existo',
                 showConfirmButton: false,
                 timer: 3000,
             });
         }).catch(() => {
-         
+
         });
     }
     const Update = (event) => {
@@ -85,7 +87,7 @@ export default function Bodegas() {
     useEffect(() => {
         GetData();
     }, [])
-    const Editar = (event)=>{
+    const Editar = (event) => {
         let id = event.currentTarget.getAttribute("data-id");
         let nombre = event.currentTarget.getAttribute("data-nombre");
         console.log(id);
@@ -95,7 +97,7 @@ export default function Bodegas() {
         });
         handleShowModal();
     }
-    const onSubmit = (data)=>{
+    const onSubmit = (data) => {
         const inventario_estado_guardar = {
             'id_bodega': data.id_bodega,
             'direccion': data.direccion
@@ -118,30 +120,30 @@ export default function Bodegas() {
     }
     return (<>
         <div className="container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row justify-content-center">
-                <div className="col-xxl-5">
-                    <h1>Bodegas</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row justify-content-center">
+                    <div className="col-xxl-5">
+                        <h1>Bodegas</h1>
+                    </div>
+                    <div className="col-xxl-1">
+                        <button type="submit" className="btn btn-primary">Guardar</button>
+
+                    </div>
+                    <div className="col-xxl-1">
+                        <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
+
+                    </div>
                 </div>
-                <div className="col-xxl-1">
-                    <button type="submit" className="btn btn-primary">Guardar</button>
-                    
-                </div>
-                <div className="col-xxl-1">
-                    <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
-                    
-                </div>
-            </div>
-            
+
                 <div className="row justify-content-center">
                     <div className="col-xxl-3">
                         <label htmlFor="">ID</label>
-                        <input type="text" name="" className="form-control"  id="" {...register('id_bodega',{required:true})} />
+                        <input type="text" name="" className="form-control" id="" {...register('id_bodega', { required: true })} />
                         {errors.id_bodega && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                     <div className="col-xxl-3">
                         <label htmlFor="">Nombre</label>
-                        <input type="text" name="" className="form-control" id="" {...register('direccion',{required:true})} />
+                        <input type="text" name="" className="form-control" id="" {...register('direccion', { required: true })} />
                         {errors.direccion && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                 </div>
@@ -161,19 +163,23 @@ export default function Bodegas() {
                     </thead>
                     <tbody>
                         {data.map((item, key) => (
-                            <tr>
+                            <tr key={item.id_bodega}>
                                 <td>{item.id_bodega}</td>
                                 <td>{item.direccion}</td>
-                                <td>{item.fecha_creacion}</td>
-                                <td>{item.fecha_actualizacion}</td>
+                                <td>{formatearFecha(item.fecha_creacion)}</td>
+                                <td>{formatearFecha(item.fecha_actualizacion)}</td>
                                 <td>
                                     <Button variant="primary" onClick={Editar} data-id={item.id_bodega} data-nombre={item.direccion}>
                                         <i className="fa fa-edit"></i>
-                                    </Button></td>
-                                <td><button className="btn " data-id={item.id_bodega} onClick={Delete}><i className="fa fa-trash text-danger"></i></button></td>
+                                    </Button>
+                                </td>
+                                <td>
+                                    <button className="btn " data-id={item.id_bodega} onClick={Delete}>
+                                        <i className="fa fa-trash text-danger"></i>
+                                    </button>
+                                </td>
                             </tr>
                         ))}
-
                     </tbody>
                 </table>
             </div>

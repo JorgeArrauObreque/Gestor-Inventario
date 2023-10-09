@@ -3,7 +3,10 @@ import { useEffect, useState,useRef } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
-
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function TipoProducto() {
     const [showModal, setShowModal] = useState(false);
 
@@ -162,8 +165,8 @@ export default function TipoProducto() {
                             <tr>
                                 <td>{item.id_tipo_producto}</td>
                                 <td>{item.nombre_tipo_producto}</td>
-                                <td>{item.fecha_creacion}</td>
-                                <td>{item.fecha_actualizacion}</td>
+                                <td>{ formatearFecha(item.fecha_creacion)}</td>
+                                <td>{ formatearFecha(item.fecha_actualizacion)}</td>
                                 <td>
                                     <Button variant="primary" onClick={Editar} data-id={item.id_tipo_producto} data-nombre={item.nombre_tipo_producto}>
                                         <i className="fa fa-edit"></i>

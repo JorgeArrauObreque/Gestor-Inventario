@@ -19,43 +19,56 @@ export default function Sidebar() {
         <li className="nav-item">
           <Link to="/bodegas" className={activeTab === "bodegas" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-            <i className="fa fa-book"></i> Bodegas
+            <i className="fa fa-book mx-2"></i> Bodegas
           </Link>
         </li>
         <li>
           <Link to="/categorias" className={activeTab === "categorias" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
-            <i className="fa fa-list"></i> Categorias
+            <i className="fa fa-list mx-2"></i> Categorias
           </Link>
         </li>
         <li>
           <Link to="/proveedores" className={activeTab === "proveedores" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table"></use></svg>
+            <i class="fa-solid fa-users mx-2"></i>
             Proveedores
           </Link>
         </li>
         <li>
           <Link to="/estadoinventario" className={activeTab === "estadoinventario" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid"></use></svg>
+            <i class="fa-solid fa-wrench mx-2"></i>
             Estados Inventario
           </Link>
         </li>
         <li>
           <Link to="/personas" className={activeTab === "personas" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            <i class="fa-solid fa-user mx-2"></i>
             Personas
           </Link>
         </li>
         <li>
           <Link to="/tipoproducto" className={activeTab === "tipoproducto" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            <i class="fa-solid fa-wrench mx-2"></i>
             Tipo Producto
           </Link>
         </li>
         <li>
           <Link to="/productos" className={activeTab === "productos" ? "nav-link active" : "nav-link text-dark"}>
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            <i class="fa-solid fa-laptop mx-2"></i>
+
             Productos
+          </Link>
+        </li>
+        <li>
+          <Link to="/inventarios" className={activeTab === "inventarios" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            <i class="fa-solid fa-barcode mx-2"></i>
+            inventarios
           </Link>
         </li>
       </ul>

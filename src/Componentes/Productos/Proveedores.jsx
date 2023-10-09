@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form'
 import axios from "axios";
 
 import Swal from "sweetalert2";
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function Proveedores() {
     const inputRef = useRef();
     const [estado, setEstado] = useState(false);
@@ -230,8 +234,8 @@ export default function Proveedores() {
                                         <td>
                                             {item.telefono}
                                         </td>
-                                        <td>{item.fecha_creacion}</td>
-                                        <td>{item.fecha_actualizacion}</td>
+                                        <td>{formatearFecha( item.fecha_creacion)}</td>
+                                        <td>{formatearFecha(item.fecha_actualizacion)}</td>
                                         <td><button onClick={eliminar} data-id={item.id_proveedor} className="btn"><i className="fa fa-trash text-danger"></i></button></td>
                                         <td><button onClick={modaleditar} data-id={item.id_proveedor} data-nombre={item.nombre_proveedor} data-correo={item.correo} data-telefono={item.telefono} data-bs-toggle="modal" data-bs-target="#modalactualizar" className="btn"><i className="fa fa-edit text-primary"></i></button></td>
                                     </tr>

@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function Personas() {
     const [data, setData] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -185,6 +189,8 @@ export default function Personas() {
                             <th>Apellidos</th>
                             <th>Carrera</th>
                             <th>Género</th>
+                            <th>Creación</th>
+                            <th>Última Actualización</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -197,6 +203,8 @@ export default function Personas() {
                                 <td>{item.apellidos}</td>
                                 <td>{item.carrera}</td>
                                 <td>{item.genero}</td>
+                                <td>{formatearFecha(item.fecha_creacion)}</td>
+                                <td>{formatearFecha(item.fecha_actualizacion) }</td>
                                 <td><Button variant="primary" data-rut={item.rut} data-nombres={item.nombres} data-apellidos={item.apellidos} data-carrera={item.carrera} data-genero={item.genero} onClick={ModalEdit}><i className="fa fa-edit"></i></Button></td>
                                 <td><button className="btn" onClick={Delete} data-rut={item.rut}><i className="fa fa-trash text-danger"></i></button></td>
                             </tr>

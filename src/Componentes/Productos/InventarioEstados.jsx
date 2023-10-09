@@ -3,6 +3,10 @@ import { useEffect, useState,useRef } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
+import { format } from 'date-fns';
+function formatearFecha(fecha) {
+    return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
+}
 export default function InventarioEstados() {
     const [showModal, setShowModal] = useState(false);
 
@@ -161,8 +165,8 @@ export default function InventarioEstados() {
                             <tr>
                                 <td>{item.id_inventario_estado}</td>
                                 <td>{item.nombre_estado_inventario}</td>
-                                <td>{item.fecha_creacion}</td>
-                                <td>{item.fecha_actualizacion}</td>
+                                <td>{formatearFecha(item.fecha_creacion) }</td>
+                                <td>{formatearFecha(item.fecha_actualizacion)}</td>
                                 <td>
                                     <Button variant="primary" onClick={Editar} data-id={item.id_inventario_estado} data-nombre={item.nombre_estado_inventario}>
                                         <i className="fa fa-edit"></i>
