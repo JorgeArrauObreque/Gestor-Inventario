@@ -71,6 +71,13 @@ export default function Sidebar() {
             inventarios
           </Link>
         </li>
+        <li>
+          <Link to="/prestamos" className={activeTab === "prestamos" ? "nav-link active" : "nav-link text-dark"}>
+            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+            <i class="fa-solid fa-barcode mx-2"></i>
+            Prestamos
+          </Link>
+        </li>
       </ul>
     </div>
   );

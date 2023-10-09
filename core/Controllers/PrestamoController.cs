@@ -54,7 +54,7 @@ namespace gestion_inventario.Controllers
                 query.rut = prestamo.rut;
                 query.entregado = false;
                 query.user = prestamo.user;
-                query.fecha_plazo = prestamo.fecha_plazo;
+                query.fecha_plazo = new DateTime(prestamo.fecha_plazo.Year,prestamo.fecha_plazo.Month, prestamo.fecha_plazo.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);                
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();
                 return Ok();

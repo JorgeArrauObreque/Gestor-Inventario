@@ -138,12 +138,12 @@ export default function TipoProducto() {
                     <div className="col-xxl-3">
                         <label htmlFor="">ID</label>
                         <input type="text" name="" className="form-control"  id="" {...register('id_tipo_producto',{required:true})} />
-                        {errors.id_inventario_estado && (<span className="text-danger">*Campo requerido</span>)}
+                        {errors.id_tipo_producto && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                     <div className="col-xxl-3">
                         <label htmlFor="">Nombre</label>
                         <input type="text" name="" className="form-control" id="" {...register('nombre_tipo_producto',{required:true})} />
-                        {errors.nombre_inventario_estado && (<span className="text-danger">*Campo requerido</span>)}
+                        {errors.nombre_tipo_producto && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                 </div>
             </form>

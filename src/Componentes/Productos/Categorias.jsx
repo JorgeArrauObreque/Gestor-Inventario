@@ -9,6 +9,8 @@ function formatearFecha(fecha) {
 }
 export default function Categorias() {
     const [showModal, setShowModal] = useState(false);
+   
+   
 
     const handleShowModal = () => {
         setShowModal(true);
@@ -26,8 +28,13 @@ export default function Categorias() {
         "id_categoria": "",
         "nombre_categoria": ""
     });
-    const GetData = () => {
-        axios.get("http://localhost:5136/api/Categorias").then(response => {
+    const GetData = (token) => {
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+          };
+        axios.get("http://localhost:5136/api/Categorias",requestOptions).then(response => {
             setData(response.data);
         }).catch(ex => {
             console.log(ex);
@@ -84,7 +91,17 @@ export default function Categorias() {
         setCategoria({ ...categoria, "nombre_categoria": nombre })
     }
     useEffect(() => {
-        GetData();
+        axios.post("http://localhost:5136/api/Accounts/login","nada",{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(response=>{
+            
+            console.log(response.data.token);
+            GetData(response.data.token);
+        })
+        
+   
     }, [])
     const Editar = (event)=>{
         let id = event.currentTarget.getAttribute("data-id");

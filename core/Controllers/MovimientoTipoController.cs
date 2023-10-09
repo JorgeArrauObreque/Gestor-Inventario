@@ -67,7 +67,7 @@ namespace gestion_inventario.Controllers
                 if (query == null) return NotFound();
                 query.id_movimiento_tipo = movimiento_tipo.id_movimiento_tipo;
                 query.nombre_movimiento_tipo = movimiento_tipo.nombre_movimiento_tipo;
-                query.fecha_creacion = DateTime.Now;
+
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();
                 return Ok();

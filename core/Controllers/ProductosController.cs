@@ -63,7 +63,7 @@ namespace gestion_inventario.Controllers
                 var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
                 if (query == null) return NotFound();
                 query.id_proveedor = producto.id_proveedor;
-                query.fecha_creacion = DateTime.Now;
+
                 query.descripcion = producto.descripcion;
                 query.fecha_actualizacion = DateTime.Now;
                 query.nombre_producto = producto.nombre_producto;

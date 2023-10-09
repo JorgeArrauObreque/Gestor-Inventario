@@ -77,7 +77,7 @@ namespace gestion_inventario.Controllers
                 query.nombre_proveedor = proveedor.nombre_proveedor;
                 query.correo = proveedor.correo;
                 query.telefono = proveedor.telefono;
-                query.fecha_creacion = DateTime.Now;
+    
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();
                 return Ok();

@@ -73,7 +73,6 @@ namespace gestion_inventario.Controllers
                 query.carrera = persona.carrera;
                 query.genero = persona.genero;
                 query.fecha_actualizacion = DateTime.Now;
-                query.fecha_creacion = DateTime.Now;
                 context.SaveChanges();
                 return Ok();
             }

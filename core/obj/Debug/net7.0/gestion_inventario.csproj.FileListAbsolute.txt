@@ -78,3 +78,4 @@ C:\Users\nacho\Documents\GitHub\Gestor-Inventario\core\bin\Debug\net7.0\Microsof
 C:\Users\nacho\Documents\GitHub\Gestor-Inventario\core\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\nacho\Documents\GitHub\Gestor-Inventario\core\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\nacho\Documents\GitHub\Gestor-Inventario\core\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\nacho\Documents\GitHub\Gestor-Inventario\core\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

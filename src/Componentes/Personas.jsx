@@ -168,7 +168,12 @@ export default function Personas() {
                 <div className="row justify-content-center">
                     <div className="col-xxl-4">
                         <label htmlFor="">genero</label>
-                        <input type="text" className="form-control" {...register('genero', { required: true })} />
+                        
+                        <select name="" className="form-control" id="" {...register('genero', { required: true })}>
+                            <option value="" selected>seleccione género</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
                         {errors.genero && <span className="text-danger">*Campo requerido</span>}
                     </div>
                     <div className="col-xxl-4">

@@ -18,6 +18,8 @@ namespace gestion_inventario.Models
         public DbSet<Producto> productos { get; set; }
         public DbSet<Proveedor> proveedores { get; set; }
         public DbSet<Persona> personas { get; set; }
+        public DbSet<Usuario> usuariosSistema { get; set; }
+        public DbSet<Rol> roles { get; set; }
         public DbContextInventario(DbContextOptions<DbContextInventario> options):base(options) { }
         public DbContextInventario() { }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -36,6 +38,7 @@ namespace gestion_inventario.Models
             modelBuilder.Entity<PrestamoDetalle>().HasOne(r => r.prestamoNavigation).WithMany(r => r.prestamo_detalles).HasForeignKey(r => r.id_prestamo);
             modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.movimientoTipoNavigation).WithMany(r => r.historicos).HasForeignKey(r => r.id_tipo_movimiento);
             modelBuilder.Entity<Prestamo>().HasOne(r => r.personaNavigation).WithMany(r => r.prestamos).HasForeignKey(r => r.rut);
+            modelBuilder.Entity<Usuario>().HasOne(r => r.rolNavigation).WithMany(r => r.Usuarios).HasForeignKey(r => r.id_rol);
             base.OnModelCreating(modelBuilder);
         }
     }

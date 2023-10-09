@@ -15,8 +15,9 @@ import Productos from './Componentes/Productos/Productos';
 import Inventario from './Componentes/Productos/Inventario';
 import Login from './Componentes/Login';
 import React, { useState } from 'react';
+import Prestamos from './Componentes/Productos/Prestamos';
 function App() {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   return (
     <>
 
@@ -41,6 +42,7 @@ function App() {
                <Route path='personas' element={<Personas />} />
                <Route path='productos' element={<Productos />} />
                <Route path='inventarios' element={<Inventario />} />
+               <Route path='prestamos' element={<Prestamos />} />
              </Routes>
            </div>
          </div>

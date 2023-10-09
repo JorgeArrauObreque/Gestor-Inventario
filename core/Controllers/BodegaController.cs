@@ -1,5 +1,6 @@
 ﻿using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class BodegaController : ControllerBase
     {
         [HttpGet]

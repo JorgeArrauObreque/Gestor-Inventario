@@ -2,18 +2,54 @@
 using Microsoft.AspNetCore.Mvc;
 using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CategoriasController : ControllerBase
     {
         [HttpGet]
+        [Authorize]
         public List<Categoria> Get_all()
         {
+
             using (DbContextInventario context = new DbContextInventario())
             {
+                var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
+                var token = authorizationHeader?.Split(" ").LastOrDefault(); // Obtén el último segmento después del espacio en blanco (Bearer)
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    try
+                    {
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var jwtToken = tokenHandler.ReadJwtToken(token);
+
+                        // Obtén las reclamaciones del token como una colección de objetos Claim
+                        var claims = jwtToken.Claims.ToList();
+
+                        // Ahora puedes acceder a las reclamaciones según tus necesidades
+                        foreach (var claim in claims)
+                        {
+                            // Accede a las propiedades del claim, como Type y Value
+                            var claimType = claim.Type;
+                            var claimValue = claim.Value;
+
+                            // Usa 'claimType' y 'claimValue' según tus necesidades
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Maneja la excepción si el token no es válido
+                    }
+                }
                 return context.categorias.ToList();
             }
         }
