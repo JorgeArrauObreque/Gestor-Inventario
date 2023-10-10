@@ -17,53 +17,56 @@ import Inventario from './Componentes/Productos/Inventario';
 import Login from './Componentes/Login';
 import React, { useState } from 'react';
 import Prestamos from './Componentes/Productos/Prestamos';
-export const userContext= React.createContext();  
+
+
+export const userContext = React.createContext();
+export const SetUserContext = React.createContext();
+
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  
-  
-  
 
-
-  const [user,setUser] = useState(null);
+  const [user, setUser] = useState({ "user": "sad" });
   return (
     <>
 
-    <userContext.Provider value={user}>
-    <BrowserRouter>
-        {user ? (
-          <>
-           <Navbar />  
-           <div className='d-flex'>
-           
-           <div className='col-xxl-2 col-xl-3'>
-             <Sidebar />
-           </div>
-           <div className='col p-4 mt-4'>
-             
-             <Routes>
-               <Route path='proveedores' element={<Proveedores />} />
-               <Route path='estadoinventario' element={<InventarioEstados />} />
-               <Route path='bodegas' element={<Bodegas />} />
-               <Route path='tipoproducto' element={<TipoProducto />} />
-               <Route path='categorias' element={<Categorias />} />
-               <Route path='personas' element={<Personas />} />
-               <Route path='productos' element={<Productos />} />
-               <Route path='inventarios' element={<Inventario />} />
-               <Route path='prestamos' element={<Prestamos />} />
-             </Routes>
-           </div>
-         </div>
-          </>
-     
-        ) : (
-          <Routes>
-          <Route path='login' element={<Login setAuthenticated={setAuthenticated} />} />
-          <Route path='*' element={<Navigate to='/login' />} />
-        </Routes>
-        )}
-      </BrowserRouter>
-    </userContext.Provider>
+      <userContext.Provider value={user}>
+        <SetUserContext.Provider value={setUser}>
+          <BrowserRouter>
+            {user ? (
+              <>
+                <Navbar />
+                <div className='d-flex'>
+
+                  <div className='col-xxl-2 col-xl-3'>
+                    <Sidebar />
+                  </div>
+                  <div className='col p-4 mt-4'>
+
+                    <Routes>
+                      <Route path='proveedores' element={<Proveedores />} />
+                      <Route path='estadoinventario' element={<InventarioEstados />} />
+                      <Route path='bodegas' element={<Bodegas />} />
+                      <Route path='tipoproducto' element={<TipoProducto />} />
+                      <Route path='categorias' element={<Categorias />} />
+                      <Route path='personas' element={<Personas />} />
+                      <Route path='productos' element={<Productos />} />
+                      <Route path='inventarios' element={<Inventario />} />
+                      <Route path='prestamos' element={<Prestamos />} />
+                    </Routes>
+                  </div>
+                </div>
+              </>
+
+            ) : (
+              <Routes>
+                <Route path='login' element={<Login setAuthenticated={setAuthenticated} />} />
+                <Route path='*' element={<Navigate to='/login' />} />
+              </Routes>
+            )}
+          </BrowserRouter>
+        </SetUserContext.Provider>
+
+      </userContext.Provider>
 
     </>
 

@@ -1,10 +1,13 @@
 import axios from "axios";
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { useForm } from 'react-hook-form'
 import Swal from "sweetalert2";
+import { SetUserContext,userContext } from "../App";
 export default function Login() {
 
     const { register, reset, handleSubmit,formState:{errors} } = useForm();
+    const cambiarusuario =  useContext(SetUserContext);
+    const getuser = useContext(userContext);
     const onSubmit = (data)=>{
         const credenciales = {
             "Username":data.username,
@@ -74,7 +77,7 @@ export default function Login() {
 
                                     <div class="col-md-6 d-flex justify-content-center">
 
-                                        <a href="#!">Forgot password?</a>
+                                        <a href="#!">Forgot password?</a> 
                                     </div>
                                 </div>
 

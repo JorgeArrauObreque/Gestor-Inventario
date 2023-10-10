@@ -1,13 +1,16 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef,useContext } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
+import { SetUserContext,userContext } from "../../App";
 import { format } from 'date-fns';
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
 export default function Bodegas() {
+    const cambiarusuario =  useContext(SetUserContext);
+    const getuser = useContext(userContext);
     useEffect(() => {
         GetData();
     }, [])
@@ -123,7 +126,7 @@ export default function Bodegas() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row justify-content-center">
                     <div className="col-xxl-5">
-                        <h1>Bodegas</h1>
+                        <h1>Bodegas</h1>{getuser.user}
                     </div>
                     <div className="col-xxl-1">
                         <button type="submit" className="btn btn-primary">Guardar</button>
