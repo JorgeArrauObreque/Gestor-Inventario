@@ -5,7 +5,8 @@ import Navbar from './Componentes/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import InventarioEstados from './Componentes/Productos/InventarioEstados';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
 import Proveedores from './Componentes/Productos/Proveedores';
 import Bodegas from './Componentes/Productos/Bodegas';
 import TipoProducto from './Componentes/Productos/TipoProducto';
@@ -16,14 +17,21 @@ import Inventario from './Componentes/Productos/Inventario';
 import Login from './Componentes/Login';
 import React, { useState } from 'react';
 import Prestamos from './Componentes/Productos/Prestamos';
+export const userContext= React.createContext();  
 function App() {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  
+  
+  
+
+
+  const [user,setUser] = useState(null);
   return (
     <>
 
-
-      <BrowserRouter>
-        {authenticated ? (
+    <userContext.Provider value={user}>
+    <BrowserRouter>
+        {user ? (
           <>
            <Navbar />  
            <div className='d-flex'>
@@ -50,10 +58,13 @@ function App() {
      
         ) : (
           <Routes>
-            <Route path='login' element={<Login setAuthenticated={setAuthenticated} />} />
-          </Routes>
+          <Route path='login' element={<Login setAuthenticated={setAuthenticated} />} />
+          <Route path='*' element={<Navigate to='/login' />} />
+        </Routes>
         )}
       </BrowserRouter>
+    </userContext.Provider>
+
     </>
 
 

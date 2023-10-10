@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState,useRef,useContext } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
+import { userContext } from "../../App";
 import { format } from 'date-fns';
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
 export default function Categorias() {
     const [showModal, setShowModal] = useState(false);
-   
+    const user = useContext(userContext);
    
 
     const handleShowModal = () => {
