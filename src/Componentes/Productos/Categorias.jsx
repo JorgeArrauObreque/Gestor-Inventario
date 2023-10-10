@@ -11,7 +11,7 @@ function formatearFecha(fecha) {
 export default function Categorias() {
     const [showModal, setShowModal] = useState(false);
     const user = useContext(userContext);
-   
+    console.log(user);
 
     const handleShowModal = () => {
         setShowModal(true);

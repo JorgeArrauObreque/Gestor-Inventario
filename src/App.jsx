@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import InventarioEstados from './Componentes/Productos/InventarioEstados';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
 import Proveedores from './Componentes/Productos/Proveedores';
 import Bodegas from './Componentes/Productos/Bodegas';
 import TipoProducto from './Componentes/Productos/TipoProducto';
@@ -24,8 +24,24 @@ export const SetUserContext = React.createContext();
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState(null); // Inicializado a null
 
-  const [user, setUser] = useState({ "user": "sad" });
+  // Recuperar el usuario de localStorage al cargar la aplicación
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  // Guardar el usuario en localStorage cuando cambie
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
   return (
     <>
 

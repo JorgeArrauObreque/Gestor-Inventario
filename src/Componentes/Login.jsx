@@ -8,12 +8,13 @@ export default function Login() {
     const { register, reset, handleSubmit,formState:{errors} } = useForm();
     const cambiarusuario =  useContext(SetUserContext);
     const getuser = useContext(userContext);
+    console.log(getuser);
     const onSubmit = (data)=>{
         const credenciales = {
             "Username":data.username,
             "PasswordHash":data.password,
         }
-        console.log(credenciales);
+
         axios.post("http://localhost:5136/api/Accounts/login",credenciales,{
             headers: {
                 "Content-Type": "application/json",
@@ -22,6 +23,8 @@ export default function Login() {
             console.log(response.data.user);
             console.log(response.data.token);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("user",response.data.user);
+            cambiarusuario(response.data.user);
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
                 toast: true, // Activa el modo Toast
