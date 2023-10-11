@@ -8,7 +8,7 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class BodegaController : ControllerBase
     {
         [HttpGet]

@@ -3,14 +3,13 @@ import { useEffect, useState, useRef,useContext } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
-import { SetUserContext,userContext } from "../../App";
+import { UserProvider, useUser } from '../../UserContext';  
 import { format } from 'date-fns';
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
 export default function Bodegas() {
-    const cambiarusuario =  useContext(SetUserContext);
-    const getuser = useContext(userContext);
+
     useEffect(() => {
         GetData();
     }, [])
@@ -30,7 +29,13 @@ export default function Bodegas() {
         "direccion": ""
     });
     const GetData = () => {
-        axios.get("http://localhost:5136/api/Bodega").then(response => {
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+          };
+        axios.get("http://localhost:5136/api/Bodega",requestOptions).then(response => {
             setData(response.data);
             console.log(response.data);
         }).catch(ex => {
@@ -48,7 +53,13 @@ export default function Bodegas() {
     }
     const Delete = (event) => {
         const id_bodega = event.currentTarget.getAttribute("data-id");
-        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`).then(() => {
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+          };
+        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`,requestOptions).then(() => {
             GetData();
             Swal.fire({
                 position: 'top-end',
@@ -68,7 +79,13 @@ export default function Bodegas() {
             'id_bodega': bodega.id_bodega,
             'direccion': bodega.direccion
         };
-        axios.put("http://localhost:5136/api/Bodega/", bodega_guardar).then(
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+          };
+        axios.put("http://localhost:5136/api/Bodega/", bodega_guardar,requestOptions).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -105,9 +122,11 @@ export default function Bodegas() {
             'id_bodega': data.id_bodega,
             'direccion': data.direccion
         };
+        let token = localStorage.getItem("token");
         axios.post('http://localhost:5136/api/Bodega/', inventario_estado_guardar, {
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             },
         }).then((result) => {
             Swal.fire({
@@ -126,7 +145,9 @@ export default function Bodegas() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row justify-content-center">
                     <div className="col-xxl-5">
-                        <h1>Bodegas</h1>{getuser.user}
+                        <h1>Bodegas</h1>
+                 
+
                     </div>
                     <div className="col-xxl-1">
                         <button type="submit" className="btn btn-primary">Guardar</button>

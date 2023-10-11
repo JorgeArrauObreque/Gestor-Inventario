@@ -12,11 +12,11 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class CategoriasController : ControllerBase
     {
         [HttpGet]
-        [Authorize]
+      
         public List<Categoria> Get_all()
         {
 

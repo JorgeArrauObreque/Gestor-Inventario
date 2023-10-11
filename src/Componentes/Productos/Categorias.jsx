@@ -5,17 +5,17 @@ import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
 import { userContext } from "../../App";
 import { format } from 'date-fns';
+
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
 export default function Categorias() {
     const [showModal, setShowModal] = useState(false);
-    const user = useContext(userContext);
-    console.log(user);
 
     const handleShowModal = () => {
         setShowModal(true);
     };
+  
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -51,6 +51,7 @@ export default function Categorias() {
             nombre_categoria: ''
         });
     }
+    
     const Delete = (event) => {
         const id_categoria = event.currentTarget.getAttribute("data-id");
         axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`).then(()=>{
@@ -131,10 +132,11 @@ export default function Categorias() {
     }
     return (<>
         <div className="container">
+           
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row justify-content-center">
                 <div className="col-xxl-5">
-                    <h1>Categorías</h1>
+                    <h1>Categorías</h1> 
                 </div>
                 <div className="col-xxl-1">
                     <button type="submit" className="btn btn-primary">Guardar</button>
