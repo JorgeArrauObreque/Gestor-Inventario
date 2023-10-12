@@ -25,6 +25,8 @@ namespace gestion_inventario.Models
         [Required]
         public int id_rol { get; set; }
         public Rol rolNavigation { get; set; }
+        public List<Prestamo> prestamos { get; set; }
+        public List<HistoricoMovimiento> historicos { get; set; }
 
     }
 }

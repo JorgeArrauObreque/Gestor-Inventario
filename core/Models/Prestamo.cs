@@ -8,7 +8,8 @@ namespace gestion_inventario.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_prestamo{ get; set; }
-        public string user { get; set; }
+        public long id_user { get; set; }
+        public Usuario userNavegation { get; set; }
         public string rut { get; set; }
         [NotMapped]
         public Persona personaNavigation { get; set; }

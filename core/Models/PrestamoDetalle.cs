@@ -9,7 +9,7 @@ namespace gestion_inventario.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_prestamo_detalle { get; set; }
         [Required]
-        public long id_inventario { get; set; }
+        public string id_inventario { get; set; }
         [NotMapped]
         public Inventario inventarioNavigation { get; set; }
         [Required]

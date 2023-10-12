@@ -54,7 +54,7 @@ namespace gestion_inventario.Controllers
                 historico.comentarios = historicoMovimiento.comentarios;
                 historico.fecha_creacion = DateTime.Now;
                 historico.fecha_actualizacion = DateTime.Now;
-                historico.user = "user";
+                historico.id_user = 1;
                 context.historico_movimientos.Add(historico);
                 context.SaveChanges();
                 return Ok();
@@ -70,7 +70,7 @@ namespace gestion_inventario.Controllers
                 query.comentarios = historicoMovimiento.comentarios;
                 query.id_tipo_movimiento = historicoMovimiento.id_tipo_movimiento;
                 query.id_inventario = historicoMovimiento.id_inventario;
-                query.user = historicoMovimiento.user;
+                query.id_user = 1;
                 context.SaveChanges();
                 return Ok();
             }

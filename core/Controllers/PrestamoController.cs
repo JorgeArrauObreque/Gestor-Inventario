@@ -37,7 +37,7 @@ namespace gestion_inventario.Controllers
                 new_prestamo.rut = prestamo.rut;
                 new_prestamo.entregado = false;
                 new_prestamo.fecha_plazo = prestamo.fecha_plazo;
-                new_prestamo.user = prestamo.user;
+                new_prestamo.id_user = 1;
                 new_prestamo.fecha_actualizacion = DateTime.Now;
                 new_prestamo.fecha_creacion = DateTime.Now;
                 context.Add(new_prestamo);
@@ -53,7 +53,7 @@ namespace gestion_inventario.Controllers
                 if (query != null) return NotFound();
                 query.rut = prestamo.rut;
                 query.entregado = false;
-                query.user = prestamo.user;
+                query.id_user = 1;
                 query.fecha_plazo = new DateTime(prestamo.fecha_plazo.Year,prestamo.fecha_plazo.Month, prestamo.fecha_plazo.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);                
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();

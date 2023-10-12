@@ -26,5 +26,8 @@ namespace gestion_inventario.Models
         public InventarioEstado InventarioEstadoNavigation { get; set; }
         public string user { get; set; }
 
+        public List<PrestamoDetalle> prestamos_detalle { get; set; }
+        public List<HistoricoMovimiento> historicos { get; set; }
+
     }
 }

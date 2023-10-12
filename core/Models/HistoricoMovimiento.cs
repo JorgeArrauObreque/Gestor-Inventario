@@ -13,8 +13,8 @@ namespace gestion_inventario.Models
         [NotMapped]
         public MovimientoTipo movimientoTipoNavigation { get; set; }
         [Required]
-        public int id_inventario { get; set; }
-        [NotMapped]
+        public string id_inventario { get; set; }
+      
         public Inventario inventarioNavigation { get; set; }
         [Required]
         [MaxLength(150)]
@@ -22,6 +22,8 @@ namespace gestion_inventario.Models
         public string comentarios { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime fecha_actualizacion { get; set; }
-        public string user { get; set; }
+        public long id_user { get; set; }
+
+        public Usuario usuarioNavegation { get; set; }
     }
 }

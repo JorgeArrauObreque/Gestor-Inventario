@@ -63,6 +63,7 @@ namespace gestion_inventario.Controllers
                 return context.usuariosSistema.Where(r => r.username == usuario.Username && r.password == usuario.PasswordHash).Any();
             }
         }
+        [HttpGet("all_users")]
         public List<Usuario> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())

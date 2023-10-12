@@ -1,3 +1,4 @@
+using gestion_inventario.Models;
 using System.ComponentModel.DataAnnotations;
 namespace gestion_inventario.ViewModels{
     public class HistoricoMovimientoViewModel{
@@ -13,6 +14,6 @@ namespace gestion_inventario.ViewModels{
         public string comentarios { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime fecha_actualizacion { get; set; }
-        public string user { get; set; }
+        public string id_user { get; set; }
     }
 }

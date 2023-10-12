@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gestion_inventario.Models;
 
@@ -11,9 +12,11 @@ using gestion_inventario.Models;
 namespace gestion_inventario.Migrations
 {
     [DbContext(typeof(DbContextInventario))]
-    partial class DbContextInventarioModelSnapshot : ModelSnapshot
+    [Migration("20231012170503_addtabletipopersonafixerrors")]
+    partial class addtabletipopersonafixerrors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,23 +86,19 @@ namespace gestion_inventario.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("id_inventario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("id_inventario")
+                        .HasColumnType("int");
 
                     b.Property<int>("id_tipo_movimiento")
                         .HasColumnType("int");
 
-                    b.Property<long>("id_user")
-                        .HasColumnType("bigint");
+                    b.Property<string>("user")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id_movimiento");
 
-                    b.HasIndex("id_inventario");
-
                     b.HasIndex("id_tipo_movimiento");
-
-                    b.HasIndex("id_user");
 
                     b.ToTable("historico_movimientos");
                 });
@@ -248,16 +247,15 @@ namespace gestion_inventario.Migrations
                     b.Property<DateTime>("fecha_plazo")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("id_user")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("rut")
                         .IsRequired()
                         .HasColumnType("varchar(15)");
 
-                    b.HasKey("id_prestamo");
+                    b.Property<string>("user")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("id_user");
+                    b.HasKey("id_prestamo");
 
                     b.HasIndex("rut");
 
@@ -272,16 +270,13 @@ namespace gestion_inventario.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_prestamo_detalle"));
 
-                    b.Property<string>("id_inventario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("id_inventario")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("id_prestamo")
                         .HasColumnType("bigint");
 
                     b.HasKey("id_prestamo_detalle");
-
-                    b.HasIndex("id_inventario");
 
                     b.HasIndex("id_prestamo");
 
@@ -403,7 +398,9 @@ namespace gestion_inventario.Migrations
 
                     b.Property<string>("nombre_tipo_persona")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("varchar(50)");
 
                     b.HasKey("id_tipo_persona");
 
@@ -471,29 +468,13 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.HistoricoMovimiento", b =>
                 {
-                    b.HasOne("gestion_inventario.Models.Inventario", "inventarioNavigation")
-                        .WithMany("historicos")
-                        .HasForeignKey("id_inventario")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("gestion_inventario.Models.MovimientoTipo", "movimientoTipoNavigation")
                         .WithMany("historicos")
                         .HasForeignKey("id_tipo_movimiento")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("gestion_inventario.Models.Usuario", "usuarioNavegation")
-                        .WithMany("historicos")
-                        .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("inventarioNavigation");
-
                     b.Navigation("movimientoTipoNavigation");
-
-                    b.Navigation("usuarioNavegation");
                 });
 
             modelBuilder.Entity("gestion_inventario.Models.Inventario", b =>
@@ -536,12 +517,6 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Prestamo", b =>
                 {
-                    b.HasOne("gestion_inventario.Models.Usuario", "userNavegation")
-                        .WithMany("prestamos")
-                        .HasForeignKey("id_user")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("gestion_inventario.Models.Persona", "personaNavigation")
                         .WithMany("prestamos")
                         .HasForeignKey("rut")
@@ -549,25 +524,15 @@ namespace gestion_inventario.Migrations
                         .IsRequired();
 
                     b.Navigation("personaNavigation");
-
-                    b.Navigation("userNavegation");
                 });
 
             modelBuilder.Entity("gestion_inventario.Models.PrestamoDetalle", b =>
                 {
-                    b.HasOne("gestion_inventario.Models.Inventario", "inventarioNavigation")
-                        .WithMany("prestamos_detalle")
-                        .HasForeignKey("id_inventario")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("gestion_inventario.Models.Prestamo", "prestamoNavigation")
                         .WithMany("prestamo_detalles")
                         .HasForeignKey("id_prestamo")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("inventarioNavigation");
 
                     b.Navigation("prestamoNavigation");
                 });
@@ -620,13 +585,6 @@ namespace gestion_inventario.Migrations
                     b.Navigation("productos");
                 });
 
-            modelBuilder.Entity("gestion_inventario.Models.Inventario", b =>
-                {
-                    b.Navigation("historicos");
-
-                    b.Navigation("prestamos_detalle");
-                });
-
             modelBuilder.Entity("gestion_inventario.Models.InventarioEstado", b =>
                 {
                     b.Navigation("inventarios");
@@ -670,13 +628,6 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.TipoProducto", b =>
                 {
                     b.Navigation("productos");
-                });
-
-            modelBuilder.Entity("gestion_inventario.Models.Usuario", b =>
-                {
-                    b.Navigation("historicos");
-
-                    b.Navigation("prestamos");
                 });
 #pragma warning restore 612, 618
         }

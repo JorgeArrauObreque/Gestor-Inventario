@@ -1,9 +1,10 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace gestion_inventario.Models
 {
-    public class DbContextInventario:DbContext
+    public class DbContextInventario : DbContext
     {
         public DbSet<Categoria> categorias { get; set; }
         public DbSet<TipoProducto> tipos_producto { get; set; }
@@ -12,6 +13,7 @@ namespace gestion_inventario.Models
         public DbSet<Inventario> inventario { get; set; }
         public DbSet<InventarioEstado> inventario_estados { get; set; }
         public DbSet<MovimientoTipo> movimiento_tipos { get; set; }
+        public DbSet<TipoPersona> tipos_personas { get; set; }
         public DbSet<Persona> usuarios { get; set; }
         public DbSet<Prestamo> prestamos { get; set; }
         public DbSet<PrestamoDetalle> prestamo_detalles { get; set; }
@@ -39,6 +41,11 @@ namespace gestion_inventario.Models
             modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.movimientoTipoNavigation).WithMany(r => r.historicos).HasForeignKey(r => r.id_tipo_movimiento).OnDelete(DeleteBehavior.Restrict); ;
             modelBuilder.Entity<Prestamo>().HasOne(r => r.personaNavigation).WithMany(r => r.prestamos).HasForeignKey(r => r.rut).OnDelete(DeleteBehavior.Restrict); ;
             modelBuilder.Entity<Usuario>().HasOne(r => r.rolNavigation).WithMany(r => r.Usuarios).HasForeignKey(r => r.id_rol).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Persona>().HasOne(r => r.TipoPersonaNavegation).WithMany(r => r.personas).HasForeignKey(r => r.id_tipo_persona).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<PrestamoDetalle>().HasOne(r => r.inventarioNavigation).WithMany(r => r.prestamos_detalle).HasForeignKey(r => r.id_inventario).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.inventarioNavigation).WithMany(r => r.historicos).HasForeignKey(r => r.id_inventario).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Prestamo>().HasOne(r=>r.userNavegation).WithMany(r=>r.prestamos).HasForeignKey(r=>r.id_user).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<HistoricoMovimiento>().HasOne(r => r.usuarioNavegation).WithMany(r => r.historicos).HasForeignKey(r => r.id_user).OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);
         }
     }

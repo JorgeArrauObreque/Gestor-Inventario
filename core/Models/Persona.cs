@@ -10,6 +10,8 @@ namespace gestion_inventario.Models
         [MaxLength(15)]
         [Column(TypeName = "varchar(15)")]
         public string rut { get; set; }
+        [Required]
+        public string id_credencial { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
         [Required]
@@ -29,5 +31,8 @@ namespace gestion_inventario.Models
         [Column(TypeName = "varchar(20)")]
         public string genero { get; set; }
         public List<Prestamo> prestamos { get; set; }
+        [Required]
+        public int id_tipo_persona { get; set; }
+        public TipoPersona TipoPersonaNavegation { get; set; }
     }
 }
