@@ -54,7 +54,13 @@ export default function Categorias() {
     
     const Delete = (event) => {
         const id_categoria = event.currentTarget.getAttribute("data-id");
-        axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`).then(()=>{
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+        };
+        axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`,requestOptions).then(()=>{
             GetData();
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
@@ -74,7 +80,13 @@ export default function Categorias() {
             'id_categoria': categoria.id_categoria,
             'nombre_categoria': categoria.nombre_categoria
         };
-        axios.put("http://localhost:5136/api/Categorias/", tipo_categoria_guardar).then(
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+        };
+        axios.put("http://localhost:5136/api/Categorias/", tipo_categoria_guardar,requestOptions).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -114,9 +126,11 @@ export default function Categorias() {
             'id_categoria': data.id_categoria,
             'nombre_categoria': data.nombre_categoria
         };
+        let token = localStorage.getItem("token");
         axios.post('http://localhost:5136/api/Categorias/', categoria_guardar, {
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
             },
         }).then((result) => {
             Swal.fire({
@@ -143,7 +157,7 @@ export default function Categorias() {
                     
                 </div>
                 <div className="col-xxl-1">
-                    <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
+                    <button type="button" onClick={Clean} className="btn btn-outline-info">Limpiar</button>
                     
                 </div>
             </div>

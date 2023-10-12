@@ -154,7 +154,7 @@ export default function Bodegas() {
 
                     </div>
                     <div className="col-xxl-1">
-                        <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
+                        <button type="button" onClick={Clean} className="btn btn-outline-info">Limpiar</button>
 
                     </div>
                 </div>

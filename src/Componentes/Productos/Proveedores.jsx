@@ -146,7 +146,7 @@ export default function Proveedores() {
             <div className="row justify-content-end">
               <div className="col-xxl-2">
                 <button type="submit" className="btn btn-primary">Guardar</button>
-                <button onClick={limpiar}>Limpiar</button>
+                <button onClick={limpiar} className="btn btn-outline-info">Limpiar</button>
               </div>
             </div>
             <div className="row">
@@ -236,8 +236,9 @@ export default function Proveedores() {
                                         </td>
                                         <td>{formatearFecha( item.fecha_creacion)}</td>
                                         <td>{formatearFecha(item.fecha_actualizacion)}</td>
+                                        
+                                        <td><button onClick={modaleditar} data-id={item.id_proveedor} data-nombre={item.nombre_proveedor} data-correo={item.correo} data-telefono={item.telefono} data-bs-toggle="modal" data-bs-target="#modalactualizar" className="btn btn-primary"><i className="fa fa-edit "></i></button></td>
                                         <td><button onClick={eliminar} data-id={item.id_proveedor} className="btn"><i className="fa fa-trash text-danger"></i></button></td>
-                                        <td><button onClick={modaleditar} data-id={item.id_proveedor} data-nombre={item.nombre_proveedor} data-correo={item.correo} data-telefono={item.telefono} data-bs-toggle="modal" data-bs-target="#modalactualizar" className="btn"><i className="fa fa-edit text-primary"></i></button></td>
                                     </tr>
                                 ))}
                             </tbody>

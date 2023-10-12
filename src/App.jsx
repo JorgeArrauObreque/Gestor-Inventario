@@ -25,7 +25,7 @@ import { UserProvider, useUser } from './UserContext';  // Importa useUser desde
 
 function App() {
   const { user } = useUser();  // Usa useUser para obtener el usuario desde el contexto
-
+  console.log(user);
   return (
 
       <BrowserRouter>

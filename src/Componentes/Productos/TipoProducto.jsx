@@ -120,7 +120,7 @@ export default function TipoProducto() {
     return (<>
         <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" >
                 <div className="col-xxl-5">
                     <h1>Tipos Producto</h1>
                 </div>
@@ -129,7 +129,7 @@ export default function TipoProducto() {
                     
                 </div>
                 <div className="col-xxl-1">
-                    <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
+                    <button type="button" onClick={Clean} className="btn btn-outline-info">Limpiar</button>
                     
                 </div>
             </div>

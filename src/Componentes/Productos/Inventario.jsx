@@ -42,7 +42,13 @@ export default function Inventario() {
         });
     }
     const getBodegas = () => {
-        axios.get("http://localhost:5136/api/Bodega").then(response => {
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+        };
+        axios.get("http://localhost:5136/api/Bodega",requestOptions).then(response => {
             setBodegas(response.data);
         }).catch(ex => {
             console.log(ex);

@@ -176,9 +176,12 @@ export default function Productos() {
                 <div className="col-xxl-3">
                     <h1>Productos</h1>
                 </div>
-                <div className="col-xxl-2">
+                <div className="col-xxl-1">
                     <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="button" onClick={Clean} className="btn btn-info">Limpiar</button>
+                    
+                </div>
+                <div className="col-xxl-1">
+                <button type="button" onClick={Clean} className="btn btn-outline-info">Limpiar</button>
                 </div>
             </div>
             <div className="row justify-content-center mt-4">

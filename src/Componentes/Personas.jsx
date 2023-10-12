@@ -144,7 +144,7 @@ export default function Personas() {
                         <button type="submit" className="btn btn-primary w-100">Guardar</button>
                     </div>
                     <div className="col-xxl-1">
-                        <button type="button" onClick={Clean} className="btn btn-info w-100">Limpiar</button>
+                        <button type="button" onClick={Clean} className="btn btn-outline-info w-100">Limpiar</button>
                     </div>
                 </div>
                 <div className="row justify-content-center">
