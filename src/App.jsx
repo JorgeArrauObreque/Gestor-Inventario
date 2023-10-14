@@ -22,6 +22,7 @@ import Prestamos from './Componentes/Productos/Prestamos';
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { UserProvider, useUser } from './UserContext';  // Importa useUser desde UserContext
+import Usuarios from './Componentes/Usuario';
 
 function App() {
   const { user } = useUser();  // Usa useUser para obtener el usuario desde el contexto
@@ -47,6 +48,7 @@ function App() {
                   <Route path='productos' element={<Productos />} />
                   <Route path='inventarios' element={<Inventario />} />
                   <Route path='prestamos' element={<Prestamos />} />
+                  <Route path='Usuarios' element={<Usuarios />} />
                   <Route path='*' element={<Bodegas />} />
                 </Routes>
               </div>

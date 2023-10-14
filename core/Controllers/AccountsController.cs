@@ -1,6 +1,8 @@
 ﻿using gestion_inventario.Migrations;
 using gestion_inventario.Models;
+using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,7 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("all")]
     public class AccountsController : ControllerBase
     {
         [AllowAnonymous] // Este método está abierto para todos
@@ -68,41 +71,42 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.usuariosSistema.ToList();
+                return context.usuariosSistema.Include(r=>r.rolNavigation).ToList();
             }
         }
-        [HttpPost]
-        public ActionResult Add([FromBody] Usuario usuario)
-        {
-            using (DbContextInventario context = new DbContextInventario())
-            {
-                if (context.usuariosSistema.Where(r => r.id_user == usuario.id_user).FirstOrDefault()!=null) return BadRequest();
-                var new_usuario = new Usuario();
-                new_usuario.id_user = usuario.id_user;
-                new_usuario.email = usuario.email;
-                new_usuario.username = usuario.username;
-                new_usuario.id_rol = usuario.id_rol;
-                new_usuario.password =  usuario.password;
-                context.Add(new_usuario);
-                context.SaveChanges();
-                return Ok("Creado correctamente");
-            }
-        }
-        [HttpPut]
-        public ActionResult Update([FromBody] Usuario usuario)
-        {
-            using (DbContextInventario context = new DbContextInventario())
-            {
-                var query = context.usuariosSistema.Where(r => r.id_user == usuario.id_user).FirstOrDefault();
-                if (query == null) return NotFound();
-                query.email = usuario.email;
-                query.username = usuario.username;
-                query.id_rol = usuario.id_rol;
-                query.fecha_actualizacion = DateTime.Now;
-                context.SaveChanges();
-                return Ok("Creado correctamente");
-            }
-        }
+        //[HttpPost("add")]
+        //[Authorize]
+        //public ActionResult Add([FromBody] UsuariosViewModel usuario)
+        //{
+        //    using (DbContextInventario context = new DbContextInventario())
+        //    {
+        //        if (context.usuariosSistema.Where(r => r.id_user == usuario.id_user).FirstOrDefault()!=null) return BadRequest();
+        //        var new_usuario = new Usuario();
+        //        new_usuario.id_user = usuario.id_user;
+        //        new_usuario.email = usuario.email;
+        //        new_usuario.username = usuario.username;
+        //        new_usuario.id_rol = usuario.id_rol;
+        //        new_usuario.password =  usuario.password;
+        //        context.Add(new_usuario);
+        //        context.SaveChanges();
+        //        return Ok("Creado correctamente");
+        //    }
+        //}
+        //[HttpPut]
+        //public ActionResult Update([FromBody] UsuariosViewModel usuario)
+        //{
+        //    using (DbContextInventario context = new DbContextInventario())
+        //    {
+        //        var query = context.usuariosSistema.Where(r => r.id_user ==  usuario.id_user).FirstOrDefault();
+        //        if (query == null) return NotFound();
+        //        query.email = usuario.email;
+        //        query.username = usuario.username;
+        //        query.id_rol = usuario.id_rol;
+        //        query.fecha_actualizacion = DateTime.Now;
+        //        context.SaveChanges();
+        //        return Ok("Creado correctamente");
+        //    }
+        //}
         [HttpPost("addrol")]
         public ActionResult AddRol([FromBody] Rol rol)
         {

@@ -44,6 +44,15 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader() // Permite cualquier encabezado HTTP
     );
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("all",
+        builder => builder
+            .AllowAnyOrigin() // Permite solicitudes desde esta dirección
+            .AllowAnyMethod() // Permite cualquier método HTTP (GET, POST, etc.)
+            .AllowAnyHeader() // Permite cualquier encabezado HTTP
+    );
+});
 var port = 5000;
 
 var app = builder.Build();
@@ -55,7 +64,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowLocalhost3000");
+app.UseCors("all");
 app.UseHttpsRedirection();
 
 app.UseAuthentication(); // Agrega autenticación al pipeline
