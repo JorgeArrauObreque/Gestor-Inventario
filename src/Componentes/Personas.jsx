@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
@@ -8,6 +8,61 @@ function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
 export default function Personas() {
+    const busqueda = useRef();
+    const filterData = (event) => {
+        // Primero, intenta encontrar coincidencias en el campo "id_user"
+        let searchTerm = busqueda.current.value;
+        if (searchTerm === undefined || searchTerm === '') {
+            GetData();
+        } else {
+            const resultsByRut = data.filter((item) =>
+                item.rut.toString().includes(searchTerm)
+            );
+
+            // Si se encuentran coincidencias en "id_user", devuélvelas
+            if (resultsByRut.length > 0) {
+                setData(resultsByRut);
+                return resultsByRut;
+            }
+
+            // Si no se encuentran coincidencias en "id_user", busca en el campo "username"
+            const resultsByNombres = data.filter((item) =>
+                item.nombres.includes(searchTerm)
+            );
+
+       
+            if (resultsByNombres.length > 0) {
+                setData(resultsByNombres);
+                return resultsByNombres;
+            }
+
+
+            const resultApellidos = data.filter((item) =>
+                item.apellidos.includes(searchTerm)
+            );
+
+            
+            if (resultApellidos.length > 0) {
+                setData(resultApellidos);
+                return resultApellidos;
+            }
+            //filtrar por carrera
+            const resultCarrera = data.filter((item) =>
+            item.carrera.includes(searchTerm)
+        );
+
+        
+        if (resultCarrera.length > 0) {
+            setData(resultCarrera);
+            return resultCarrera;
+        }
+
+
+
+        }
+
+
+    };
     const [data, setData] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [showModal, setShowModal] = useState(false);
@@ -186,6 +241,9 @@ export default function Personas() {
             </form>
 
             <div className="row mt-5">
+            <div className="col-xxl-3 d-flex">
+                    <input type="text" className="form-control" placeholder="Buscar Usuario" ref={busqueda} /><button onClick={filterData} className="btn"><i className="fa fa-search"></i></button>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>

@@ -4,10 +4,13 @@ import { useUser } from '../UserContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Logo from './LogoDuoc.png'
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
   const { register, handleSubmit,formState:{errors}, reset } = useForm();
   const { setUser } = useUser();
   const [authenticated, setAuthenticated] = useState(true); // Initialize to true
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const baseurl = "http://localhost:5136/api/Accounts/login";
@@ -26,7 +29,6 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userdata", JSON.stringify(response.data.user));
       
-      
       setUser({ username: response.data.user.email, rol: response.data.user.rolNavigation.nombre_rol });
       Swal.fire({
         position: 'top-end',
@@ -36,7 +38,12 @@ function Login() {
         showConfirmButton: false,
         timer: 3000,
       });
+      
       setAuthenticated(true);
+
+      // Redirect to "/"
+      navigate("/");
+
     } catch (error) {
       console.error("An error occurred:", error);
       setAuthenticated(false);

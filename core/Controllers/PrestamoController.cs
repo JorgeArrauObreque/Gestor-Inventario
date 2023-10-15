@@ -9,7 +9,7 @@ namespace gestion_inventario.Controllers
     [ApiController]
     public class PrestamoController : ControllerBase
     {
-        [HttpGet("api/prestamo/all")]
+        [HttpGet]
         public List<Prestamo> Get_all()
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -17,7 +17,7 @@ namespace gestion_inventario.Controllers
                 return context.prestamos.ToList();
             }
         }
-        [HttpGet("api/prestamo/get_by_id")]
+        [HttpGet("{id_prestamo}")]
         public Prestamo Get_by_id(long id_prestamo)
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -30,14 +30,14 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.prestamos.Where(r => r.id_prestamo == prestamo.id_prestamo).FirstOrDefault();
+                var query = context.prestamos.Where(r => r.id_prestamo == 0).FirstOrDefault();
                 if (query != null) return NotFound();
                 Prestamo new_prestamo = new Prestamo();
-                new_prestamo.id_prestamo = prestamo.id_prestamo;
+                //new_prestamo.id_prestamo = 1;
                 new_prestamo.rut = prestamo.rut;
                 new_prestamo.entregado = false;
                 new_prestamo.fecha_plazo = prestamo.fecha_plazo;
-                new_prestamo.id_user = 1;
+                new_prestamo.id_user = 2;
                 new_prestamo.fecha_actualizacion = DateTime.Now;
                 new_prestamo.fecha_creacion = DateTime.Now;
                 context.Add(new_prestamo);
@@ -49,11 +49,11 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.prestamos.Where(r => r.id_prestamo == prestamo.id_prestamo).FirstOrDefault();
+                var query = context.prestamos.Where(r => r.id_prestamo == 1).FirstOrDefault();
                 if (query != null) return NotFound();
                 query.rut = prestamo.rut;
                 query.entregado = false;
-                query.id_user = 1;
+                query.id_user = 2;
                 query.fecha_plazo = new DateTime(prestamo.fecha_plazo.Year,prestamo.fecha_plazo.Month, prestamo.fecha_plazo.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);                
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();

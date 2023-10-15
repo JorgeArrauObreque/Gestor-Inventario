@@ -64,7 +64,7 @@ function App() {
                   <Route path='Usuarios' element={<Usuarios />} />
                   <Route path='Usuarios' element={<Usuarios />} />
                   <Route path='RegistrarActivo' element={<RegistrarActivo />} />
-                  <Route path='*' element={<Bodegas />} />
+                  {/* <Route path='*' element={<Bodegas />} /> */}
                 </Routes>
               </div>
             </div>
