@@ -23,10 +23,23 @@ import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { UserProvider, useUser } from './UserContext';  // Importa useUser desde UserContext
 import Usuarios from './Componentes/Usuario';
+import RegistrarActivo from './Componentes/Productos/RegistrarActivo';
 
 function App() {
-  const { user } = useUser();  // Usa useUser para obtener el usuario desde el contexto
+  const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
   console.log(user);
+  useEffect(() => {
+    // Intenta obtener el usuario desde el localStorage al cargar la página
+    const storedUser = localStorage.getItem('userdata');
+    // console.log("usuario");
+    console.log(storedUser);
+    if (storedUser) {
+      // Si se encuentra un usuario en el localStorage, establece el estado del usuario
+      console.log("holaaaa");
+      console.log(JSON.parse(storedUser));
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
   return (
 
       <BrowserRouter>
@@ -49,6 +62,8 @@ function App() {
                   <Route path='inventarios' element={<Inventario />} />
                   <Route path='prestamos' element={<Prestamos />} />
                   <Route path='Usuarios' element={<Usuarios />} />
+                  <Route path='Usuarios' element={<Usuarios />} />
+                  <Route path='RegistrarActivo' element={<RegistrarActivo />} />
                   <Route path='*' element={<Bodegas />} />
                 </Routes>
               </div>

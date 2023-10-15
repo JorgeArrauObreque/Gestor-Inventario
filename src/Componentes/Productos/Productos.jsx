@@ -39,7 +39,13 @@ export default function Productos() {
         }).catch(ex => console.log());
     }
     const GetCategoria = () => {
-        axios.get("http://localhost:5136/api/Categorias").then(response => {
+        let token = localStorage.getItem("token");
+        const requestOptions = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
+            },
+          };
+        axios.get("http://localhost:5136/api/Categorias",requestOptions).then(response => {
             setCategorias(response.data);
         }).catch(ex => {
             console.log(ex);

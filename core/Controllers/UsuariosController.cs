@@ -39,5 +39,34 @@ namespace gestion_inventario.Controllers
                 return StatusCode(500, "Error interno del servidor: " + ex.Message);
             }
         }
+        [HttpPost]
+        public ActionResult Add([FromBody] UsuariosViewModel usuario)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                if (context.usuariosSistema.Where(r => r.id_user == int.Parse(usuario.id_user)).FirstOrDefault() != null) return BadRequest();
+                var new_usuario = new Usuario();
+
+                new_usuario.email = usuario.email;
+                new_usuario.username = usuario.username;
+                new_usuario.id_rol = int.Parse(usuario.id_rol);
+                new_usuario.password = "123";
+                context.Add(new_usuario);
+                context.SaveChanges();
+                return Ok("Creado correctamente");
+            }
+        }
+        [HttpDelete("{id_usuario}")]
+        public ActionResult Delete(int id_usuario)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.usuariosSistema.Where(r => r.id_user == id_usuario).FirstOrDefault();
+                if (query == null) return BadRequest();
+                context.usuariosSistema.Remove(query);
+                context.SaveChanges();
+                return Ok();
+            }
+        }
     }
 }

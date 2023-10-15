@@ -24,7 +24,9 @@ function Login() {
       });
   
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", response.data.user);
+      localStorage.setItem("userdata", JSON.stringify(response.data.user));
+      
+      
       setUser({ username: response.data.user.email, rol: response.data.user.rolNavigation.nombre_rol });
       Swal.fire({
         position: 'top-end',
@@ -55,7 +57,7 @@ function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-outline mb-4">
           <input type="text" id="form2Example1" className="form-control" {...register('username',{required:true})} />
-          {errors.username && (<span>*Campo requerido</span>)}
+          {errors.username && (<span className='text-danger'>*Campo requerido</span>)}
         </div>
         <div className="form-outline mb-4">
           <input type="password" id="form2Example2" className="form-control" {...register('password',{required:true})} />

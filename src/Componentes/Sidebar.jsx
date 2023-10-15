@@ -6,10 +6,12 @@ import { useUser } from '../UserContext';
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState("bodega");
   const location = useLocation();
-  const { user } = useUser();  // Usa useUser para obtener el usuario desde el contexto
+  const { user, setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
   useEffect(() => {
     // Actualiza el estado activeTab cuando cambia la ubicación (navegación)
     const path = location.pathname;
+    const user_aux = JSON.parse(localStorage.getItem('userdata'));
+    setUser({ username: user_aux.email, rol: user_aux.rolNavigation.nombre_rol });
     setActiveTab(path.substring(1)); // Elimina el "/" inicial del pathname
   }, [location.pathname]);
 
@@ -18,9 +20,9 @@ export default function Sidebar() {
       {user.rol === "Administrador" ? (
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <Link to="/Activo" className={activeTab === "Activo" ? "nav-link active" : "nav-link text-dark"}>
+            <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-              <i className="fa fa-book mx-2"></i> Registrar Activo
+              <i className="fa fa-book mx-2"></i> Registrar Activo Pañol
             </Link>
           </li>
 
@@ -92,7 +94,7 @@ export default function Sidebar() {
                   <li>
                     <Link to="/usuarios" className={activeTab === "usuarios" ? "nav-link active" : "nav-link text-dark"}>
                       <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-                      <i class="fa-solid fa-barcode mx-2"></i>
+                      <i class="fa-solid fa-users mx-2"></i>
                       Usuarios
                     </Link>
                   </li>
@@ -110,11 +112,10 @@ export default function Sidebar() {
         </ul>
       ) : (
         <ul className="nav nav-pills flex-column mb-auto">
-          <li>
-            <Link to="/inventarios" className={activeTab === "inventarios" ? "nav-link active" : "nav-link text-dark"}>
-              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-              <i class="fa-solid fa-barcode mx-2"></i>
-              inventarios
+           <li className="nav-item">
+            <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
+              <i className="fa fa-book mx-2"></i> Registrar Activo Pañol
             </Link>
           </li>
         </ul>
