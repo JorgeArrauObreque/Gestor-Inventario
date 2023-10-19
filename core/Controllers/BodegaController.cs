@@ -8,7 +8,7 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class BodegaController : ControllerBase
     {
         [HttpGet]
@@ -46,6 +46,7 @@ namespace gestion_inventario.Controllers
                 {
                     var query = context.bodegas.Where(r=>r.id_bodega == bodega.id_bodega).FirstOrDefault();
                     if (query == null) return NotFound();
+                    query.nombre_bodega = bodega.nombre_bodega;
                     query.id_bodega = bodega.id_bodega;
                     query.direccion = bodega.direccion;
                     query.fecha_actualizacion = DateTime.Now;
@@ -64,6 +65,7 @@ namespace gestion_inventario.Controllers
                 if (query != null) return BadRequest();
                 Bodega new_bodega = new Bodega();
                 new_bodega.id_bodega = bodega.id_bodega;
+                new_bodega.nombre_bodega = bodega.nombre_bodega;
                 new_bodega.direccion = bodega.direccion;
                 new_bodega.fecha_creacion = DateTime.Now;
                 new_bodega.fecha_actualizacion = DateTime.Now;

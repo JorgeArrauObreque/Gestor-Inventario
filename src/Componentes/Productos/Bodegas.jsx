@@ -27,6 +27,7 @@ export default function Bodegas() {
 
     const [bodega, setBodega] = useState({
         "id_bodega": "",
+        "nombre_bodega":"",
         "direccion": ""
     });
     const GetData = () => {
@@ -42,6 +43,7 @@ export default function Bodegas() {
         // También puedes usar la función reset de react-hook-form para reiniciar el formulario
         reset({
             id_bodega: '',
+            nombre_bodega:"",
             direccion: ''
         });
     }
@@ -85,6 +87,7 @@ export default function Bodegas() {
     
         const bodega_guardar = {
             'id_bodega': bodega.id_bodega,
+            "nombre_bodega":bodega.nombre_bodega,
             'direccion': bodega.direccion
         };
 
@@ -104,8 +107,9 @@ export default function Bodegas() {
         ).catch(ex => console.log(ex));
     }
     const onChangeNombre = (event) => {
-        let nombre = event.target.value;
-        setBodega({ ...bodega, "direccion": nombre })
+        // let nombre = event.target.value;
+        const {name,value}  = event.target
+        setBodega({ ...bodega, [name]: value })
     }
     useEffect(() => {
         GetData();
@@ -123,6 +127,7 @@ export default function Bodegas() {
     const onSubmit = (data) => {
         const inventario_estado_guardar = {
             'id_bodega': data.id_bodega,
+            'nombre_bodega': data.nombre_bodega,
             'direccion': data.direccion
         };
         axios.post('http://localhost:5136/api/Bodega/', inventario_estado_guardar).then((result) => {
@@ -160,12 +165,17 @@ export default function Bodegas() {
                 <div className="row justify-content-center">
                     <div className="col-xxl-3">
                         <label htmlFor="">ID</label>
-                        <input type="text" name="" className="form-control" id="" {...register('id_bodega', { required: true })} />
+                        <input type="text" name="id_bodega" className="form-control" id="" {...register('id_bodega', { required: true })} />
                         {errors.id_bodega && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                     <div className="col-xxl-3">
-                        <label htmlFor="">Nombre</label>
-                        <input type="text" name="" className="form-control" id="" {...register('direccion', { required: true })} />
+                        <label htmlFor="">Nombre Bodega</label>
+                        <input type="text" name="nombre_bodega" className="form-control" id="" {...register('nombre_bodega', { required: true })} />
+                        {errors.id_bodega && (<span className="text-danger">*Campo requerido</span>)}
+                    </div>
+                    <div className="col-xxl-3">
+                        <label htmlFor="">Dirección</label>
+                        <input type="text" name="direccion" className="form-control" id="" {...register('direccion', { required: true })} />
                         {errors.direccion && (<span className="text-danger">*Campo requerido</span>)}
                     </div>
                 </div>
@@ -176,7 +186,8 @@ export default function Bodegas() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>nombre</th>
+                            <th>dirección</th>
                             <th>fecha creación</th>
                             <th>fecha Actualización</th>
                             <th></th>
@@ -187,6 +198,7 @@ export default function Bodegas() {
                         {data.map((item, key) => (
                             <tr key={item.id_bodega}>
                                 <td>{item.id_bodega}</td>
+                                <td>{item.nombre_bodega}</td>
                                 <td>{item.direccion}</td>
                                 <td>{formatearFecha(item.fecha_creacion)}</td>
                                 <td>{formatearFecha(item.fecha_actualizacion)}</td>
