@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace gestion_inventario.ViewModels{
     public class ProveedorViewModel{
   
-        public int id_proveedor { get; set; }
+        public string id_proveedor { get; set; }
    
         public string nombre_proveedor { get; set; }
   

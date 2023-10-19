@@ -11,6 +11,7 @@ namespace gestion_inventario.Models
         [Column(TypeName = "varchar(15)")]
         public string rut { get; set; }
         [Required]
+        [MaxLength(70)]
         public string id_credencial { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
         public DateTime fecha_actualizacion { get; set; } = DateTime.Now;

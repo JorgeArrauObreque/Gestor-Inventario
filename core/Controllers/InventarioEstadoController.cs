@@ -18,7 +18,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("get_by_id")]
-        public InventarioEstado Get_by_id(int id_inventario_estado)
+        public InventarioEstado Get_by_id(string id_inventario_estado)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -26,7 +26,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_inventario_estado}")]
-        public ActionResult Delete (int id_inventario_estado){
+        public ActionResult Delete (string id_inventario_estado){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from 'react-hook-form'
-import axios from "axios";
+import axios from '../../AxiosConfig'
 
 import Swal from "sweetalert2";
 import { format } from 'date-fns';
@@ -18,7 +18,7 @@ export default function Proveedores() {
         inputRef.current.value = "";
     };
     const Getdata = () => {
-        axios.get("http://localhost:5136/api/Proveedores").then((response) => {
+        axios.get("api/Proveedores").then((response) => {
             setData(response.data);
             setEstado(true);
         }).catch(ex => console.log());
@@ -106,8 +106,8 @@ export default function Proveedores() {
 
     const eliminar = (event) => {
         const ide = event.currentTarget.getAttribute("data-id");
-        alert(ide);
-        axios.delete(`http://localhost:5136/api/Proveedores/${ide}`)
+
+        axios.delete(`api/Proveedores/${ide}`)
             .then(response => {
                 Getdata();
                 Swal.fire({
@@ -121,7 +121,7 @@ export default function Proveedores() {
             }).catch(ex => console.log());
     }
     const actualizar = (event) => {
-        axios.put("http://localhost:5136/api/Proveedores/", proveedor).then(
+        axios.put("api/Proveedores", proveedor).then(
             (result) => {
                 const button = document.querySelector("#btn-cerrar");
                 button.click();
@@ -157,12 +157,8 @@ export default function Proveedores() {
             'correo': data.correo,
             'telefono': data.telefono,
         };
-        console.log(proveedor_guardar);
-        axios.post('http://localhost:5136/api/Proveedores/', proveedor_guardar, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((result) => {
+   
+        axios.post('api/Proveedores', proveedor_guardar).then((result) => {
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
                 toast: true, // Activa el modo Toast

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../../AxiosConfig'
 import { useEffect, useState,useRef,useContext } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
@@ -30,13 +30,8 @@ export default function Categorias() {
         "nombre_categoria": ""
     });
     const GetData = () => {
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-          };
-        axios.get("http://localhost:5136/api/Categorias",requestOptions).then(response => {
+  
+        axios.get("api/Categorias").then(response => {
             setData(response.data);
         }).catch(ex => {
             console.log(ex);
@@ -45,7 +40,6 @@ export default function Categorias() {
 
     const Clean = ()=>{
    
-        // También puedes usar la función reset de react-hook-form para reiniciar el formulario
         reset({
             id_categoria: '',
             nombre_categoria: ''
@@ -54,25 +48,32 @@ export default function Categorias() {
     
     const Delete = (event) => {
         const id_categoria = event.currentTarget.getAttribute("data-id");
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-        };
-        axios.delete(`http://localhost:5136/api/Categorias/${id_categoria}`,requestOptions).then(()=>{
-            GetData();
-            Swal.fire({
-                position: 'top-end', // Personaliza el ancho de la notificación
-                toast: true, // Activa el modo Toast
-                icon: 'success',
-                title: 'Registro Eliminado con existo',
-                showConfirmButton: false,
-                timer: 3000,
-            });
-        }).catch(() => {
-         
-        });
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará el registro de forma permanente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`api/Categorias/${id_categoria}`).then(()=>{
+                    GetData();
+                    Swal.fire({
+                        position: 'top-end', // Personaliza el ancho de la notificación
+                        toast: true, // Activa el modo Toast
+                        icon: 'success',
+                        title: 'Registro Eliminado con existo',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                }).catch(() => {
+                 
+                });
+            }
+          });
+
+  
     }
     const Update = (event) => {
         console.log(categoria);
@@ -80,13 +81,8 @@ export default function Categorias() {
             'id_categoria': categoria.id_categoria,
             'nombre_categoria': categoria.nombre_categoria
         };
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-        };
-        axios.put("http://localhost:5136/api/Categorias/", tipo_categoria_guardar,requestOptions).then(
+
+        axios.put("api/Categorias/", tipo_categoria_guardar).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -121,18 +117,13 @@ export default function Categorias() {
         handleShowModal();
     }
     const onSubmit = (data)=>{
-        console.log(data);
+   
         const categoria_guardar = {
             'id_categoria': data.id_categoria,
             'nombre_categoria': data.nombre_categoria
         };
-        let token = localStorage.getItem("token");
-        axios.post('http://localhost:5136/api/Categorias/', categoria_guardar, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-        }).then((result) => {
+
+        axios.post('http://localhost:5136/api/Categorias/', categoria_guardar).then((result) => {
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
                 toast: true, // Activa el modo Toast
@@ -142,6 +133,7 @@ export default function Categorias() {
                 timer: 3000,
             });
             GetData();
+            Clean();
         }).catch(ex => console.log(ex));
     }
     return (<>

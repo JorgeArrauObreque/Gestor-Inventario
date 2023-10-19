@@ -17,7 +17,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("api/MovimientoTipo/get_by_id")]
-        public MovimientoTipo Get_by_id_movimiento_tipo(long id_movimiento_tipo)
+        public MovimientoTipo Get_by_id_movimiento_tipo(int id_movimiento_tipo)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -25,7 +25,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete]
-        public ActionResult Delete(long id_movimiento_tipo){
+        public ActionResult Delete(int id_movimiento_tipo){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())

@@ -24,8 +24,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Bodega", b =>
                 {
-                    b.Property<int>("id_bodega")
-                        .HasColumnType("int");
+                    b.Property<string>("id_bodega")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("direccion")
                         .IsRequired()
@@ -38,6 +38,11 @@ namespace gestion_inventario.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("nombre_bodega")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
                     b.HasKey("id_bodega");
 
                     b.ToTable("bodegas");
@@ -45,8 +50,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Categoria", b =>
                 {
-                    b.Property<int>("id_categoria")
-                        .HasColumnType("int");
+                    b.Property<string>("id_categoria")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -115,15 +120,17 @@ namespace gestion_inventario.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("id_bodega")
-                        .HasColumnType("int");
-
-                    b.Property<int>("id_inventario_estado")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("id_producto")
+                    b.Property<string>("id_bodega")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("id_inventario_estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("id_producto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("user")
                         .IsRequired()
@@ -142,8 +149,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.InventarioEstado", b =>
                 {
-                    b.Property<int>("id_inventario_estado")
-                        .HasColumnType("int");
+                    b.Property<string>("id_inventario_estado")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -211,7 +218,8 @@ namespace gestion_inventario.Migrations
 
                     b.Property<string>("id_credencial")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<int>("id_tipo_persona")
                         .HasColumnType("int");
@@ -290,8 +298,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Producto", b =>
                 {
-                    b.Property<int>("id_producto")
-                        .HasColumnType("int");
+                    b.Property<string>("id_producto")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("descripcion")
                         .IsRequired()
@@ -304,17 +312,17 @@ namespace gestion_inventario.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("id_categoria")
+                    b.Property<string>("id_categoria")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("id_proveedor")
+                    b.Property<string>("id_proveedor")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("id_tipo_producto")
+                    b.Property<string>("id_tipo_producto")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("marca")
                         .IsRequired()
@@ -339,8 +347,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.Proveedor", b =>
                 {
-                    b.Property<int>("id_proveedor")
-                        .HasColumnType("int");
+                    b.Property<string>("id_proveedor")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("correo")
                         .IsRequired()
@@ -369,10 +377,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Rol", b =>
                 {
                     b.Property<int>("id_rol")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_rol"));
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -412,8 +417,8 @@ namespace gestion_inventario.Migrations
 
             modelBuilder.Entity("gestion_inventario.Models.TipoProducto", b =>
                 {
-                    b.Property<int>("id_tipo_producto")
-                        .HasColumnType("int");
+                    b.Property<string>("id_tipo_producto")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("fecha_actualizacion")
                         .HasColumnType("datetime2");
@@ -434,10 +439,7 @@ namespace gestion_inventario.Migrations
             modelBuilder.Entity("gestion_inventario.Models.Usuario", b =>
                 {
                     b.Property<long>("id_user")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_user"));
 
                     b.Property<string>("email")
                         .IsRequired()

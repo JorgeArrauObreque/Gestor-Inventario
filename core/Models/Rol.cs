@@ -7,7 +7,7 @@ namespace gestion_inventario.Models
     {
         [Required]
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id_rol { get; set; }
         [Required]
         [MaxLength(200)]

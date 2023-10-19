@@ -1,10 +1,11 @@
-import axios from "axios";
+
 import { useEffect, useState, useRef,useContext } from "react";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 import { Button, Modal } from 'react-bootstrap';
 import { UserProvider, useUser } from '../../UserContext';  
 import { format } from 'date-fns';
+import axios from '../../AxiosConfig'
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
@@ -29,15 +30,8 @@ export default function Bodegas() {
         "direccion": ""
     });
     const GetData = () => {
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-          };
-        axios.get("http://localhost:5136/api/Bodega",requestOptions).then(response => {
+        axios.get("api/Bodega").then(response => {
             setData(response.data);
-            console.log(response.data);
         }).catch(ex => {
             console.log(ex);
         });
@@ -52,40 +46,49 @@ export default function Bodegas() {
         });
     }
     const Delete = (event) => {
-        const id_bodega = event.currentTarget.getAttribute("data-id");
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-          };
-        axios.delete(`http://localhost:5136/api/Bodega/${id_bodega}`,requestOptions).then(() => {
-            GetData();
-            Swal.fire({
-                position: 'top-end',
-                toast: true,
-                icon: 'success',
-                title: 'Registro Eliminado con existo',
-                showConfirmButton: false,
-                timer: 3000,
-            });
-        }).catch(() => {
-
+        const id_bodega = event.currentTarget.getAttribute('data-id');
+      
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: 'Esta acción eliminará el registro de forma permanente.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(`api/Bodega/${id_bodega}`)
+              .then(() => {
+                GetData();
+                Swal.fire({
+                  position: 'top-end',
+                  toast: true,
+                  icon: 'success',
+                  title: 'Registro Eliminado con éxito',
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              })
+              .catch(() => {
+                // Manejar errores en caso de que falle la eliminación
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Hubo un problema al eliminar el registro',
+                });
+              });
+          }
         });
-    }
+      };
     const Update = (event) => {
-        console.log(bodega);
+    
         const bodega_guardar = {
             'id_bodega': bodega.id_bodega,
             'direccion': bodega.direccion
         };
-        let token = localStorage.getItem("token");
-        const requestOptions = {
-            headers: {
-              Authorization: `Bearer ${token}`, // Agrega el token al encabezado de autorización
-            },
-          };
-        axios.put("http://localhost:5136/api/Bodega/", bodega_guardar,requestOptions).then(
+
+        axios.put("api/Bodega/", bodega_guardar).then(
             (result) => {
                 handleCloseModal();
                 GetData();
@@ -122,13 +125,9 @@ export default function Bodegas() {
             'id_bodega': data.id_bodega,
             'direccion': data.direccion
         };
-        let token = localStorage.getItem("token");
-        axios.post('http://localhost:5136/api/Bodega/', inventario_estado_guardar, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-        }).then((result) => {
+        axios.post('http://localhost:5136/api/Bodega/', inventario_estado_guardar).then((result) => {
+           Clean();
+            GetData();
             Swal.fire({
                 position: 'top-end', // Personaliza el ancho de la notificación
                 toast: true, // Activa el modo Toast
@@ -137,7 +136,6 @@ export default function Bodegas() {
                 showConfirmButton: false,
                 timer: 3000,
             });
-            GetData();
         }).catch(ex => console.log(ex));
     }
     return (<>

@@ -20,7 +20,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("api/bodega/get_by_id")]
-        public Bodega Get_by_id(int id)
+        public Bodega Get_by_id(string id)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -28,7 +28,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_bodega}")]
-        public ActionResult Delete(int id_bodega){
+        public ActionResult Delete(string id_bodega){
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query =context.bodegas.Where(r=>r.id_bodega == id_bodega).FirstOrDefault();

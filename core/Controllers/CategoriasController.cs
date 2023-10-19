@@ -54,7 +54,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("api/categoria/get_by_categoria")]
-        public Categoria Get_by_id(int id_categoria)
+        public Categoria Get_by_id(string id_categoria)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -81,7 +81,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_categoria}")]
-        public ActionResult Delete(int id_categoria)
+        public ActionResult Delete(string id_categoria)
         {
             try
             {

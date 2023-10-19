@@ -19,7 +19,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("api/proveedor/get_by_id")]
-        public Proveedor Get_by_id(int id_proveedor)
+        public Proveedor Get_by_id(string id_proveedor)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -27,7 +27,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_proveedor}")]
-        public ActionResult Delete(int id_proveedor){
+        public ActionResult Delete(string id_proveedor){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())

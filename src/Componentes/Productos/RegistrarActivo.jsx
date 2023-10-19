@@ -1,9 +1,15 @@
 export default function RegistrarActivo(){
     return (<>
         <div className="container">
-            <div className="row">
-                <div className="col-xxl-4">
+            <div className="row justify-content-center">
+                <div className="col-xxl-6">
                     <h1>Registrar Activo Pañol</h1>
+                </div>
+                <div className="col-xxl-2">
+                    <button className="btn btn-warning w-100">Escanear</button>
+                </div>
+                <div className="col-xxl-2">
+                    <button className="btn btn-primary w-100">Guardar</button>
                 </div>
             </div>
             <div className="d-flex justify-content-center">

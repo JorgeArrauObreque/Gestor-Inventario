@@ -56,6 +56,8 @@ namespace gestion_inventario.Controllers
                 new_persona.genero = persona.genero;
                 new_persona.fecha_actualizacion = DateTime.Now;
                 new_persona.fecha_creacion = DateTime.Now;
+                new_persona.id_tipo_persona = 1;
+                new_persona.id_credencial = "testing123";
                 context.personas.Add(new_persona);
                 context.SaveChanges();
                 return Ok();

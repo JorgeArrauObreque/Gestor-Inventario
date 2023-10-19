@@ -63,11 +63,11 @@ function Login() {
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-outline mb-4">
-          <input type="text" id="form2Example1" className="form-control" {...register('username',{required:true})} />
+          <input type="text" id="form2Example1" placeholder='nombre de usuario' className="form-control" {...register('username',{required:true})} />
           {errors.username && (<span className='text-danger'>*Campo requerido</span>)}
         </div>
         <div className="form-outline mb-4">
-          <input type="password" id="form2Example2" className="form-control" {...register('password',{required:true})} />
+          <input type="password" placeholder='contraseña' id="form2Example2" className="form-control" {...register('password',{required:true})} />
           {errors.password && (<span className='text-danger'>*Campo Requerido</span>)}
         </div>
         <div className="row mb-4">

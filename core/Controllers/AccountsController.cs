@@ -1,4 +1,4 @@
-﻿using gestion_inventario.Migrations;
+﻿
 using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Authorization;
