@@ -282,7 +282,7 @@ export default function Bodegas() {
                         </div>
                         <div className="col">
                             <label htmlFor="">Dirección</label>
-                            <textarea name="direccion" className="form-control" id="" cols="30" rows="3">{bodega.direccion}</textarea>
+                            <textarea name="direccion" className="form-control" id="" cols="30" rows="3" onChange={onChangeNombre} value={bodega.direccion}></textarea>
 
                         </div>
                     </div>

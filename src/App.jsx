@@ -6,23 +6,23 @@ import Sidebar from './Componentes/Sidebar'
 import Navbar from './Componentes/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
-import InventarioEstados from './Componentes/Productos/InventarioEstados';
+import InventarioEstados from './Componentes/Administrador/InventarioEstados';
 
 import { useEffect } from 'react';
-import Proveedores from './Componentes/Productos/Proveedores';
-import Bodegas from './Componentes/Productos/Bodegas';
-import TipoProducto from './Componentes/Productos/TipoProducto';
-import Categorias from './Componentes/Productos/Categorias';
-import Personas from './Componentes/Personas';
-import Productos from './Componentes/Productos/Productos';
-import Inventario from './Componentes/Productos/Inventario';
+import Proveedores from './Componentes/Administrador/Proveedores';
+import Bodegas from './Componentes/Administrador/Bodegas';
+import TipoProducto from './Componentes/Administrador/TipoProducto';
+import Categorias from './Componentes/Administrador/Categorias';
+import Personas from './Componentes/Administrador/Personas';
+import Productos from './Componentes/Administrador/Productos';
+import Inventario from './Componentes/Administrador/Inventario';
 import Login from './Componentes/Login';
 
-import Prestamos from './Componentes/Productos/Prestamos';
+import Prestamos from './Componentes/Administrador/Prestamos';
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { UserProvider, useUser } from './UserContext';  // Importa useUser desde UserContext
-import Usuarios from './Componentes/Usuario';
+import Usuarios from './Componentes/Administrador/Usuario';
 import RegistrarActivo from './Componentes/Bodeguero/RegistrarActivo';
 import InventarioActivos from './Componentes/Bodeguero/InventarioActivos';
 

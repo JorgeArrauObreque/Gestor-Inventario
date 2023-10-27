@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Get_all,Delete,Update,Create } from "../Servicios/UsuariosServices";
+import { Get_all,Delete,Update,Create } from "../../Servicios/UsuariosServices";
 import Swal from "sweetalert2";
 import { format } from 'date-fns';
 

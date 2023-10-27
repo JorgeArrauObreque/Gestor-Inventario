@@ -45,12 +45,29 @@ function Login() {
       
         // Redirige a la URL deseada
         navigate("/");
-      }).catch(ex=>{
+      }) .catch(error => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            // Credenciales incorrectas (Unauthorized)
+            setauthenticationMessage("Credenciales incorrectas. Por favor, verifica tus credenciales.");
+          } else {
+            // Otro error de respuesta HTTP
+            setauthenticationMessage("Error del servidor. Por favor, inténtalo de nuevo más tarde.");
+          }
+        } else if (error.request) {
+          // La solicitud fue realizada, pero no se recibió respuesta del servidor (API no corriendo)
+          setauthenticationMessage("No se pudo conectar con el servidor. Verifica si la API está en funcionamiento.");
+        } else {
+          // Error antes de la solicitud
+          setauthenticationMessage("Ocurrió un error antes de la solicitud. Por favor, inténtalo de nuevo más tarde.");
+        }
+    
+        // Puedes establecer el estado de autenticación u otra acción apropiada
         setAuthenticated(false);
-        setauthenticationMessage("Problemas al conectar con el servidor");
-        console.error("Error sin respuesta HTTP:");
       });
 
+
+      
     } catch (error) {
       if (error.response) {
         // Error de respuesta HTTP
