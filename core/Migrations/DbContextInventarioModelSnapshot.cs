@@ -189,6 +189,30 @@ namespace gestion_inventario.Migrations
                     b.ToTable("movimiento_tipos");
                 });
 
+            modelBuilder.Entity("gestion_inventario.Models.PasswordToken", b =>
+                {
+                    b.Property<long>("id_token_password")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_token_password"));
+
+                    b.Property<DateTime>("fecha_creacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("id_usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id_token_password");
+
+                    b.ToTable("passwordtokens");
+                });
+
             modelBuilder.Entity("gestion_inventario.Models.Persona", b =>
                 {
                     b.Property<string>("rut")

@@ -22,6 +22,7 @@ namespace gestion_inventario.Models
         public DbSet<Persona> personas { get; set; }
         public DbSet<Usuario> usuariosSistema { get; set; }
         public DbSet<Rol> roles { get; set; }
+        public DbSet<PasswordToken> passwordtokens { get; set; }
         public DbContextInventario(DbContextOptions<DbContextInventario> options):base(options) { }
         public DbContextInventario() { }
         protected override void OnConfiguring(DbContextOptionsBuilder options)

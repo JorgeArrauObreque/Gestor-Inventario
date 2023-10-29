@@ -5,6 +5,7 @@ import axios from '../AxiosConfig'
 import Swal from 'sweetalert2';
 import Logo from './LogoDuoc.png'
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const { register, handleSubmit,formState:{errors}, reset } = useForm();
@@ -116,7 +117,8 @@ function Login() {
         </div>
         <div className="row mb-4">
           <div className="col">
-            <a href="#!">Olvidaste tu contraseña?</a>
+            <Link to="/RecoverPassword">Olvidaste tu contraseña?</Link>
+         
           </div>
         </div>
         <button type="submit" className="btn btn-primary btn-block mb-4">Iniciar sesión</button>

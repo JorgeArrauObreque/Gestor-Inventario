@@ -30,7 +30,7 @@ export default function InventarioActivos() {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'people.xlsx'; // Nombre del archivo
+          a.download = 'Inventario.xlsx'; // Nombre del archivo
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);

@@ -25,6 +25,8 @@ import { UserProvider, useUser } from './UserContext';  // Importa useUser desde
 import Usuarios from './Componentes/Administrador/Usuario';
 import RegistrarActivo from './Componentes/Bodeguero/RegistrarActivo';
 import InventarioActivos from './Componentes/Bodeguero/InventarioActivos';
+import RecoverPassword from './Componentes/RecoverPassword';
+import NewPassword from './Componentes/NewPassword';
 
 function App() {
   const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
@@ -65,6 +67,7 @@ function App() {
                   <Route path='Usuarios' element={<Usuarios />} />
                   <Route path='RegistrarActivo' element={<RegistrarActivo />} />
                   <Route path='InventarioActivos' element={<InventarioActivos />} />
+                  <Route path='NewPassword' element={<NewPassword />} />
                   {/* <Route path='*' element={<Bodegas />} /> */}
                 </Routes>
               </div>
@@ -73,6 +76,8 @@ function App() {
         ) : (
           <Routes>
             <Route path='login' element={<Login />} />
+            <Route path='RecoverPassword' element={<RecoverPassword />} />
+            <Route path='NewPassword' element={<NewPassword />} />
             <Route path='*' element={<Navigate to='/login' />} />
           </Routes>
         )}

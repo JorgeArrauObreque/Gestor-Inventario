@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 
 namespace gestion_inventario.Controllers
 {
@@ -73,6 +76,102 @@ namespace gestion_inventario.Controllers
             using (DbContextInventario context = new DbContextInventario())
             {
                 return context.usuariosSistema.Include(r=>r.rolNavigation).ToList();
+            }
+        }
+        [AllowAnonymous]
+        [HttpGet("RecoverPassword")]
+        public ActionResult RecoverPassword([FromQuery] string correo_electronico)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                if (context.usuariosSistema.Where(r=>r.email == correo_electronico.Trim()).Any())
+                {
+                    string smtpServer = "smtp.office365.com"; // o smtp-mail.outlook.com según corresponda
+                    int smtpPort = 587; // Puedes cambiar a 465 si prefieres SSL/TLS
+                    string smtpUsername = "testingdata97@outlook.com"; // Tu dirección de correo Outlook
+                    string smtpPassword = "duoc2023"; // La contraseña de tu cuenta Outlook
+
+                    // Configura el cliente SMTP
+                    SmtpClient smtpClient = new SmtpClient(smtpServer);
+                    smtpClient.Port = smtpPort;
+                    smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+                    smtpClient.EnableSsl = true; // Usar SSL para Gmail
+
+                    // Crea el mensaje de correo
+                    Guid uniqueCode = Guid.NewGuid();
+                    string uniqueCodeString = uniqueCode.ToString();
+
+                    MailMessage correo = new MailMessage();
+                    correo.From = new MailAddress("testingdata97@outlook.com");
+                    correo.To.Add("jor.arrau@duocuc.cl");
+                    correo.Subject = "Asunto del correo";
+                    // Crea el cuerpo del correo con un enlace
+                    string linkRecuperar = $"http://localhost:3000/NewPassword?token={uniqueCode}"; // Cambia esto al enlace correcto
+                    string cuerpoCorreo = "Para recuperar la contraseña, haga clic en el siguiente enlace: " + linkRecuperar;
+
+                    correo.Body = cuerpoCorreo;
+
+                    try
+                    {
+                        // Envía el correo
+                        smtpClient.Send(correo);
+                        using (DbContextInventario db = new DbContextInventario())
+                        {
+                            PasswordToken token = new PasswordToken();
+                            token.id_usuario = correo_electronico;
+                            token.token = uniqueCodeString;
+                            token.fecha_creacion = DateTime.Now;
+                            db.Add(token);
+                            db.SaveChanges();
+                        }
+                    
+                        Console.WriteLine("Correo enviado con éxito.");
+                        return Ok();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error al enviar el correo: " + ex.Message);
+                        return BadRequest(ex.Message);
+                    }
+
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("validateToken")]
+        public bool ValidateToken(string token)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var resultado = context.passwordtokens.Where(r => r.token == token).FirstOrDefault();
+                if (resultado == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var fecha_limite = resultado.fecha_creacion.AddHours(2);
+                    if (DateTime.Now > fecha_limite)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost("changePassword")]
+        public ActionResult ChangePassword([FromBody] PasswordRecovery password_recovery)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query_token = context.passwordtokens.Where(r => r.token == password_recovery.token).FirstOrDefault();
+                return null;
             }
         }
         //[HttpPost("add")]

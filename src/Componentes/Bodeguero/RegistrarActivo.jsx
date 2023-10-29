@@ -86,11 +86,11 @@ export default function RegistrarActivo(){
                         <div className="row mt-2">
                             <div className="col">
                                 <label htmlFor="">Nombre Producto</label>
-                                <input type="text" name="nombre_producto" value={producto.nombre_producto} onChange={onChangeProducto}  className="form-control" id="" />
+                                <input type="text" name="nombre_producto" value={producto.nombre_producto} onChange={onChangeProducto} disabled className="form-control" id="" />
                             </div>
                             <div className="col">
                                 <label htmlFor="">Marca</label>
-                                <input type="text" name="marca" value={producto.marca}  onChange={onChangeProducto}  className="form-control" id="" />
+                                <input type="text" name="marca" value={producto.marca}  onChange={onChangeProducto} disabled className="form-control" id="" />
                             </div>
                             <div className="col">
                                 <label htmlFor="">Tipo Producto</label>
@@ -101,7 +101,7 @@ export default function RegistrarActivo(){
                             <div className="col">
                                 <label htmlFor="">Descripción</label>
                               
-                                <textarea name="descripcion" className="form-control" onChange={onChangeProducto}  id="" cols="30" rows="3" value={producto.descripcion}></textarea>
+                                <textarea name="descripcion" className="form-control" onChange={onChangeProducto}  disabled id="" cols="30" rows="3" value={producto.descripcion}></textarea>
                             </div>
                             
                         </div>
