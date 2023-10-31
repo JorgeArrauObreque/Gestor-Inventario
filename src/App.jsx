@@ -27,6 +27,9 @@ import RegistrarActivo from './Componentes/Bodeguero/RegistrarActivo';
 import InventarioActivos from './Componentes/Bodeguero/InventarioActivos';
 import RecoverPassword from './Componentes/RecoverPassword';
 import NewPassword from './Componentes/NewPassword';
+import BarChart from './Componentes/Bodeguero/RegistrarPrestamo';
+import BarChartComponent from './Componentes/Bodeguero/RegistrarPrestamo';
+import Dashboard from './Componentes/Administrador/Dashboard';
 
 function App() {
   const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
@@ -67,6 +70,7 @@ function App() {
                   <Route path='Usuarios' element={<Usuarios />} />
                   <Route path='RegistrarActivo' element={<RegistrarActivo />} />
                   <Route path='InventarioActivos' element={<InventarioActivos />} />
+                  <Route path='Dashboard' element={<Dashboard />} />
                   <Route path='NewPassword' element={<NewPassword />} />
                   {/* <Route path='*' element={<Bodegas />} /> */}
                 </Routes>
@@ -75,6 +79,7 @@ function App() {
           </>
         ) : (
           <Routes>
+            
             <Route path='login' element={<Login />} />
             <Route path='RecoverPassword' element={<RecoverPassword />} />
             <Route path='NewPassword' element={<NewPassword />} />
