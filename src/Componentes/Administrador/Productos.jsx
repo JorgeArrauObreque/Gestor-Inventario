@@ -267,8 +267,8 @@ export default function Productos() {
             
             <div className="row mt-3">
                 <table className="table">
-                    <thead>
-                        <tr>
+                 
+                        <tr className='table-head'>
                             <th>ID</th>
                             <th>Nombre Producto</th>
                             <th>Marca</th>
@@ -279,7 +279,7 @@ export default function Productos() {
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+             
                     <tbody>
                         {data.map((item) => (
                             <tr>

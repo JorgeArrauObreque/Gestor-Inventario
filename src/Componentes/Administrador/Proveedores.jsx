@@ -299,9 +299,9 @@ export default function Proveedores() {
                 </div>
                     {estado && (
                         
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
+                        <table className="table table-hover mt-3">
+                         
+                                <tr className='table-head'>
                                     <th>Id</th>
                                     <th>Nombre</th>
                                     <th>Correo</th>
@@ -310,7 +310,7 @@ export default function Proveedores() {
                                     <th>Última Actualización</th>
                                     <th></th>
                                 </tr>
-                            </thead>
+                         
                             <tbody>
                                 {data.map((item, key) => (
                                     <tr>

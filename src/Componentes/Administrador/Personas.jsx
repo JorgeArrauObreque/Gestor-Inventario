@@ -244,9 +244,9 @@ export default function Personas() {
             <div className="col-xxl-3 d-flex">
                     <input type="text" className="form-control" placeholder="Buscar Usuario" ref={busqueda} /><button onClick={filterData} className="btn"><i className="fa fa-search"></i></button>
                 </div>
-                <table className="table">
-                    <thead>
-                        <tr>
+                <table className="table mt-3">
+                  
+                        <tr className='table-head'>
                             <th>Rut</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
@@ -257,7 +257,7 @@ export default function Personas() {
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+                  
                     <tbody>
                         {data.map((item, key) => (
                             <tr>

@@ -239,8 +239,8 @@ export default function Inventario() {
 
             <div className="row mt-4">
                 <table className="table">
-                    <thead>
-                        <tr>
+                 
+                        <tr className='table-head'>
                             <th>ID</th>
                             <th>Producto</th>
                             <th>Bodega</th>
@@ -250,7 +250,7 @@ export default function Inventario() {
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+                 
                     <tbody>
                         {data.map((item) => (
                             <tr>

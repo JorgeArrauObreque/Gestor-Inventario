@@ -150,8 +150,8 @@ export default function TipoProducto() {
 
             <div className="mt-5">
                 <table className="table">
-                    <thead>
-                        <tr>
+                
+                        <tr className='table-head'>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>fecha creación</th>
@@ -159,7 +159,7 @@ export default function TipoProducto() {
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+                
                     <tbody>
                         {data.map((item, key) => (
                             <tr>

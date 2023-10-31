@@ -7,6 +7,8 @@ import { UserProvider, useUser } from '../../UserContext';
 import { format, getDate } from 'date-fns';
 import axios from '../../AxiosConfig'
 import { Get_all, Update,Delete,Create } from "../../Servicios/BodegaService";
+
+
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy HH:mm:ss');
 }
@@ -227,17 +229,17 @@ export default function Bodegas() {
 
             <div className="mt-5">
                 <table className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>nombre</th>
-                            <th>dirección</th>
-                            <th>fecha creación</th>
-                            <th>fecha Actualización</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
+         
+                    <tr className="table-head">
+                        <th >ID</th>
+                        <th>nombre</th>
+                        <th>dirección</th>
+                        <th>fecha creación</th>
+                        <th>fecha Actualización</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+               
                     <tbody>
                         {data.map((item, key) => (
                             <tr key={item.id_bodega}>

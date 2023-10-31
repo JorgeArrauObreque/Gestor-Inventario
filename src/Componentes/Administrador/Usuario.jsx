@@ -241,9 +241,9 @@ export default function Usuarios() {
                 <div className="col-xxl-3 d-flex">
                     <input type="text" className="form-control" placeholder="Buscar Usuario" ref={busqueda} /><button onClick={filterData} className="btn"><i className="fa fa-search"></i></button>
                 </div>
-                <table className="table">
-                    <thead>
-                        <tr>
+                <table className="table mt-3">
+                   
+                        <tr className='table-head'>
                             <th>ID User</th>
                             <th>User</th>
                             <th>Correo</th>
@@ -251,7 +251,7 @@ export default function Usuarios() {
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+                    
                     <tbody>
                         {data.map((item) => (
                             <tr>
