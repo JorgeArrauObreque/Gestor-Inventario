@@ -21,10 +21,12 @@ const Dashboard = () => {
 
   async function Estadisticas() {
     const data = await axios.get(baseURL + "/api/Estadisticas/dashboard", getHeaders());
+    console.log(data.data);
     return data.data;
   }
 
   useEffect(() => {
+    
     Estadisticas().then((result) => {
       setEstadisticas(result);
       const chartData = result.prestamos_siete_dias.map((item) => ({
@@ -57,14 +59,14 @@ const Dashboard = () => {
             <div className='card text-center p-3'>
                 <h3 className='h6'>Producto Más Solicitado</h3>
                 <h3>{estadisticas.productoConMasPrestamos.producto.nombre_producto}</h3>
-                <h3>{estadisticas.productoConMasPrestamos.producto.TotalPrestamos}</h3>
+                <h3>Cantidad: {estadisticas.productoConMasPrestamos.totalPrestamos}</h3>
               </div>
             </div>
             <div className='col-xxl-3'>
               <div className='card text-center p-3'>
                   <h3 className='h6'>Producto Más Solicitado</h3>
                   <h3>{estadisticas.productoConMenosPrestamos.producto.nombre_producto}</h3>
-                  <h3>{estadisticas.productoConMenosPrestamos.producto.TotalPrestamos}</h3>
+                  <h3>Cantidad: {estadisticas.productoConMenosPrestamos.totalPrestamos}</h3>
                 </div>
             </div>
           </div>
