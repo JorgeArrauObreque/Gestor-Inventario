@@ -33,7 +33,7 @@ import Dashboard from './Componentes/Administrador/Dashboard';
 
 function App() {
   const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
-  console.log(user);
+
   useEffect(() => {
     // Intenta obtener el usuario desde el localStorage al cargar la página
     const storedUser = localStorage.getItem('userdata');
