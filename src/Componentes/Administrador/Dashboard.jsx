@@ -43,7 +43,9 @@ const Dashboard = () => {
       <h2>Estadísticas</h2>
 
       {loading ? ( // Muestra un mensaje de "Cargando..." mientras se obtienen los datos
-        <p>Cargando...</p>
+        <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
       ) : (
         // Cuando los datos están disponibles, muestra el contenido
         <div className='container'>
@@ -58,14 +60,14 @@ const Dashboard = () => {
             <div className='col-xxl-3'>
             <div className='card text-center p-3'>
                 <h3 className='h6'>Producto Más Solicitado</h3>
-                <h3>{estadisticas.productoConMasPrestamos.producto.nombre_producto}</h3>
+                <h3>{estadisticas.productoConMasPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
                 <h3>Cantidad: {estadisticas.productoConMasPrestamos.totalPrestamos}</h3>
               </div>
             </div>
             <div className='col-xxl-3'>
               <div className='card text-center p-3'>
-                  <h3 className='h6'>Producto Más Solicitado</h3>
-                  <h3>{estadisticas.productoConMenosPrestamos.producto.nombre_producto}</h3>
+                  <h3 className='h6'>Producto Menos Solicitado</h3>
+                  <h3>{estadisticas.productoConMenosPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
                   <h3>Cantidad: {estadisticas.productoConMenosPrestamos.totalPrestamos}</h3>
                 </div>
             </div>

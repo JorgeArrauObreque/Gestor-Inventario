@@ -12,5 +12,6 @@ namespace gestion_inventario.Models
         [Required]
         public string token { get; set; }
         public DateTime fecha_creacion { get; set; }
+        public bool usado { get; set; } = false;
     }
 }

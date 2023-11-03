@@ -208,6 +208,9 @@ namespace gestion_inventario.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("usado")
+                        .HasColumnType("bit");
+
                     b.HasKey("id_token_password");
 
                     b.ToTable("passwordtokens");

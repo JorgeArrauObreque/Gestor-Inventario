@@ -168,11 +168,27 @@ namespace gestion_inventario.Controllers
         [HttpPost("changePassword")]
         public ActionResult ChangePassword([FromBody] PasswordRecovery password_recovery)
         {
-            using (DbContextInventario context = new DbContextInventario())
+            if (password_recovery.password == password_recovery.password_confirm)
             {
-                var query_token = context.passwordtokens.Where(r => r.token == password_recovery.token).FirstOrDefault();
-                return null;
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query_token = context.passwordtokens.Where(r => r.token == password_recovery.token).FirstOrDefault();
+                    if (query_token.usado == true)
+                    {
+                        return BadRequest();
+                    }
+                    var usuario = context.usuariosSistema.Where(r => r.email == query_token.id_usuario).FirstOrDefault();
+                    usuario.password = password_recovery.password;
+                    query_token.usado = true;
+                    context.SaveChanges();
+                    return Ok();
+                }
             }
+            else
+            {
+                return BadRequest();
+            }
+      
         }
         //[HttpPost("add")]
         //[Authorize]
