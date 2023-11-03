@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form'
 import { error } from 'jquery';
 
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const NewPasswordComponent = () => {
   const [verificationResult, setVerificationResult] = useState(''); // Estado para el resultado de la verificación
 
   const [token, setToken] = useState(''); // Estado para el token obtenido de la URL
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
+  const [valido,setValido] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     // Obtener el token de la URL
@@ -33,17 +35,16 @@ const NewPasswordComponent = () => {
     }
     axios.post(`http://localhost:5136/api/Accounts/changePassword`, password)
       .then(response => {
-        // Accede al código de estado HTTP
         const statusCode = response.status;
-        // Hacer algo con el código de estado, por ejemplo, verificar si es 200 (éxito)
         if (statusCode === 200) {
             alert("contraseña cambiada correctamente");
             navigate("/login");
+            valido(true);
         }
       })
       .catch(error => {
         // Error en la solicitud
-        setVerificationResult('Error al verificar el token: ' + error.message);
+        setVerificationResult('');
       });
   }
 
@@ -54,32 +55,45 @@ const NewPasswordComponent = () => {
         if (response.data === true) {
           // Token válido, no se muestra un mensaje
           setVerificationResult('');
+          setValido(true);
         } else {
           // Token inválido, muestra un mensaje de error
+          
           setVerificationResult('Token inválido o incorrecto. No se puede cambiar la contraseña.');
         }
       })
       .catch(error => {
-        // Error en la solicitud
-        setVerificationResult('Error al verificar el token: ' + error.message);
+        setVerificationResult('');
+        // // Error en la solicitud
+        // setVerificationResult('Error al verificar el token: ' + error.message);
       });
   };
 
   return (
     <div>
-      <h1>Cambio de contraseña</h1>
+  
 
-      {verificationResult ? (
+      {valido===false ? (
         // Si hay un mensaje de verificación, muéstralo
-        <div>
-          <p>{verificationResult}</p>
+        <div className='justify-content-center d-flex' style={{marginTop:'20vh'}}>
+          {/* <p>{verificationResult}</p> */}
+          <div className='alert alert-danger w-50'>
+            <p>Error</p>
+            <strong>
+              Token caducado
+            </strong>
+          </div>
+
+
         </div>
       ) : (
         // Si no hay mensaje de verificación, muestra el formulario de cambio de contraseña
         <form onSubmit={handleSubmit(OnSubmit)}>
-          <div>
-
-            <input
+          <div className='container' style={{marginTop:'20vh'}}>
+              <div className='row'>
+                  <div className='col-xxl-4 mx-auto'>
+                  <h1>Cambio de contraseña</h1>
+                  <input
               type="password"
               placeholder="Nueva Contraseña" className='form-control'
               {...register("password", { required: true })}
@@ -88,12 +102,15 @@ const NewPasswordComponent = () => {
             {errors.password && (<span className='text-danger'>*Campo Requerido</span>)}
             <input
               type="password"
-              placeholder="Confirmar Contraseña" className='form-control'
+              placeholder="Confirmar Contraseña" className='form-control mt-3'
               {...register("password_confirm", { required: true })}
 
             />
             {errors.password_confirm && (<span className='text-danger'>*Campo Requerido</span>)}
-            <button className='btn btn-primary' type='submit'>Cambiar Contraseña</button>
+            <button className='btn btn-primary mt-3' type='submit'>Cambiar Contraseña</button>
+                  </div>
+              </div>
+
           </div>
         </form>
 

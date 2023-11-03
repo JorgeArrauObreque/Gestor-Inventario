@@ -12,6 +12,7 @@ function Login() {
   const { setUser } = useUser();
   const [authenticated, setAuthenticated] = useState(true); // Initialize to true
   const [authenticationMessage,setauthenticationMessage] = useState("");
+  const [btnEnvio,setBtnEnvio] = useState(false); 
   const navigate = useNavigate();
 
   const onSubmit =  (data) => {
@@ -21,7 +22,7 @@ function Login() {
       "Username": data.username,
       "PasswordHash": data.password,
     };
-  
+    setBtnEnvio(true);
     try {
       axios.post(baseurl, credentials, {
         headers: {
@@ -43,10 +44,11 @@ function Login() {
           timer: 3000,
         });
         setAuthenticated(true);
-      
+        setBtnEnvio(false);
         // Redirige a la URL deseada
         navigate("/");
       }) .catch(error => {
+        setBtnEnvio(false);
         if (error.response) {
           if (error.response.status === 401) {
             // Credenciales incorrectas (Unauthorized)
@@ -70,6 +72,7 @@ function Login() {
 
       
     } catch (error) {
+      setBtnEnvio(false);
       if (error.response) {
         // Error de respuesta HTTP
         const status = error.response.status;
@@ -121,7 +124,7 @@ function Login() {
          
           </div>
         </div>
-        <button type="submit" className="btn btn-primary btn-block mb-4">Iniciar sesión</button>
+        <button type="submit" disabled={btnEnvio} className="btn btn-primary btn-block mb-4">Iniciar sesión</button>
 
       </form>
     </div>
