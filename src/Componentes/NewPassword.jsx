@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form'
 import { error } from 'jquery';
+
+import { useNavigate } from 'react-router-dom';
+
 const NewPasswordComponent = () => {
   const [verificationResult, setVerificationResult] = useState(''); // Estado para el resultado de la verificación
 
   const [token, setToken] = useState(''); // Estado para el token obtenido de la URL
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
   useEffect(() => {
     // Obtener el token de la URL
     const params = new URLSearchParams(window.location.search);
@@ -17,24 +21,30 @@ const NewPasswordComponent = () => {
     }
   }, []);
 
-  function OnSubmit (data){
+  function OnSubmit(data) {
 
     const params = new URLSearchParams(window.location.search);
     const tokenFromURL = params.get("token");
 
     const password = {
-      'password':data.password,
-      'password_confirm':data.password_confirm,
-      'token':tokenFromURL,
+      'password': data.password,
+      'password_confirm': data.password_confirm,
+      'token': tokenFromURL,
     }
-    axios.post(`http://localhost:5136/api/Accounts/changePassword`,password)
-    .then(response => {
-   
-    })
-    .catch(error => {
-      // Error en la solicitud
-      setVerificationResult('Error al verificar el token: ' + error.message);
-    });
+    axios.post(`http://localhost:5136/api/Accounts/changePassword`, password)
+      .then(response => {
+        // Accede al código de estado HTTP
+        const statusCode = response.status;
+        // Hacer algo con el código de estado, por ejemplo, verificar si es 200 (éxito)
+        if (statusCode === 200) {
+            alert("contraseña cambiada correctamente");
+            navigate("/login");
+        }
+      })
+      .catch(error => {
+        // Error en la solicitud
+        setVerificationResult('Error al verificar el token: ' + error.message);
+      });
   }
 
   const verifyToken = (token) => {
@@ -72,15 +82,15 @@ const NewPasswordComponent = () => {
             <input
               type="password"
               placeholder="Nueva Contraseña" className='form-control'
-              {...register("password",{required:true})}
-              
+              {...register("password", { required: true })}
+
             />
             {errors.password && (<span className='text-danger'>*Campo Requerido</span>)}
             <input
               type="password"
               placeholder="Confirmar Contraseña" className='form-control'
-              {...register("password_confirm",{required:true})}
-              
+              {...register("password_confirm", { required: true })}
+
             />
             {errors.password_confirm && (<span className='text-danger'>*Campo Requerido</span>)}
             <button className='btn btn-primary' type='submit'>Cambiar Contraseña</button>

@@ -1,15 +1,32 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react"; // Importa el hook useState
+import Swal from "sweetalert2";
 
 export default function RecoverPassword() {
   const [correoElectronico, setCorreoElectronico] = useState(""); // Estado para el correo electrónico
 
   async function envio() {
     const url = `http://localhost:5136/api/Accounts/RecoverPassword?correo_electronico=${correoElectronico}`;
-    
-    const data = await axios.get(url);
-    return data.data;
+
+    const response = await axios.get(url);
+
+    const statusCode = response.status;
+
+    if (statusCode === 200) {
+        
+        Swal.fire({
+          position: 'top-end',
+          toast: true,
+          icon: 'success',
+          title: 'Correo Enviado Correctamente al correo: '+" "+correoElectronico,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+    }
+    setCorreoElectronico("");
+
+    return response.data;
   }
 
   const handleCorreoElectronicoChange = (e) => {

@@ -149,6 +149,10 @@ namespace gestion_inventario.Controllers
             using (DbContextInventario context = new DbContextInventario())
             {
                 var resultado = context.passwordtokens.Where(r => r.token == token).FirstOrDefault();
+                if (resultado.usado == true)
+                {
+                    return false;
+                }
                 if (resultado == null)
                 {
                     return false;

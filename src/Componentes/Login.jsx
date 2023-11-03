@@ -57,7 +57,7 @@ function Login() {
           }
         } else if (error.request) {
           // La solicitud fue realizada, pero no se recibió respuesta del servidor (API no corriendo)
-          setauthenticationMessage("No se pudo conectar con el servidor. Verifica si la API está en funcionamiento.");
+          setauthenticationMessage("No se pudo conectar con el servidor. Verifique el servidor está en funcionamiento.");
         } else {
           // Error antes de la solicitud
           setauthenticationMessage("Ocurrió un error antes de la solicitud. Por favor, inténtalo de nuevo más tarde.");
