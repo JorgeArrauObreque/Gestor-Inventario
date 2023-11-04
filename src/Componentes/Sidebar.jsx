@@ -110,6 +110,13 @@ export default function Sidebar() {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/historicoMovimientos" className={activeTab === "historicoMovimientos" ? "nav-link active" : "nav-link text-dark"}>
+                      <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+                      <i class="fa-solid fa-barcode mx-2"></i>
+                      Prestamos
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/Dashboard" className={activeTab === "Dashboard" ? "nav-link active" : "nav-link text-dark"}>
                       <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
                       <i class="fa-solid fa-barcode mx-2"></i>
