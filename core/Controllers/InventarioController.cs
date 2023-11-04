@@ -82,5 +82,39 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
+        [HttpPost("registrarActivo")]
+        public ActionResult RegistrarActivo([FromBody] RegistroActivo activo)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+
+                Producto producto = new Producto();
+                producto.id_producto = string.Concat(activo.marca.Substring(0,2), " ", DateTime.Now.ToString("HH:mm:ss"));
+                producto.marca = activo.marca;
+                producto.descripcion = activo.descripcion;
+                producto.id_proveedor = "1";
+                producto.nombre_producto = activo.nombre_producto;
+                producto.fecha_creacion = DateTime.Now;
+                producto.fecha_actualizacion = DateTime.Now;
+                producto.id_tipo_producto =activo.tipo_producto;
+                context.Add(producto);
+
+                var query = context.inventario.Where(r => r.id_inventario == activo.id_inventario).FirstOrDefault();
+                if (query != null) return BadRequest();
+                Inventario new_inventario = new Inventario();
+                new_inventario.id_inventario = activo.id_inventario;
+                new_inventario.id_inventario_estado = "1";
+                new_inventario.id_bodega = "1";
+                new_inventario.id_producto = producto.id_producto;
+                new_inventario.fecha_creacion = DateTime.Now;
+                new_inventario.fecha_actualizacion = DateTime.Now;
+                new_inventario.user = "admin";
+                context.inventario.Add(new_inventario);
+
+           
+                context.SaveChanges();
+                return Ok();
+            }
+        }
     }
 }

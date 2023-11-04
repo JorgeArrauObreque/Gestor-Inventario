@@ -82,3 +82,23 @@ function handleRequestError(error) {
     console.error("Error de red o solicitud no válida:", error.message);
   }
 }
+
+
+
+export async function Create_activo(activo_guardar) {
+  try {
+    const response = await axios.post(`${baseURL}/api/Inventario/registrarActivo`,activo_guardar, getHeaders());
+    const status = response.status;
+    if (status === 200) {
+      console.log("Solicitud exitosa");
+      return 1;
+    } else {
+      console.log("La solicitud no fue exitosa. Código de estado:", status);
+      return 0;
+    }
+    
+  } catch (error) {
+    handleRequestError(error);
+    return 0;
+  }
+}

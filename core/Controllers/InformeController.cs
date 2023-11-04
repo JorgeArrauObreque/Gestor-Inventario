@@ -23,8 +23,8 @@ namespace gestion_inventario.Controllers
                     .Include(r => r.bodegaNavigation)
                     .Include(r => r.productoNavigation)
                     .Include(r => r.productoNavigation.categoriaNavigation)
-                    .Include(r => r.productoNavigation.tipoProductoNavigation).
-                    Include(r=>r.InventarioEstadoNavigation)
+                    .Include(r => r.productoNavigation.tipoProductoNavigation)
+                    .Include(r=>r.InventarioEstadoNavigation)
                     .ToList();
 
 
@@ -65,8 +65,10 @@ namespace gestion_inventario.Controllers
                 headerRow.GetCell(2).CellStyle = cellStyle;
                 headerRow.CreateCell(3).SetCellValue("Tipo Producto");
                 headerRow.GetCell(3).CellStyle = cellStyle;
-                headerRow.CreateCell(4).SetCellValue("Categoría");
+                headerRow.CreateCell(4).SetCellValue("Marca");
                 headerRow.GetCell(4).CellStyle = cellStyle;
+                headerRow.CreateCell(5).SetCellValue("Categoría");
+                headerRow.GetCell(5).CellStyle = cellStyle;
                 // Llenar la hoja de trabajo con datos
                 for (int i = 0; i < inventarios.Count; i++)
                 {
@@ -75,7 +77,8 @@ namespace gestion_inventario.Controllers
                     dataRow.CreateCell(1).SetCellValue(inventarios[i].bodegaNavigation.nombre_bodega);
                     dataRow.CreateCell(2).SetCellValue(inventarios[i].productoNavigation.nombre_producto);
                     dataRow.CreateCell(3).SetCellValue(inventarios[i].productoNavigation.tipoProductoNavigation.nombre_tipo_producto);
-                    dataRow.CreateCell(4).SetCellValue(inventarios[i].productoNavigation.categoriaNavigation.nombre_categoria);
+                    dataRow.CreateCell(4).SetCellValue(inventarios[i].productoNavigation.marca);
+                    dataRow.CreateCell(5).SetCellValue(inventarios[i].productoNavigation.categoriaNavigation.nombre_categoria);
                 }
 
                 // Crear un flujo de memoria para el libro de Excel

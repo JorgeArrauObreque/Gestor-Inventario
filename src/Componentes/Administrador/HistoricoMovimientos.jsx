@@ -49,8 +49,8 @@ export default function HistoricoMovimientos() {
                 </div>
             </div>
             <table className='table mt-3'>
-                <thead className='table-head'>
-                    <tr>
+              
+                    <tr className='table-head'>
                         <th>ID movimiento</th>
                         <th>Movimiento</th>
                         <th>ID inventario</th>
@@ -59,7 +59,7 @@ export default function HistoricoMovimientos() {
                         <th>Categoría</th>
                         <th>Fecha Movimiento</th>
                     </tr>
-                </thead>
+              
                 <tbody>
                     {datosFiltrados.map((item, key) => (
                         <tr key={key}>
