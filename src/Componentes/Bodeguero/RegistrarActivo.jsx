@@ -61,10 +61,12 @@ export default function RegistrarActivo() {
         const productos_get = await get_all_productos();
         setProductos(productos_get);
         console.log(productos_get);
+        
         const elementos = productos_get.map((element) => ({
           value: element.id_producto,
           label: element.nombre_producto,
         }));
+
         setOption(elementos);
         const tipos = await get_all_tipo_productos();
         console.log(tipos);
@@ -80,15 +82,35 @@ export default function RegistrarActivo() {
   const OnSubmit = async (data) => {
     // Realiza acciones en el envío del formulario
     // console.log(data);
-    const activo = {
-      "id_inventario":data.id_inventario,
-   
-      "nombre_producto":data.nombre_producto,
-      "marca":data.marca,
-      "tipo_producto":data.tipo_producto,
-      "descripcion":data.descripcion,
+    if (CamposProducto === false) {
+      const activo = {
+        "id_inventario": data.id_inventario,
+        "id_producto": "0",
+        "nombre_producto": data.nombre_producto,
+        "marca": data.marca,
+        "tipo_producto": data.tipo_producto,
+        "descripcion": data.descripcion,
+      };
+      var response = await Create_activo(activo);
+    } else {
+      const activo = {
+        "id_inventario": data.id_inventario,
+        "id_producto": data.id_producto,
+        "nombre_producto": data.nombre_producto,
+        "marca": data.marca,
+        "tipo_producto": data.tipo_producto,
+        "descripcion": data.descripcion,
+      };
+      var response = await Create_activo(activo);
     }
-    var response = await Create_activo(activo);
+  
+    reset({
+      id_inventario: '', // Restablece este campo a su valor inicial (en este caso, una cadena vacía)
+      nombre_producto: '', // Restablece los demás campos a su valor inicial (en este caso, cadena vacía)
+      marca: '',
+      tipo_producto: '',
+      descripcion: ''
+    });
   };
 
   return (
