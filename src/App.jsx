@@ -31,6 +31,7 @@ import BarChart from './Componentes/Bodeguero/RegistrarPrestamo';
 import BarChartComponent from './Componentes/Bodeguero/RegistrarPrestamo';
 import Dashboard from './Componentes/Administrador/Dashboard';
 import HistoricoMovimientos from './Componentes/Administrador/HistoricoMovimientos';
+import RegistrarPrestamo from './Componentes/Bodeguero/RegistrarPrestamo';
 
 function App() {
   const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
@@ -73,6 +74,7 @@ function App() {
                   <Route path='InventarioActivos' element={<InventarioActivos />} />
                   <Route path='Dashboard' element={<Dashboard />} />
                   <Route path='NewPassword' element={<NewPassword />} />
+                  <Route path='RegistrarPrestamo' element={<RegistrarPrestamo />} />
                   {/* <Route path='*' element={<Bodegas />} /> */}
                   <Route path='historicoMovimientos' element={<HistoricoMovimientos />} />
                 </Routes>

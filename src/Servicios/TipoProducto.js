@@ -17,7 +17,7 @@ export async function Get_all() {
   try {
     const response = await axios.get(`${baseURL}/api/TipoProducto`, getHeaders());
     return response.data;
-  } catch (error) {
+  } catch (error) {   
     return [];
   }
 }

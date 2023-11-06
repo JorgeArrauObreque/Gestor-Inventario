@@ -132,9 +132,6 @@ namespace gestion_inventario.Controllers
                     context.inventario.Add(new_inventario);
                     context.SaveChanges();
                 }
-    
-
-          
                 return Ok();
             }
         }

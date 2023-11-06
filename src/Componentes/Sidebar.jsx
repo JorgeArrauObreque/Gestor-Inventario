@@ -29,7 +29,13 @@ export default function Sidebar() {
               <i className="fa fa-book mx-2"></i> Inventario Pañol
             </Link>
           </li>
-
+          <li>
+                    <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
+                      <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+                      <i class="fa-solid fa-barcode mx-2"></i>
+                      Registrar Prestamo
+                    </Link>
+                  </li>
           <li>
             <p>
 
@@ -113,7 +119,7 @@ export default function Sidebar() {
                     <Link to="/historicoMovimientos" className={activeTab === "historicoMovimientos" ? "nav-link active" : "nav-link text-dark"}>
                       <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
                       <i class="fa-solid fa-barcode mx-2"></i>
-                      Prestamos
+                      Historico de movimientos
                     </Link>
                   </li>
                   <li>
@@ -123,6 +129,7 @@ export default function Sidebar() {
                       Estadisticas
                     </Link>
                   </li>
+   
                 </ul>
               </div>
             </div>
@@ -130,6 +137,13 @@ export default function Sidebar() {
         </ul>
       ) : (
         <ul className="nav nav-pills flex-column mb-auto">
+                         <li>
+                    <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
+                      <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+                      <i class="fa-solid fa-barcode mx-2"></i>
+                      Registrar Prestamo
+                    </Link>
+                  </li>
            <li className="nav-item">
             <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
