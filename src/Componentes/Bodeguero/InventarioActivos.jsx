@@ -120,7 +120,8 @@ export default function InventarioActivos() {
         ('0' + (currentDate.getMonth() + 1)).slice(-2) +
         ('0' + currentDate.getDate()).slice(-2) +
         ('0' + currentDate.getHours()).slice(-2) +
-        ('0' + currentDate.getMinutes()).slice(-2);
+        ('0' + currentDate.getMinutes()).slice(-2) +
+        ('0' + currentDate.getSeconds()).slice(-2);
 
       a.download = 'Inventario_' + formattedDate + '.xlsx'; // Nombre del archivo con fecha
       document.body.appendChild(a);

@@ -64,7 +64,7 @@ export default function RegistrarActivo() {
         
         const elementos = productos_get.map((element) => ({
           value: element.id_producto,
-          label: element.nombre_producto,
+          label: element.nombre_producto+" ("+element.marca+")",
         }));
 
         setOption(elementos);
