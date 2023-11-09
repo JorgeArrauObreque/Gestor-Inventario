@@ -16,12 +16,14 @@ namespace gestion_inventario.Controllers
                 return context.personas.ToList();
             }
         }
-        [HttpGet("api/personas/get_by_rut")]
+        [HttpGet("get_by_rut")]
         public Persona Get_by_rut(string rut)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.personas.Where(r => r.rut == rut).FirstOrDefault();
+                var query = context.personas.Where(r => r.rut == rut).FirstOrDefault();
+             
+                return query;
             }
         }
         [HttpDelete("{rut}")]

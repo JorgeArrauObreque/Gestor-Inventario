@@ -69,6 +69,8 @@ namespace gestion_inventario.Controllers
                 headerRow.GetCell(4).CellStyle = cellStyle;
                 headerRow.CreateCell(5).SetCellValue("Categoría");
                 headerRow.GetCell(5).CellStyle = cellStyle;
+                headerRow.CreateCell(6).SetCellValue("estado");
+                headerRow.GetCell(6).CellStyle = cellStyle;
                 // Llenar la hoja de trabajo con datos
                 for (int i = 0; i < inventarios.Count; i++)
                 {
@@ -79,6 +81,7 @@ namespace gestion_inventario.Controllers
                     dataRow.CreateCell(3).SetCellValue(inventarios[i].productoNavigation.tipoProductoNavigation.nombre_tipo_producto);
                     dataRow.CreateCell(4).SetCellValue(inventarios[i].productoNavigation.marca);
                     dataRow.CreateCell(5).SetCellValue(inventarios[i].productoNavigation.categoriaNavigation.nombre_categoria);
+                    dataRow.CreateCell(6).SetCellValue(inventarios[i].InventarioEstadoNavigation.nombre_estado_inventario);
                 }
 
                 // Crear un flujo de memoria para el libro de Excel

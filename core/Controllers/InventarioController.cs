@@ -91,7 +91,7 @@ namespace gestion_inventario.Controllers
                 if (activo.id_producto == "0")
                 {
                     Producto producto = new Producto();
-                    producto.id_producto = string.Concat(activo.marca.Substring(0, 2), " ", DateTime.Now.ToString("HH:mm:ss"));
+                    producto.id_producto = string.Concat(activo.marca.Substring(0, 2), " ", DateTime.Now.ToString("ddMMyyyyHHmmss"));
                     producto.marca = activo.marca;
                     producto.descripcion = activo.descripcion;
                     producto.id_proveedor = "1";
