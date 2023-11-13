@@ -26,7 +26,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    
+
     Estadisticas().then((result) => {
       setEstadisticas(result);
       const chartData = result.prestamos_siete_dias.map((item) => ({
@@ -35,6 +35,7 @@ const Dashboard = () => {
       }));
       setData(chartData);
       setLoading(false); // Marca la carga como completa
+      console.log(result);
     });
   }, []);
 
@@ -42,12 +43,12 @@ const Dashboard = () => {
     <div>
       <h2>Estadísticas</h2>
 
-      {loading ? ( // Muestra un mensaje de "Cargando..." mientras se obtienen los datos
+      {loading ? (
         <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+          <span class="visually-hidden">Loading...</span>
+        </div>
       ) : (
-        // Cuando los datos están disponibles, muestra el contenido
+
         <div className='container'>
           <div className='row mb-3'>
             <div className='col-xxl-3'>
@@ -55,32 +56,53 @@ const Dashboard = () => {
                 <h3 className='h6'>Cantidad de productos en inventario</h3>
                 <h3>{estadisticas.cantidad_productos_inventario}</h3>
               </div>
-          
-            </div>
-            <div className='col-xxl-3'>
-            <div className='card text-center p-3'>
-                <h3 className='h6'>Producto Más Solicitado</h3>
-                <h3>{estadisticas.productoConMasPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
-                <h3>Cantidad: {estadisticas.productoConMasPrestamos.totalPrestamos}</h3>
-              </div>
+
             </div>
             <div className='col-xxl-3'>
               <div className='card text-center p-3'>
-                  <h3 className='h6'>Producto Menos Solicitado</h3>
-                  <h3>{estadisticas.productoConMenosPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
-                  <h3>Cantidad: {estadisticas.productoConMenosPrestamos.totalPrestamos}</h3>
-                </div>
+                <h3 className='h6'>Producto Más Solicitado</h3>
+                {estadisticas.productoConMasPrestamos !== null ? (
+                  <>
+                    <h3>{estadisticas.productoConMasPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
+                    <h3>Cantidad: {estadisticas.productoConMasPrestamos.totalPrestamos}</h3>
+                  </>
+                ) : (
+                  <p>No hay datos disponibles para el Producto Más Solicitado.</p>
+                )}
+              </div>
+            </div>
+
+            <div className='col-xxl-3'>
+              <div className='card text-center p-3'>
+                <h3 className='h6'>Producto Menos Solicitado</h3>
+                {estadisticas.productoConMenosPrestamos !== null ? (
+                  <>
+                    <h3>{estadisticas.productoConMenosPrestamos.producto.nombre_producto} ({estadisticas.productoConMenosPrestamos.producto.marca})</h3>
+                    <h3>Cantidad: {estadisticas.productoConMenosPrestamos.totalPrestamos}</h3>
+                  </>
+                ) : (
+                  <p>No hay datos disponibles para el Producto Menos Solicitado.</p>
+                )}
+              </div>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="prestamos" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
+
+
+          {data.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={data}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="prestamos" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <p>No hay prestamos esta semana disponibles para mostrarse</p>
+          )}
+
+
         </div>
       )}
     </div>
