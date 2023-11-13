@@ -22,7 +22,7 @@ namespace gestion_inventario.Controllers
                             join producto in context.productos on inventario.id_producto equals producto.id_producto
                             join categoria in context.categorias on producto.id_categoria equals categoria.id_categoria
                             select new { id_movimiento = movimientos.id_movimiento, nombre_movimiento = tipo.nombre_movimiento_tipo, fecha_creacion = movimientos.fecha_creacion.ToString("dd-MM-yyyy HH:mm"),
-                            id_inventario = inventario.id_inventario, nombre_producto = producto.nombre_producto, marca = producto.marca, categoria =  categoria.nombre_categoria}).ToList();
+                            id_inventario = inventario.id_inventario, nombre_producto = producto.nombre_producto, marca = producto.marca, categoria =  categoria.nombre_categoria}).OrderBy(r=>r.id_movimiento).ToList();
 
 
                 return query;

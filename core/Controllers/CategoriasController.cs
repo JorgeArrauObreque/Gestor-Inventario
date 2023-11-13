@@ -50,7 +50,16 @@ namespace gestion_inventario.Controllers
                         // Maneja la excepción si el token no es válido
                     }
                 }
-                return context.categorias.ToList();
+                return context.categorias.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_categoria, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
             }
         }
         [HttpGet("api/categoria/get_by_categoria")]

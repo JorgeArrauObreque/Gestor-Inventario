@@ -31,6 +31,40 @@ export default function Inventario() {
     const handleCloseModal = () => {
         setShowModal(false);
     };
+
+
+
+
+    const handleDownloadExcel = async () => {
+        try {
+          // Código para descargar el archivo Excel
+          const response = await fetch('http://localhost:5136/api/Informe/export'); // Asegúrate de que la ruta sea correcta
+          const blob = await response.blob();
+    
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          const currentDate = new Date();
+          const formattedDate = currentDate.getFullYear() +
+            ('0' + (currentDate.getMonth() + 1)).slice(-2) +
+            ('0' + currentDate.getDate()).slice(-2) +
+            ('0' + currentDate.getHours()).slice(-2) +
+            ('0' + currentDate.getMinutes()).slice(-2) +
+            ('0' + currentDate.getSeconds()).slice(-2);
+    
+          a.download = 'Inventario_' + formattedDate + '.xlsx'; // Nombre del archivo con fecha
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+
+
+
     async function getData(){
         const data_get = await Get_all();
         setData(data_get);

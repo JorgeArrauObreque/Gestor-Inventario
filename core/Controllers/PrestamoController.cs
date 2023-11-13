@@ -2,7 +2,7 @@
 using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
@@ -14,7 +14,8 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.prestamos.ToList();
+                var query = context.prestamos.Include(r=>r.personaNavigation).OrderBy(r => r.id_prestamo).ToList();
+                return query;
             }
         }
         [HttpGet("{id_prestamo}")]
@@ -25,6 +26,27 @@ namespace gestion_inventario.Controllers
                 return context.prestamos.Where(r => r.id_prestamo == id_prestamo).FirstOrDefault();
             }
         }
+        [HttpGet("get_No_back")]
+        public List<PrestamoDetalle> Get_No_Back()
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                return context.prestamo_detalles.Include(r=>r.prestamoNavigation).Include(r=>r.prestamoNavigation.personaNavigation).Where(r => r.entregado == false).ToList();
+            }
+        }
+        [HttpGet("get_by_id_inventario")]
+        public PrestamoDetalle get_by_id_inventario(string id)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query  = context.prestamo_detalles.Include(r => r.prestamoNavigation)
+                    .Include(r => r.prestamoNavigation.personaNavigation)
+                    .Where(r => r.entregado == false && r.id_inventario == id).OrderByDescending(r=>r.fecha_entrega).FirstOrDefault();
+                return query;
+            }
+        }
+
+
         [HttpPost]
         public ActionResult Add([FromBody] PrestamoViewModel prestamo)
         {
@@ -60,5 +82,7 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
+
+        
     }
 }

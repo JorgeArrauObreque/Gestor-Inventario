@@ -18,7 +18,9 @@ namespace gestion_inventario.Controllers
             {
                 return context.inventario.Include(r => r.InventarioEstadoNavigation).Include(r => r.bodegaNavigation).Include(r => r.productoNavigation)
                     .Select(r => new { id_inventario = r.id_inventario, id_bodega = r.id_bodega, id_inventario_estado = r.id_inventario_estado,
-                        nombre_bodega = r.bodegaNavigation.direccion, nombre_inventario_estado = r.InventarioEstadoNavigation.nombre_estado_inventario, nombre_producto = r.productoNavigation.nombre_producto, id_producto = r.id_producto,fecha_actualizacion = r.fecha_actualizacion, fecha_creacion=r.fecha_creacion   }).ToArray();
+                        nombre_bodega = r.bodegaNavigation.direccion, nombre_inventario_estado = r.InventarioEstadoNavigation.nombre_estado_inventario,
+                        nombre_producto = r.productoNavigation.nombre_producto, id_producto = r.id_producto,fecha_actualizacion = r.fecha_actualizacion,
+                        fecha_creacion=r.fecha_creacion   }).OrderBy(r=>r.id_inventario).ToArray();
             }
         }
         [HttpGet("api/inventario/get_by_id")]
@@ -52,7 +54,7 @@ namespace gestion_inventario.Controllers
         public ActionResult Add([FromBody] InventarioViewModel inventario){
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.inventario.Where(r=>r.id_inventario == inventario.id_inventario).FirstOrDefault();
+                var query = context.inventario.Where(r => r.id_inventario == inventario.id_inventario).FirstOrDefault();
                 if (query != null) return BadRequest();
                 Inventario new_inventario = new Inventario();
                 new_inventario.id_inventario = inventario.id_inventario;
@@ -64,6 +66,17 @@ namespace gestion_inventario.Controllers
                 new_inventario.user = "admin";
                 context.inventario.Add(new_inventario);
                 context.SaveChanges();
+
+                //añadicion al historico
+                HistoricoMovimiento historico = new HistoricoMovimiento();
+                historico.id_tipo_movimiento = 3;
+                historico.id_inventario = new_inventario.id_inventario;
+                historico.id_user = 2;
+                historico.comentarios = "Ingreso";
+                historico.fecha_creacion = DateTime.Now;
+                historico.fecha_actualizacion = DateTime.Now;
+                context.Add(historico);
+                context.SaveChanges();
                 return Ok();
             }
         }
@@ -73,6 +86,7 @@ namespace gestion_inventario.Controllers
             {
                 var query = context.inventario.Where(r=>r.id_inventario == inventario.id_inventario).FirstOrDefault();
                 if (query == null) return NotFound();
+                bool cambio_bodega = query.id_bodega != inventario.id_bodega; 
                 query.id_inventario = inventario.id_inventario;
                 query.id_inventario_estado = inventario.id_inventario_estado;
                 query.id_bodega = inventario.id_bodega;
@@ -80,6 +94,18 @@ namespace gestion_inventario.Controllers
                 query.id_producto = inventario.id_producto;
                 query.fecha_actualizacion = DateTime.Now;
                 context.SaveChanges();
+                if (cambio_bodega == true)
+                {
+                    HistoricoMovimiento historico = new HistoricoMovimiento();
+                    historico.id_tipo_movimiento = 2;
+                    historico.id_inventario = query.id_inventario;
+                    historico.id_user = 2;
+                    historico.comentarios = "cambio de bodega";
+                    historico.fecha_creacion = DateTime.Now;
+                    historico.fecha_actualizacion = DateTime.Now;
+                    context.Add(historico);
+                    context.SaveChanges();
+                }
                 return Ok();
             }
         }
@@ -113,6 +139,15 @@ namespace gestion_inventario.Controllers
                     new_inventario.user = "admin";
                     context.inventario.Add(new_inventario);
                     context.SaveChanges();
+                    HistoricoMovimiento historico = new HistoricoMovimiento();
+                    historico.id_tipo_movimiento = 3;
+                    historico.id_inventario = new_inventario.id_inventario;
+                    historico.id_user = 2;
+                    historico.fecha_creacion = DateTime.Now;
+                    historico.fecha_actualizacion = DateTime.Now;
+                    historico.comentarios = "Ingreso";
+                    context.Add(historico);
+                    context.SaveChanges();
                 }
                 else
                 {
@@ -120,7 +155,7 @@ namespace gestion_inventario.Controllers
 
                     var query = context.productos.Where(r => r.id_producto == activo.id_producto).FirstOrDefault();
                     var query_inventario = context.inventario.Where(r => r.id_inventario == activo.id_inventario).FirstOrDefault();
-                    if (query != null) return BadRequest();
+                    if (query_inventario != null) return BadRequest();
                     Inventario new_inventario = new Inventario();
                     new_inventario.id_inventario = activo.id_inventario;
                     new_inventario.id_inventario_estado = "1";
@@ -130,6 +165,15 @@ namespace gestion_inventario.Controllers
                     new_inventario.fecha_actualizacion = DateTime.Now;
                     new_inventario.user = "admin";
                     context.inventario.Add(new_inventario);
+                    context.SaveChanges();
+                    HistoricoMovimiento historico = new HistoricoMovimiento();
+                    historico.id_tipo_movimiento = 3;
+                    historico.id_inventario = new_inventario.id_inventario;
+                    historico.id_user = 2;
+                    historico.comentarios = "Ingreso";
+                    historico.fecha_creacion = DateTime.Now;
+                    historico.fecha_actualizacion = DateTime.Now;
+                    context.Add(historico);
                     context.SaveChanges();
                 }
                 return Ok();

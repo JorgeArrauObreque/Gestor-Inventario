@@ -4170,19 +4170,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rsala\\.nuget\\packages\\": {}
+    "C:\\Users\\nacho\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rsala\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
+      "projectUniqueName": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
       "projectName": "gestion_inventario",
-      "projectPath": "C:\\Users\\rsala\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
-      "packagesPath": "C:\\Users\\rsala\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rsala\\Documents\\GitHub\\Gestor-Inventario\\core\\obj\\",
+      "projectPath": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
+      "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\rsala\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

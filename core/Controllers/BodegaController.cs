@@ -16,7 +16,20 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.bodegas.ToList();
+                int result;
+                return context.bodegas.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_bodega, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
+
+
+
             }
         }
         [HttpGet("get_by_id")]

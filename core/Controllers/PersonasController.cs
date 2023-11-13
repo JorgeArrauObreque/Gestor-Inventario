@@ -13,7 +13,7 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.personas.ToList();
+                return context.personas.OrderBy(r=>r.rut).ToList();
             }
         }
         [HttpGet("get_by_rut")]

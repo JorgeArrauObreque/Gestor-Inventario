@@ -14,7 +14,16 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.inventario_estados.ToList();
+                return context.inventario_estados.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_inventario_estado, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
             }
         }
         [HttpGet("get_by_id")]

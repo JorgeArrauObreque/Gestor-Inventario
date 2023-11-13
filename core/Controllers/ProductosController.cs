@@ -21,8 +21,17 @@ namespace gestion_inventario.Controllers
                     .Select(r => new { id_producto = r.id_producto, nombre_producto = r.nombre_producto
                     , fecha_creacion = r.fecha_creacion, fecha_actualizacion = r.fecha_actualizacion, proveedor = r.ProveedorNavigation.nombre_proveedor
                     , marca = r.marca, descripcion = r.descripcion, categoria = r.categoriaNavigation.nombre_categoria,
-                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor = r.id_proveedor, id_categoria = r.id_categoria, id_tipo_producto = r.id_tipo_producto })
-                    .ToArray();
+                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor = r.id_proveedor, id_categoria = r.id_categoria, 
+                        id_tipo_producto = r.id_tipo_producto }).ToList().OrderBy(r => {
+                            if (int.TryParse(r.id_producto, out int result))
+                            {
+                                return result;
+                            }
+                            else
+                            {
+                                return int.MaxValue;
+                            }
+                        }).ToArray();
             }
         }
         [HttpGet("get")]

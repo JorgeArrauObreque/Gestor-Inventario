@@ -75,7 +75,7 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.usuariosSistema.Include(r=>r.rolNavigation).ToList();
+                return context.usuariosSistema.Include(r=>r.rolNavigation).OrderBy(r=>r.id_user).ToList();
             }
         }
         [AllowAnonymous]

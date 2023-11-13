@@ -19,6 +19,13 @@ export default function Sidebar() {
     <div className="d-flex flex-column flex-shrink-0 p-3 sidebar" style={{ width: "100%", height: "90vh" }}>
       {user.rol === "Administrador" ? (
         <ul className="nav nav-pills flex-column mb-auto">
+                           <li>
+                    <Link to="/DevolucionPrestamo" className={activeTab === "DevolucionPrestamo" ? "nav-link active" : "nav-link text-dark"}>
+                      <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+                      <i class="fa-solid fa-barcode mx-2"></i>
+                      Devolver Prestamo
+                    </Link>
+                  </li>
           <li className="nav-item">
             <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
@@ -138,12 +145,19 @@ export default function Sidebar() {
       ) : (
         <ul className="nav nav-pills flex-column mb-auto">
                          <li>
-                    <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
+                    <Link to="/DevolucionPrestamo" className={activeTab === "DevolucionPrestamo" ? "nav-link active" : "nav-link text-dark"}>
                       <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
                       <i class="fa-solid fa-barcode mx-2"></i>
-                      Registrar Prestamo
+                      Devolver Prestamo
                     </Link>
                   </li>
+          <li>
+            <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+              <i class="fa-solid fa-barcode mx-2"></i>
+              Registrar Prestamo
+            </Link>
+          </li>
            <li className="nav-item">
             <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>

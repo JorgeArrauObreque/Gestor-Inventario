@@ -307,6 +307,12 @@ namespace gestion_inventario.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_prestamo_detalle"));
 
+                    b.Property<bool>("entregado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("fecha_entrega")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("id_inventario")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

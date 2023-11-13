@@ -14,8 +14,11 @@ namespace gestion_inventario.Models
         public Inventario inventarioNavigation { get; set; }
         [Required]
         public long id_prestamo { get; set; }
-        [NotMapped]
-        public Prestamo prestamoNavigation { get; set; }
         
+        public Prestamo prestamoNavigation { get; set; }
+        public DateTime? fecha_entrega { get; set; }
+        [Required]
+        public bool entregado { get; set; } = false;
+
     }
 }
