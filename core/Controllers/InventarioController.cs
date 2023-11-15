@@ -20,7 +20,7 @@ namespace gestion_inventario.Controllers
                     .Select(r => new { id_inventario = r.id_inventario, id_bodega = r.id_bodega, id_inventario_estado = r.id_inventario_estado,
                         nombre_bodega = r.bodegaNavigation.direccion, nombre_inventario_estado = r.InventarioEstadoNavigation.nombre_estado_inventario,
                         nombre_producto = r.productoNavigation.nombre_producto, id_producto = r.id_producto,fecha_actualizacion = r.fecha_actualizacion,
-                        fecha_creacion=r.fecha_creacion   }).OrderBy(r=>r.id_inventario).ToArray();
+                        fecha_creacion=r.fecha_creacion, marca = r.productoNavigation.marca   }).OrderBy(r=>r.id_inventario).ToArray();
             }
         }
         [HttpGet("api/inventario/get_by_id")]
