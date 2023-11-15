@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from "react"
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { Button, Modal } from 'react-bootstrap';
+import PrestamoDetail from "./PrestamoDetail";
+import { Get_Prestamo_Details } from "../../Servicios/Prestamos";
 function formatearFecha(fecha) {
     return format(new Date(fecha), 'dd-MM-yyyy');
 }
@@ -10,8 +12,14 @@ export default function Prestamos() {
 
     const [showModal, setShowModal] = useState(false);
 
-    const handleShowModal = () => {
+    const handleShowModal = async (event) => {
+        const dataValue = event.target.getAttribute('data-id');
+
         setShowModal(true);
+        const resultado = await Get_Prestamo_Details(dataValue );
+        console.log(resultado);
+        setPrestamoDetalles(resultado); 
+        
     };
 
 
@@ -24,6 +32,10 @@ export default function Prestamos() {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [inventarios, setInventarios] = useState([]);
     const [prestamo, setPrestamo] = useState();
+    const [prestamoDetalles,setPrestamoDetalles] = useState([]); 
+
+
+
     const GetData = () => {
         axios.get("http://localhost:5136/api/Prestamo").then((response) => {
             setData(response.data);
@@ -38,6 +50,7 @@ export default function Prestamos() {
         GetData();
         GetPersonas();
         GetInventario();
+
     }, []);
     const GetPersonas = () => {
         axios.get("http://localhost:5136/api/Personas").then(response => {
@@ -152,6 +165,7 @@ export default function Prestamos() {
                                 <th>Fecha creacion</th>
                                 <th>Plazo</th>
                                 <th>Rut</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,6 +175,7 @@ export default function Prestamos() {
                                     <td>{formatearFecha(item.fecha_creacion)} </td>
                                     <td>{ formatearFecha(item.fecha_plazo)}</td>
                                     <td>{item.rut}</td>
+                                    <td><Button type="button" onClick={handleShowModal} data-id={item.id_prestamo} variant="primary">Ver</Button></td>
                                 </tr>
                             ))}
 
@@ -172,53 +187,9 @@ export default function Prestamos() {
                         <Modal.Title>Prestamos</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID Inventario</th>
-                                    <th>Producto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {inventarios.map((item) => (
-                                    <tr>
-                                        <td><button data-id={item.id_inventario} data-nombre={item.nombre_producto} onClick={SeleccionarElemento} className="btn"><i className="fa fa-plus"></i></button></td>
-                                        <td>{item.id_inventario}</td>
-                                        <td>{item.nombre_producto}</td>
-
-                                    </tr>
-                                ))}
-
-                            </tbody>
-                        </table>
-                        {InventariosSeleccionados.length > 0 ? (
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ID Inventario</th>
-                                        <th>Producto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {InventariosSeleccionados.map((item) => (
-                                        <tr key={item.id_inventario}>
-                                            <td>
-                                                <button data-id={item.id_inventario} onClick={EliminarElementoSeleccionado} className="btn"><i className="fa fa-trash text-danger"></i></button>
-                                            </td>
-                                            <td>{item.id_inventario}</td>
-                                            <td>{item.nombre_producto}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <>
-                            </>
-                        )}
-
+                            
+                        <PrestamoDetail detalles={prestamoDetalles}  />
+                            
 
                     </Modal.Body>
                     <Modal.Footer>

@@ -23,6 +23,31 @@ export async function Get_all() {
       return [];
     }
   }
+
+  export async function get_inventario_by_id(id){
+    try {
+      const response = await axios.get(`${baseURL}/api/Prestamo/get_inventario?id=${id}`, getHeaders());
+      return response.data;
+    } catch (error) {
+      handleRequestError(error);
+      return [];
+    }
+  }
+
+  export async function CreatePrestamo(id_solicitante,fecha_plazo,items){
+    try {
+    const request = {
+      'id_solicitante':id_solicitante,
+      'fecha_plazo':fecha_plazo,
+      'id_inventarios':items,
+    }
+    const response = await axios.post(`${baseURL}/api/Prestamo/GenerarPrestamo`,request,getHeaders());
+    return response;
+  } catch (error) {
+    handleRequestError(error);
+    return [];
+  }
+  }
   
   export async function Get_Pendientes() {
     try {
@@ -45,6 +70,16 @@ export async function Get_all() {
   }
 
 
+  export async function Get_Prestamo_Details(id){
+      try {
+        const response = await axios.get(`${baseURL}/api/Prestamo/get_details?id_prestamo=${id}`, getHeaders());
+        return response.data;
+      } catch (error) {
+        handleRequestError(error);
+        return [];
+      }
+  }
+
   function handleRequestError(error) {
     if (error.response) {
       console.error("Código de estado:", error.response.status);
@@ -57,3 +92,5 @@ export async function Get_all() {
       console.error("Error de red o solicitud no válida:", error.message);
     }
   }
+
+
