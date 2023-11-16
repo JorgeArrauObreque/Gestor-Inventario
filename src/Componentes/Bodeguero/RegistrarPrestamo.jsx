@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Get_all as get_all_productos } from '../../Servicios/ProductoService';
 import { get_all as get_all_personas, get_by_rut } from '../../Servicios/PersonasServices';
 import { ModalBody, ModalHeader, ModalTitle, Modal, Button } from 'react-bootstrap';
@@ -72,7 +72,7 @@ const RegistrarPrestamo = () => {
         setShowModalEscaner(false);
     };
 
-    const handleSelectChange = async (e) => { 
+    const handleSelectChange = async (e) => {
         const selectedValue = e.target.value;
         if (selectedValue != '') {
             const response = await get_by_rut(selectedValue);
@@ -86,11 +86,11 @@ const RegistrarPrestamo = () => {
                 },
             });
             console.log(response);
-        }  
-        
-        
-     
-      
+        }
+
+
+
+
         // formStatepersona();
     };
 
@@ -123,13 +123,13 @@ const RegistrarPrestamo = () => {
         }));
     };
 
-    const { formState : { errors }, register, reset, clearErrors, handleSubmit } = useForm();
+    const { formState: { errors }, register, reset, clearErrors, handleSubmit } = useForm();
     const submit = async (data) => {
         // console.log(productosSeleccionados);
         const inventarios = productosSeleccionados.map(objeto => objeto.id_inventario);
-        if(inventarios.length != 0){
-            const response = await CreatePrestamo(data.id_solicitante,data.fecha_plazo, inventarios);
-            
+        if (inventarios.length != 0) {
+            const response = await CreatePrestamo(data.id_solicitante, data.fecha_plazo, inventarios);
+
             if (response.status == 200) {
                 Swal.fire({
                     position: 'top-end',
@@ -138,10 +138,11 @@ const RegistrarPrestamo = () => {
                     title: "Prestamo Generado correctamente",
                     showConfirmButton: false,
                     timer: 3000,
-                  });
+                });
+                Limpiar();
             }
-     
-        }  else{
+
+        } else {
             Swal.fire({
                 position: 'top-end',
                 toast: true,
@@ -149,9 +150,9 @@ const RegistrarPrestamo = () => {
                 title: "Ingrese productos para generar un prestamo",
                 showConfirmButton: false,
                 timer: 3000,
-              });
+            });
         }
-        
+
     };
 
     useEffect(() => {
@@ -167,6 +168,20 @@ const RegistrarPrestamo = () => {
         const value = e.target.value;
     };
 
+
+    const Limpiar = () => {
+        setFormStatepersona({
+            selectedRut: '',
+            persona: {
+                nombres: '',
+                apellidos: '',
+                tipo: '',
+                Carrera: '',
+            },
+        });
+        setProductosSeleccionados([]);
+        reset();
+    }
     // useEffect(() => {
     //     async function getPersona() {
     //         const query = await get_by_rut(formState.selectedRut);
@@ -186,6 +201,19 @@ const RegistrarPrestamo = () => {
     //     }
     // }, [formState.selectedRut]);
 
+    const inputRef = useRef(null);
+
+    const handleModalShow = () => {
+        if (showModalEscaner) {
+            inputRef.current.focus();
+        }
+    };
+
+    useEffect(() => {
+        handleModalShow();
+    }, [showModalEscaner]);
+
+
     return (
         <>
             <form onSubmit={handleSubmit(submit)}>
@@ -193,10 +221,10 @@ const RegistrarPrestamo = () => {
                     <h1>Prestamo de Activos</h1>
                     <div className='row'>
                         <div className='col-xl-2'>
-                            <button onClick={handleShowModal} className='btn btn-secondary w-100'>Productos</button>
+                            <button type='button' onClick={handleShowModal} className='btn btn-secondary w-100'>Productos</button>
                         </div>
                         <div className='col-xl-2'>
-                            <button onClick={handleShowModalEscaner} className='btn btn-warning w-100'>Escanear</button>
+                            <button type='button' onClick={handleShowModalEscaner} className='btn btn-warning w-100'>Escanear</button>
                         </div>
                         <div className='col-xl-2'>
                             <button onClick={submit} className='btn btn-primary w-100'>Guardar</button>
@@ -207,9 +235,9 @@ const RegistrarPrestamo = () => {
                         <div className='col'>
                             <label htmlFor="">Solicitante</label>
                             <select {...register("id_solicitante", { required: true })} className='form-control' onChange={(e) => {
-                            handleSelectChange(e);
-                            register("id_solicitante").onChange(e); // Ejecuta el onChange de register
-                        }}>
+                                handleSelectChange(e);
+                                register("id_solicitante").onChange(e); // Ejecuta el onChange de register
+                            }}>
                                 <option value="" selected>Selecciona Persona</option>
                                 {personas.map((item) => (
                                     <option key={item.rut} value={item.rut}>{item.nombres} {item.apellidos} ({item.rut}) </option>
@@ -220,72 +248,87 @@ const RegistrarPrestamo = () => {
                         <div className='col'>
                             <label htmlFor="">Fecha Plazo</label>
                             <input
-                            type="date"
-                            className='form-control'
-                            {...register("fecha_plazo", {
-                                required: true,
-                                validate: {
-                                    dateValidation: value => {
-                                        // Aquí puedes realizar validaciones personalizadas si es necesario
-                                        // Por ejemplo, verificar si la fecha es válida
-                                        return true; // Retorna true si la fecha es válida, de lo contrario, false
+                                type="date"
+                                className='form-control'
+                                {...register("fecha_plazo", {
+                                    required: true,
+                                    validate: {
+                                        dateValidation: value => {
+                                            // Aquí puedes realizar validaciones personalizadas si es necesario
+                                            // Por ejemplo, verificar si la fecha es válida
+                                            return true; // Retorna true si la fecha es válida, de lo contrario, false
+                                        }
                                     }
-                                }
-                            })}
-                            onChange={handleDateChange}
-                        />
-                       {errors.fecha_plazo && (<span className='text-danger'>Campo Requerido</span>)}
+                                })}
+                                onChange={handleDateChange}
+                            />
+                            {errors.fecha_plazo && (<span className='text-danger'>Campo Requerido</span>)}
                         </div>
 
-              
+
                     </div>
                     <div className='row'>
-                    <div className='col'>
+                        <div className='col'>
                             <label htmlFor="">Nombres</label>
-                            <input type="text" name="" disabled value={formStatepersona.persona.nombres}  className='form-control' id="" />
-                        
+                            <input type="text" name="" disabled value={formStatepersona.persona.nombres} className='form-control' id="" />
+
                         </div>
                         <div className='col'>
                             <label htmlFor="">Apellidos</label>
-                            <input type="text" name="" disabled value={formStatepersona.persona.apellidos}  className='form-control' id="" />
-                       
+                            <input type="text" name="" disabled value={formStatepersona.persona.apellidos} className='form-control' id="" />
+
                         </div>
                     </div>
                     <div className='row justify-content-center mt-5'>
                         <div className='col-xxl-10'>
-                            <table className='table'>
-                            
-                                <tr className='table-head'>
-                                        <th>ID Inventario</th>
-                                        <th>Nombre producto</th>
-                                        <th>Marca</th>
-                                        <th>Tipo producto</th>
-                                    </tr>
-                           
-                                <tbody>
-                                    {productosSeleccionados.map((producto) => (
-                                        <tr key={producto.id_producto}>
-                                            <td>{producto.id_inventario}</td>
-                                            <td>{producto.nombre_producto}</td>
-                                            <td>{producto.marca}</td>
-                                            <td>{producto.tipo_producto}</td>
-                                            {/* <td className='justify-content-center d-flex'>
-                                        <input
-                                            type="number" className='form-control' style={{width:"200px"}} maxLength={3}
-                                            value={producto.cantidad} min={1} max={10}
-                                            onChange={(e) => {
-                                                const nuevaCantidad = parseInt(e.target.value, 10);
-                                                const nuevosProductos = productosSeleccionados.map((p) =>
-                                                    p.id_producto === producto.id_producto ? { ...p, cantidad: nuevaCantidad } : p
-                                                );
-                                                setProductosSeleccionados(nuevosProductos);
-                                            }}
-                                        />
-                                    </td> */}
+                            {productosSeleccionados.length > 0 ? (
+                                <table className='table'>
+                                    <thead>
+                                        <tr className='table-head'>
+                                            <th>ID Inventario</th>
+                                            <th>Nombre producto</th>
+                                            <th>Marca</th>
+                                            <th>Tipo producto</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {productosSeleccionados.map((producto) => (
+                                            <tr key={producto.id_producto}>
+                                                <td>{producto.id_inventario}</td>
+                                                <td>{producto.nombre_producto}</td>
+                                                <td>{producto.marca}</td>
+                                                <td>{producto.tipo_producto}</td>
+                                                {/* <td className='justify-content-center d-flex'>
+                        <input
+                            type="number"
+                            className='form-control'
+                            style={{ width: "200px" }}
+                            maxLength={3}
+                            value={producto.cantidad}
+                            min={1}
+                            max={10}
+                            onChange={(e) => {
+                                const nuevaCantidad = parseInt(e.target.value, 10);
+                                const nuevosProductos = productosSeleccionados.map((p) =>
+                                    p.id_producto === producto.id_producto
+                                        ? { ...p, cantidad: nuevaCantidad }
+                                        : p
+                                );
+                                setProductosSeleccionados(nuevosProductos);
+                            }}
+                        />
+                    </td> */}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className='alert alert-info'>
+                                    <p>No hay productos añadidos para el prestamo</p>
+                                </div>
+                            )}
+
+
                         </div>
                     </div>
                 </div>
@@ -336,22 +379,29 @@ const RegistrarPrestamo = () => {
 
 
 
-            <Modal show={showModalEscaner} onHide={handleCloseModalEscaner} size="lg">
+            <Modal show={showModalEscaner} onHide={handleCloseModalEscaner} size="lg" onClick={handleModalShow}>
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Inventario</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div className='d-flex justify-content-center'>
                     <img src="https://codigodebarra.com.ar/wp-content/uploads/2018/08/entre-rios-codigos-de-barra-ean.png" style={{ width: "500px" }} />
-                    <input type="text" name="" onKeyDown={onScan} autoFocus className='form-control' id="" />
+                    </div>
+                    
+                    <input
+                        type="text"
+                        name=""
+                        onKeyDown={onScan}
+                        className='form-control'
+                        ref={inputRef}
+                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModalEscaner}>
                         Cerrar
                     </Button>
-
                 </Modal.Footer>
             </Modal>
-
         </>
     );
 };
