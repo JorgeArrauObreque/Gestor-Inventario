@@ -35,7 +35,7 @@ import RegistrarPrestamo from './Componentes/Bodeguero/RegistrarPrestamo';
 import DevolucionPrestamo from './Componentes/Bodeguero/DevolucionPrestamo';
 
 function App() {
-  const { user,setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
+  const { user, setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
 
   useEffect(() => {
     // Intenta obtener el usuario desde el localStorage al cargar la página
@@ -50,16 +50,16 @@ function App() {
   }, []);
   return (
 
-      <BrowserRouter>
-        {user ? (
-          <>
-            <Navbar />
-            <div className='d-flex'>
-              <div className='col-xxl-2 col-xl-3'>
-                <Sidebar />
-              </div>
-              <div className='col p-4 mt-4' style={{ width: '900px' }}>
-  <div style={{ maxHeight: '700px', overflowY: 'auto' }}>
+    <BrowserRouter>
+      {user ? (
+        <>
+          <Navbar />
+          <div className='d-flex'>
+            <div className='col-xxl-2 col-xl-3'>
+              <Sidebar />
+            </div>
+            <div className='col p-4 mt-4' style={{ width: '900px' }}>
+              <div style={{ maxHeight: '700px', overflowY: 'auto' }}>
                 <Routes>
                   <Route path='proveedores' element={<Proveedores />} />
                   <Route path='DevolucionPrestamo' element={<DevolucionPrestamo />} />
@@ -82,19 +82,19 @@ function App() {
                   <Route path='historicoMovimientos' element={<HistoricoMovimientos />} />
                 </Routes>
               </div>
-              </div>
             </div>
-          </>
-        ) : (
-          <Routes>
-            
-            <Route path='login' element={<Login />} />
-            <Route path='RecoverPassword' element={<RecoverPassword />} />
-            <Route path='NewPassword' element={<NewPassword />} />
-            <Route path='*' element={<Navigate to='/login' />} />
-          </Routes>
-        )}
-      </BrowserRouter>
+          </div>
+        </>
+      ) : (
+        <Routes>
+
+          <Route path='login' element={<Login />} />
+          <Route path='RecoverPassword' element={<RecoverPassword />} />
+          <Route path='NewPassword' element={<NewPassword />} />
+          <Route path='*' element={<Navigate to='/login' />} />
+        </Routes>
+      )}
+    </BrowserRouter>
 
   );
 }

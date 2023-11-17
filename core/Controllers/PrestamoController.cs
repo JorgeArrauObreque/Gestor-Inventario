@@ -44,12 +44,18 @@ namespace gestion_inventario.Controllers
                 context.SaveChanges();
                 foreach (var item in prestamo_request.id_inventarios)
                 {
-                    PrestamoDetalle detalle = new PrestamoDetalle();
-                    detalle.id_inventario = item;
-                    detalle.id_prestamo = prestamo.id_prestamo;
-                    detalle.entregado = false;
-                    detalle.fecha_entrega = null;
-                    context.Add(detalle);
+                    var validacion = context.prestamo_detalles.Include(r => r.prestamoNavigation)
+                        .Where(r => r.prestamoNavigation.rut == prestamo_request.id_solicitante && r.entregado == true && r.id_inventario == item).FirstOrDefault();
+                    if (validacion == null)
+                    {
+                        PrestamoDetalle detalle = new PrestamoDetalle();
+                        detalle.id_inventario = item;
+                        detalle.id_prestamo = prestamo.id_prestamo;
+                        detalle.entregado = false;
+                        detalle.fecha_entrega = null;
+                        context.Add(detalle);
+                    }
+                
                 }
                 
                 context.SaveChanges();
@@ -137,6 +143,18 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
+        [HttpGet("devolver")]
+        public ActionResult PrestamoEntregado([FromQuery] prestamoEntrega entrega)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = context.prestamo_detalles.Include(r => r.prestamoNavigation).Where(r => r.id_inventario == entrega.id_inventario && r.prestamoNavigation.rut == entrega.rut && r.entregado == false).FirstOrDefault();
+                query.entregado = true;
+                query.fecha_entrega = DateTime.Now;
+                context.SaveChanges();
+                return Ok();
+            }
+        }
         [HttpGet("get_prestamos_persona")]
         public dynamic GetPrestamosPersona(string rut)
         {
@@ -154,5 +172,10 @@ namespace gestion_inventario.Controllers
         }
 
         
+    }
+    public class prestamoEntrega
+    {
+        public string rut { get; set; }
+        public string id_inventario { get; set; }
     }
 }

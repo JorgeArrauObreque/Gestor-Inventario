@@ -91,6 +91,16 @@ export async function Get_all() {
     }
 }
 
+
+export async function devolver(id_inventario,rut){
+  try {
+    const response = await axios.get(`${baseURL}/api/Prestamo/devolver?id_inventario=${id_inventario}&rut=${rut}`);
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+    return [];
+  }
+}
   function handleRequestError(error) {
     if (error.response) {
       console.error("Código de estado:", error.response.status);

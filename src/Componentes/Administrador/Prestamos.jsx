@@ -37,7 +37,7 @@ export default function Prestamos() {
 
         setShowModal(true);
         const resultado = await Get_Prestamo_Details(dataValue);
-        console.log(resultado);
+     
         setPrestamoDetalles(resultado);
 
     };

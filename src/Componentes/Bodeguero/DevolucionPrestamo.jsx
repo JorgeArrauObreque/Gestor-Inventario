@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { Get_all as get_all_prestamos, Get_Pendientes, Get_Prestamo_By_Inventario, Get_Prestamo_persona } from '../../Servicios/Prestamos';
+import { devolver, devuelto, Get_all as get_all_prestamos, Get_Pendientes, Get_Prestamo_By_Inventario, Get_Prestamo_persona } from '../../Servicios/Prestamos';
 import { format, isAfter } from 'date-fns';
 import ActivosPrestados from './ActivosPrestadosPersona';
 import Swal from 'sweetalert2';
@@ -69,6 +69,7 @@ export default function DevolucionPrestamo() {
                         'nombre_solicitante': '',
                         'fecha_plazo': '',
                         'fecha_solicitud': '',
+                        'entregado': '',
                     });
                     setEstadoPrestamoDetalle(false);
                 } else {
@@ -81,6 +82,7 @@ export default function DevolucionPrestamo() {
                             'nombre_solicitante': res.prestamoNavigation.personaNavigation.nombres + " " + res.prestamoNavigation.personaNavigation.apellidos,
                             'fecha_plazo': res.prestamoNavigation.fecha_plazo,
                             'fecha_solicitud': res.prestamoNavigation.fecha_creacion,
+                            'entregado': res.entregado,
                         }
 
                     );
@@ -163,6 +165,9 @@ export default function DevolucionPrestamo() {
     //     const { name, value } = e.target;
     //     setDatosPersonales({...DatosPersonales,[name]:[value]})
     // }
+    const InventarioDevuelto = async ()=>{
+       const response =  await devolver(PrestameDetalle.id_inventario,PrestameDetalle.rut_solicitante);
+    }
     return (
         <>
             <button className='btn btn-warning' onClick={handleShowModal}>
@@ -285,6 +290,18 @@ export default function DevolucionPrestamo() {
 
 
                         </div>
+                        <div className='col'>
+                            <label htmlFor="">entregado </label>
+                           
+                            <input
+                                type="text"
+                                className='form-control'
+                                value={PrestameDetalle.entregado }
+                            />
+
+
+
+                        </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
@@ -292,7 +309,7 @@ export default function DevolucionPrestamo() {
                     {estadoPrestamoDetalle === false ? (
                         <button className='btn btn-info' onClick={handleCloseModaldetails}>Cerrar</button>
                     ) : (
-                        <button className='btn btn-primary'>Aceptar</button>
+                        <button onClick={InventarioDevuelto} className='btn btn-primary'>Aceptar Entrega</button>
                     )}
 
 
