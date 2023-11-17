@@ -17,6 +17,7 @@ export default function ActivosPrestados(props) {
               <th>Marca</th>
               <th>Fecha Prestamo</th>
               <th>Plazo</th>
+              <th>Entregado</th>
             </tr>
       
           <tbody>
@@ -36,6 +37,7 @@ export default function ActivosPrestados(props) {
                   <td>{item.inventarioNavigation.productoNavigation.marca}</td>
                   <td>{formatearFecha(item.prestamoNavigation.fecha_creacion)}</td>
                   <td>{formatearFecha(item.prestamoNavigation.fecha_plazo)}</td>
+                  <td>{item.entregado ? "Sí" : "No"}</td>
                 </tr>
               ))
             )}
