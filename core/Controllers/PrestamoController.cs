@@ -137,6 +137,21 @@ namespace gestion_inventario.Controllers
                 return Ok();
             }
         }
+        [HttpGet("get_prestamos_persona")]
+        public dynamic GetPrestamosPersona(string rut)
+        {
+            using (DbContextInventario context= new DbContextInventario())
+            {
+                var persona = context.personas.Where(r=>r.rut == rut).Include(r => r.TipoPersonaNavegation).FirstOrDefault();
+                var query = context.prestamo_detalles.Include(r => r.prestamoNavigation)
+                    .Include(r => r.prestamoNavigation.personaNavigation)
+                    .Include(r => r.inventarioNavigation).Include(r=>r.inventarioNavigation.productoNavigation).Include(r => r.inventarioNavigation.productoNavigation.categoriaNavigation)
+
+                    .Where(r=>r.prestamoNavigation.personaNavigation.rut == rut).ToList();
+                
+                return new { persona = persona,prestamos = query};
+            }
+        }
 
         
     }

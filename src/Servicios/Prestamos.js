@@ -80,6 +80,17 @@ export async function Get_all() {
       }
   }
 
+
+  export async function Get_Prestamo_persona(rut){
+    try {
+      const response = await axios.get(`${baseURL}/api/Prestamo/get_prestamos_persona?rut=${rut}`, getHeaders());
+      return response.data;
+    } catch (error) {
+      handleRequestError(error);
+      return [];
+    }
+}
+
   function handleRequestError(error) {
     if (error.response) {
       console.error("Código de estado:", error.response.status);

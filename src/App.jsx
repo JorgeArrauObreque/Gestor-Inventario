@@ -58,7 +58,8 @@ function App() {
               <div className='col-xxl-2 col-xl-3'>
                 <Sidebar />
               </div>
-              <div className='col p-4 mt-4'>
+              <div className='col p-4 mt-4' style={{ width: '900px' }}>
+  <div style={{ maxHeight: '700px', overflowY: 'auto' }}>
                 <Routes>
                   <Route path='proveedores' element={<Proveedores />} />
                   <Route path='DevolucionPrestamo' element={<DevolucionPrestamo />} />
@@ -80,6 +81,7 @@ function App() {
                   {/* <Route path='*' element={<Bodegas />} /> */}
                   <Route path='historicoMovimientos' element={<HistoricoMovimientos />} />
                 </Routes>
+              </div>
               </div>
             </div>
           </>

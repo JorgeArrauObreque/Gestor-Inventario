@@ -5,6 +5,7 @@ import { Get_all as get_all_productos } from "../../Servicios/ProductoService";
 import { Get_all as get_all_tipo_productos } from "../../Servicios/TipoProducto";
 import { Create_activo } from "../../Servicios/InventarioService";
 import { ModalBody, ModalHeader, ModalTitle, Modal, Button } from 'react-bootstrap';
+import Swal from "sweetalert2";
 
 
 
@@ -126,6 +127,17 @@ export default function RegistrarActivo() {
         descripcion: data.descripcion,
       };
       var response = await Create_activo(activo);
+      console.log(response);
+      Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'info',
+        title: response.data,
+        showConfirmButton: false,
+        timer: 3000,
+    });
+
+  
     } else {
       const activo = {
         id_inventario: data.id_inventario,
@@ -136,6 +148,16 @@ export default function RegistrarActivo() {
         descripcion: data.descripcion,
       };
       var response = await Create_activo(activo);
+      console.log(response);
+      Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'info',
+        title: response.data,
+        showConfirmButton: false,
+        timer: 3000,
+    });
+ 
     }
 
     reset({

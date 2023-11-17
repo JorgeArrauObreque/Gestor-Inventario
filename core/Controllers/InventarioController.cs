@@ -23,6 +23,22 @@ namespace gestion_inventario.Controllers
                         fecha_creacion=r.fecha_creacion, marca = r.productoNavigation.marca   }).OrderBy(r=>r.id_inventario).ToArray();
             }
         }
+        [HttpGet("withoutStock")]
+        public dynamic WithoutStock()
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var query = (
+                             from producto in context.productos.Include(r=>r.inventarios)
+                             join categoria in context.categorias on producto.id_categoria equals categoria.id_categoria
+                            where producto.inventarios.Count() <5
+                            orderby producto.inventarios.Count descending
+                            select new { producto = producto, stock = producto.inventarios.Count, categoria = categoria.nombre_categoria}).ToList();
+                return (query);
+            }
+        }
+
+
         [HttpGet("api/inventario/get_by_id")]
         public Inventario Get_by_id(string id_inventario)
         {
@@ -55,7 +71,7 @@ namespace gestion_inventario.Controllers
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query = context.inventario.Where(r => r.id_inventario == inventario.id_inventario).FirstOrDefault();
-                if (query != null) return BadRequest();
+                if (query != null) return NotFound("Ya existe el producto ingresado");
                 Inventario new_inventario = new Inventario();
                 new_inventario.id_inventario = inventario.id_inventario;
                 new_inventario.id_inventario_estado = inventario.id_inventario_estado;
@@ -77,7 +93,7 @@ namespace gestion_inventario.Controllers
                 historico.fecha_actualizacion = DateTime.Now;
                 context.Add(historico);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Inventario Añadido Correctamente");
             }
         }
         [HttpPut]
@@ -128,7 +144,7 @@ namespace gestion_inventario.Controllers
                     producto.id_categoria = "1";
                     context.Add(producto);
                     var query = context.inventario.Where(r => r.id_inventario == activo.id_inventario).FirstOrDefault();
-                    if (query != null) return BadRequest();
+                    if (query != null) return Ok("el activo ya existe");
                     Inventario new_inventario = new Inventario();
                     new_inventario.id_inventario = activo.id_inventario;
                     new_inventario.id_inventario_estado = "1";
@@ -155,7 +171,7 @@ namespace gestion_inventario.Controllers
 
                     var query = context.productos.Where(r => r.id_producto == activo.id_producto).FirstOrDefault();
                     var query_inventario = context.inventario.Where(r => r.id_inventario == activo.id_inventario).FirstOrDefault();
-                    if (query_inventario != null) return BadRequest();
+                    if (query_inventario != null) return Ok("el activo ya existe");
                     Inventario new_inventario = new Inventario();
                     new_inventario.id_inventario = activo.id_inventario;
                     new_inventario.id_inventario_estado = "1";
@@ -176,7 +192,7 @@ namespace gestion_inventario.Controllers
                     context.Add(historico);
                     context.SaveChanges();
                 }
-                return Ok();
+                return Ok("Activo ingresado correctame");
             }
         }
     }

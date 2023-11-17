@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { Get_all as get_all_prestamos, Get_Pendientes, Get_Prestamo_By_Inventario } from '../../Servicios/Prestamos';
+import { Get_all as get_all_prestamos, Get_Pendientes, Get_Prestamo_By_Inventario, Get_Prestamo_persona } from '../../Servicios/Prestamos';
 import { format, isAfter } from 'date-fns';
+import ActivosPrestados from './ActivosPrestadosPersona';
+import Swal from 'sweetalert2';
 
 function formatearFecha(fecha) {
-    return format(new Date(fecha), 'dd-MM-yyyy HH:mm');
+    return format(new Date(fecha), 'dd-MM-yyyy');
 }
 
 export default function DevolucionPrestamo() {
@@ -93,12 +95,7 @@ export default function DevolucionPrestamo() {
     }
 
     useEffect(() => {
-        async function Get_all() {
-            const response = await Get_Pendientes();
-            console.log(response);
-            setPrestamos(response);
-        }
-        Get_all();
+
     }, []);
 
     // Function to check if the deadline has passed
@@ -106,51 +103,103 @@ export default function DevolucionPrestamo() {
         return isAfter(new Date(), new Date(deadline));
     }
 
+
+    const [filtro, setFiltro] = useState('');
+
+    const handleFiltroChange = (e) => {
+        setFiltro(e.target.value.toLowerCase());
+
+    };
+
+
+    async function GetDataPrestamos(){
+       var response = await Get_Prestamo_persona(rut);
+       console.log(response);
+       if (response.persona == null) {
+        Swal.fire({
+            position: 'top-end',
+            toast: true,
+            icon: 'info',
+            title: "Persona no encontrada",
+            showConfirmButton: false,
+            timer: 3000,
+        });
+        setDatosPersonales({
+            'nombres':'',
+            'apellidos':'',
+            'carrera':'',
+            'tipo_persona':'',
+        })
+       }else{
+        Swal.fire({
+            position: 'top-end',
+            toast: true,
+            icon: 'info',
+            title: "Solicitante encontrado",
+            showConfirmButton: false,
+            timer: 3000,
+        });
+        setDatosPersonales({
+            'nombres':response.persona.nombres,
+            'apellidos':response.persona.apellidos,
+            'carrera':response.persona.carrera,
+            'tipo_persona':'',
+        });
+       }
+       setPrestamos(response);
+    }
+    const [rut,setRut] = useState('');
+    const [DatosPersonales,setDatosPersonales] = useState({
+        'nombres':'',
+        'apellidos':'',
+        'carrera':'',
+        'tipo_persona':'',
+    });
+    const handleRut = (e) => {
+        setRut(e.target.value); // Accede al valor con e.target.value
+    };
+
+    // const handleDatosPersonales= (e)=>{
+    //     const { name, value } = e.target;
+    //     setDatosPersonales({...DatosPersonales,[name]:[value]})
+    // }
     return (
         <>
             <button className='btn btn-warning' onClick={handleShowModal}>
-                Abrir
+                Escanear
             </button>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-xxl-3'>
+                        <label htmlFor="">Rut</label>
+                        <input type="text" onChange={handleRut} value={rut} className='form-control' />
+                    </div>
+                    <div className='col-xxl-2'>
+                        <br />
+                        <button onClick={GetDataPrestamos} className='btn btn-primary'>Buscar</button>
+                    </div>
+                </div>
+                <div className='row mt-2'>
+                    <div className='col'>
+                        <label htmlFor="">Nombres</label>
+                        <input type="text" disabled value={DatosPersonales.nombres} name='nombres' className='form-control' />
+                    </div>
+                    <div className='col'>
+                        <label htmlFor="">Apellidos</label>
+                        <input type="text" disabled value={DatosPersonales.apellidos} name='apellidos' className='form-control' />
+                    </div>
+                    <div className='col'>
+                        <label htmlFor="">Carrera</label>
+                        <input type="text" disabled name='carrera' value={DatosPersonales.carrera} className='form-control' />
+                    </div>
+                </div>
+            </div>
+            <div className='container mt-3'>
+                <ActivosPrestados prestamos={Prestamos.prestamos} />
+            </div>
 
-            <table className='table mt-3'>
 
-                <tr className='table-head'>
-                    <th>ID</th>
-                    <th>Nombre Solicitante</th>
-                    <th>Carrera Solicitante</th>
-                    <th>ID Inventario</th>
-                    <th>Fecha Solicitud</th>
-                    <th>Fecha Plazo</th>
-                    <th>Estado</th>
-                </tr>
 
-                <tbody>
-                    {Prestamos.map((item) => (
-                        <tr key={item.id_prestamo}>
-                            <td>{item.id_prestamo}</td>
-                            <td>
-                                {item.prestamoNavigation.personaNavigation.nombres} {item.prestamoNavigation.personaNavigation.apellidos}
-                            </td>
-                            <td>{item.prestamoNavigation.personaNavigation.carrera}</td>
-                            <td>{item.id_inventario}</td>
-                            <td>{formatearFecha(item.prestamoNavigation.fecha_creacion)}</td>
-                            <td>{formatearFecha(item.prestamoNavigation.fecha_plazo)}</td>
-                            <td>
-                                <span
-                                    style={{
-                                        backgroundColor: isDeadlinePassed(item.fecha_plazo) ? '#dc3545' : '#28a745',
-                                        color: '#fff',
-                                        padding: '0.25em 0.5em',
-                                        borderRadius: '0.25em',
-                                    }}
-                                >
-                                    {isDeadlinePassed(item.prestamoNavigation.fecha_plazo) ? 'Vencido' : 'En plazo'}
-                                </span>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
             <Modal show={showModal} onHide={handleCloseModal} size='lg'>
                 <Modal.Body>
                     <h1 className='text-center'>Escanee el código de barras </h1>
@@ -225,7 +274,8 @@ export default function DevolucionPrestamo() {
 
                         </div>
                         <div className='col'>
-                            <label htmlFor="">Fecha Plazo</label>
+                            <label htmlFor="">Fecha Plazo </label>
+                            <strong >({isDeadlinePassed(PrestameDetalle.fecha_plazo) ? 'Vencido' : 'En plazo'})</strong>
                             <input
                                 type="text"
                                 className='form-control'

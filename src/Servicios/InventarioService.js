@@ -91,14 +91,22 @@ export async function Create_activo(activo_guardar) {
     const status = response.status;
     if (status === 200) {
       console.log("Solicitud exitosa");
-      return 1;
-    } else {
-      console.log("La solicitud no fue exitosa. Código de estado:", status);
-      return 0;
+      return response;
     }
-    
+    return response;
   } catch (error) {
     handleRequestError(error);
     return 0;
   }
+}
+
+
+export async function sin_stock(){
+    try {
+      const response = await axios.get(`${baseURL}/api/Inventario/withoutStock`, getHeaders());
+      return response.data;
+    } catch (error) {
+      handleRequestError(error);
+      return [];
+    }
 }
