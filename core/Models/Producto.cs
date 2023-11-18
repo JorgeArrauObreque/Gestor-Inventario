@@ -10,7 +10,7 @@ namespace gestion_inventario.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id_producto { get; set; }
+        public string id_producto { get; set; }
         [Required]
         [MaxLength(50)]
         [NotNull]
@@ -21,7 +21,7 @@ namespace gestion_inventario.Models
         public DateTime fecha_actualizacion { get; set; }
         [Required]
         [NotNull]
-        public int? id_proveedor { get; set; }
+        public string id_proveedor { get; set; }
         [NotMapped]
         [IgnoreDataMember]
         public Proveedor ProveedorNavigation { get; set; }
@@ -38,13 +38,13 @@ namespace gestion_inventario.Models
         public string descripcion { get; set; }
         [Required]
         [NotNull]
-        public int? id_categoria { get; set; }
+        public string id_categoria { get; set; }
         [NotMapped]
         [IgnoreDataMember]
         public Categoria categoriaNavigation { get; set; }
         [Required]
         [NotNull]
-        public int? id_tipo_producto { get; set; }
+        public string id_tipo_producto { get; set; }
         [NotMapped]
         [IgnoreDataMember]
         public TipoProducto tipoProductoNavigation { get; set; }

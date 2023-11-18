@@ -21,12 +21,21 @@ namespace gestion_inventario.Controllers
                     .Select(r => new { id_producto = r.id_producto, nombre_producto = r.nombre_producto
                     , fecha_creacion = r.fecha_creacion, fecha_actualizacion = r.fecha_actualizacion, proveedor = r.ProveedorNavigation.nombre_proveedor
                     , marca = r.marca, descripcion = r.descripcion, categoria = r.categoriaNavigation.nombre_categoria,
-                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor = r.id_proveedor, id_categoria = r.id_categoria, id_tipo_producto = r.id_tipo_producto })
-                    .ToArray();
+                        tipo_producto = r.tipoProductoNavigation.nombre_tipo_producto, id_proveedor = r.id_proveedor, id_categoria = r.id_categoria, 
+                        id_tipo_producto = r.id_tipo_producto }).ToList().OrderBy(r => {
+                            if (int.TryParse(r.id_producto, out int result))
+                            {
+                                return result;
+                            }
+                            else
+                            {
+                                return int.MaxValue;
+                            }
+                        }).ToArray();
             }
         }
-        [HttpGet("api/productos/get")]
-        public Producto Get(int id_producto)
+        [HttpGet("get")]
+        public Producto Get(string id_producto)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -40,6 +49,8 @@ namespace gestion_inventario.Controllers
             {
                 var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
                 if (query != null) return BadRequest();
+                var validacion_nombre_marca = context.productos.Where(r => r.nombre_producto == producto.nombre_producto && r.marca == producto.marca  ).FirstOrDefault();
+                if (validacion_nombre_marca != null) return BadRequest();
                 Producto new_producto = new Producto();
                 new_producto.id_producto = producto.id_producto;
                 new_producto.id_proveedor = producto.id_proveedor;
@@ -62,8 +73,12 @@ namespace gestion_inventario.Controllers
             {
                 var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
                 if (query == null) return NotFound();
-                query.id_proveedor = producto.id_proveedor;
 
+                var validacion_nombre_marca = context.productos.Where(r => r.nombre_producto == producto.nombre_producto && r.marca == producto.marca).FirstOrDefault();
+                if (validacion_nombre_marca != null) return BadRequest();
+
+
+                query.id_proveedor = producto.id_proveedor;
                 query.descripcion = producto.descripcion;
                 query.fecha_actualizacion = DateTime.Now;
                 query.nombre_producto = producto.nombre_producto;
@@ -77,7 +92,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_producto}")]
-        public ActionResult Delete(long id_producto){
+        public ActionResult Delete(string id_producto){
             try
             {
                 using (DbContextInventario context = new DbContextInventario())
@@ -94,6 +109,33 @@ namespace gestion_inventario.Controllers
                 return BadRequest();
             }
       
+        }
+        [HttpGet("get_stock")]
+        public dynamic Stock()
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                var idBodega = "1"; // Aquí se define el ID de la bodega que quieres filtrar
+
+                var query = context.productos
+         .Include(r => r.inventarios)
+         .Include(r => r.categoriaNavigation)
+         .Include(r => r.ProveedorNavigation)
+         .Where(r => r.inventarios.Count == 0 || r.inventarios.All(inv => inv.id_bodega != idBodega) || r.inventarios.Count > 0)
+         .Select(r => new
+         {
+             nombre_producto = r.nombre_producto,
+             stock = r.inventarios.Count,
+             marca = r.marca,
+             categoria = r.categoriaNavigation.nombre_categoria,
+             proveedor = r.ProveedorNavigation.nombre_proveedor
+         })
+         .OrderBy(r => r.nombre_producto)
+         .ToList();
+
+                return query;
+
+            }
         }
     }
 }

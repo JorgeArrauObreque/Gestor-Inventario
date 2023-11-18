@@ -7,7 +7,10 @@ namespace gestion_inventario.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id_bodega { get; set; }
+        public string id_bodega { get; set; }
+        [MaxLength(200)]
+        [Column(TypeName = "varchar(200)")]
+        public string nombre_bodega { get; set; }
         [Required]
         [MaxLength(200)]
         [Column(TypeName = "varchar(200)")]

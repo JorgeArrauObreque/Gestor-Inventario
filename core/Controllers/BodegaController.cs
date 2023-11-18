@@ -16,11 +16,24 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                return context.bodegas.ToList();
+                int result;
+                return context.bodegas.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_bodega, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
+
+
+
             }
         }
-        [HttpGet("api/bodega/get_by_id")]
-        public Bodega Get_by_id(int id)
+        [HttpGet("get_by_id")]
+        public Bodega Get_by_id(string id)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -28,15 +41,24 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_bodega}")]
-        public ActionResult Delete(int id_bodega){
-            using (DbContextInventario context = new DbContextInventario())
+        public ActionResult Delete(string id_bodega){
+            try
             {
-                var query =context.bodegas.Where(r=>r.id_bodega == id_bodega).FirstOrDefault();
-                if (query == null) return NotFound();
-                context.bodegas.Remove(query);
-                context.SaveChanges();
-                return Ok();
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.bodegas.Where(r => r.id_bodega == id_bodega).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.bodegas.Remove(query);
+                    context.SaveChanges();
+                    return Ok();
+                }
             }
+            catch (Exception e)
+            {
+
+                return BadRequest();
+            }
+  
         }
         [HttpPut]
         public ActionResult Update([FromBody]BodegaViewModel bodega){
@@ -46,6 +68,7 @@ namespace gestion_inventario.Controllers
                 {
                     var query = context.bodegas.Where(r=>r.id_bodega == bodega.id_bodega).FirstOrDefault();
                     if (query == null) return NotFound();
+                    query.nombre_bodega = bodega.nombre_bodega;
                     query.id_bodega = bodega.id_bodega;
                     query.direccion = bodega.direccion;
                     query.fecha_actualizacion = DateTime.Now;
@@ -64,6 +87,7 @@ namespace gestion_inventario.Controllers
                 if (query != null) return BadRequest();
                 Bodega new_bodega = new Bodega();
                 new_bodega.id_bodega = bodega.id_bodega;
+                new_bodega.nombre_bodega = bodega.nombre_bodega;
                 new_bodega.direccion = bodega.direccion;
                 new_bodega.fecha_creacion = DateTime.Now;
                 new_bodega.fecha_actualizacion = DateTime.Now;

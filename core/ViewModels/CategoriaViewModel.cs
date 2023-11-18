@@ -3,7 +3,7 @@
     public class CategoriaViewModel
 
     {
-        public int id_categoria { get; set; }
+        public string id_categoria { get; set; }
         public string nombre_categoria { get; set; }
     }
 }

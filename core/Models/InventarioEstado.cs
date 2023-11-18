@@ -8,7 +8,7 @@ namespace gestion_inventario.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id_inventario_estado { get; set; }
+        public string id_inventario_estado { get; set; }
         [Required]
         [NotNull]
         [MaxLength(50)]
