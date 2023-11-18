@@ -175,13 +175,17 @@ export default function DevolucionPrestamo() {
         showConfirmButton: false,
         timer: 3000,
     });
+    handleCloseModaldetails();
     }
     return (
         <>
+     
+    
+            <div className='container'>
+            <h1>Devolver Prestamo</h1>
             <button className='btn btn-warning' onClick={handleShowModal}>
                 Escanear
             </button>
-            <div className='container'>
                 <div className='row'>
                     <div className='col-xxl-3'>
                         <label htmlFor="">Rut</label>

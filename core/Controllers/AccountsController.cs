@@ -104,7 +104,7 @@ namespace gestion_inventario.Controllers
                     MailMessage correo = new MailMessage();
                     correo.From = new MailAddress("testingdata97@outlook.com");
                     correo.To.Add("jor.arrau@duocuc.cl");
-                    correo.Subject = "Asunto del correo";
+                    correo.Subject = "Recuperación de contraseña";
                     // Crea el cuerpo del correo con un enlace
                     string linkRecuperar = $"http://localhost:3000/NewPassword?token={uniqueCode}"; // Cambia esto al enlace correcto
                     string cuerpoCorreo = "Para recuperar la contraseña, haga clic en el siguiente enlace: " + linkRecuperar;

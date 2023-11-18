@@ -301,7 +301,7 @@ export default function Productos() {
             </div>
             <Modal show={showModal} onHide={handleCloseModal} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar Inventario Estado</Modal.Title>
+                    <Modal.Title>Editar Producto</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row justify-content-center mt-4">

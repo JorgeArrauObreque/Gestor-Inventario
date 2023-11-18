@@ -381,7 +381,7 @@ const RegistrarPrestamo = () => {
 
             <Modal show={showModalEscaner} onHide={handleCloseModalEscaner} size="lg" onClick={handleModalShow}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar Inventario</Modal.Title>
+                    <Modal.Title>Escanear activo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='d-flex justify-content-center'>

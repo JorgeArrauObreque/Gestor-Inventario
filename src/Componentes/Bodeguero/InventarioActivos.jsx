@@ -23,6 +23,19 @@ export default function InventarioActivos() {
     setShowModal(false);
   };
 
+
+  const [showModalEscanear, setShowModalEscanear] = useState(false);
+  const handleShowModalEscanear = () => {
+
+    setShowModalEscanear(true);
+  };
+
+  const handleCloseModalEscanear = () => {
+    setShowModalEscanear(false);
+  };
+
+
+
   useEffect(() => {
     async function GetSinStock() {
       const data = await sin_stock();
@@ -82,6 +95,20 @@ export default function InventarioActivos() {
     )
   );
 
+
+const onScan = (event) => {
+  // Puedes verificar si la tecla presionada es Enter (código 13)
+  if (event.key === 'Enter') {
+    // Obtén el valor del campo de entrada
+    const barcodeValue = event.target.value;
+
+    // Realiza acciones adicionales con el código de barras si es necesario
+    console.log('Código de barras escaneado:', barcodeValue);
+    setFiltro(barcodeValue);
+    // Cierra el modal u realiza otras acciones necesarias
+    handleCloseModalEscanear();
+  }
+};
   return (
     <>   <div>
       <div className='row justify-content-end'>
@@ -89,9 +116,10 @@ export default function InventarioActivos() {
          <h1>Inventario</h1>
         </div>
         <div className='col-lg-2'>
-          <button className='btn btn-success w-100' onClick={handleDownloadExcel}>
+          <button className='btn btn-warning' onClick={handleShowModalEscanear}>Escanear</button>
+          {/* <button className='btn btn-success w-100' onClick={handleDownloadExcel}>
             Exportar Excel
-          </button>
+          </button> */}
         </div>
 
       </div>
@@ -130,7 +158,18 @@ export default function InventarioActivos() {
       </table>
         </div>
       </div>
+      <Modal show={showModalEscanear} onHide={handleCloseModalEscanear} size="lg" >
+             
+  <Modal.Body>
+    <h1 className="text-center">Escanee el codigo de barras </h1>
+    <div className="justify-content-center d-flex">
+       <img src="https://codigodebarra.com.ar/wp-content/uploads/2018/08/entre-rios-codigos-de-barra-ean.png" style={{width: "500px"}} />
     
+       
+    </div>
+    <input type="text" name="" id="" autoFocus className="form-control" onKeyDown={onScan} />
+  </ Modal.Body>
+</ Modal>
     </div>
       <Modal show={showModal} onHide={handleCloseModal} size="xl" >
         <Modal.Header>
