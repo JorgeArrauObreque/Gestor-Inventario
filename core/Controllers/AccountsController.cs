@@ -1,8 +1,4 @@
-﻿
-<<<<<<< HEAD
-using Azure.Messaging;
-=======
->>>>>>> main
+﻿using gestion_inventario.Migrations;
 using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -14,18 +10,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-<<<<<<< HEAD
-using System.Net;
-using System.Net.Mail;
-using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
-=======
->>>>>>> main
 
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("all")]
     public class AccountsController : ControllerBase
     {
         [AllowAnonymous] // Este método está abierto para todos
@@ -35,11 +24,7 @@ namespace gestion_inventario.Controllers
             bool resultado = IsValidUser(user);
             if (!resultado)
             {
-<<<<<<< HEAD
-                return Unauthorized( "Usuario No existente");
-=======
                 return Unauthorized();
->>>>>>> main
             }
             else
             {
@@ -59,11 +44,7 @@ namespace gestion_inventario.Controllers
                 {
             new Claim(ClaimTypes.Name, username),
         }),
-<<<<<<< HEAD
-                
-=======
                 Expires = DateTime.UtcNow.AddHours(2),
->>>>>>> main
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
 
@@ -89,131 +70,9 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-<<<<<<< HEAD
-                return context.usuariosSistema.Include(r=>r.rolNavigation).OrderBy(r=>r.id_user).ToList();
-            }
-        }
-        [AllowAnonymous]
-        [HttpGet("RecoverPassword")]
-        public ActionResult RecoverPassword([FromQuery] string correo_electronico)
-        {
-            using (DbContextInventario context = new DbContextInventario())
-            {
-                if (context.usuariosSistema.Where(r=>r.email == correo_electronico.Trim()).Any())
-                {
-                    string smtpServer = "smtp.office365.com"; // o smtp-mail.outlook.com según corresponda
-                    int smtpPort = 587; // Puedes cambiar a 465 si prefieres SSL/TLS
-                    string smtpUsername = "testingdata97@outlook.com"; // Tu dirección de correo Outlook
-                    string smtpPassword = "duoc2023"; // La contraseña de tu cuenta Outlook
-
-                    // Configura el cliente SMTP
-                    SmtpClient smtpClient = new SmtpClient(smtpServer);
-                    smtpClient.Port = smtpPort;
-                    smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                    smtpClient.EnableSsl = true; // Usar SSL para Gmail
-
-                    // Crea el mensaje de correo
-                    Guid uniqueCode = Guid.NewGuid();
-                    string uniqueCodeString = uniqueCode.ToString();
-
-                    MailMessage correo = new MailMessage();
-                    correo.From = new MailAddress("testingdata97@outlook.com");
-                    correo.To.Add("jor.arrau@duocuc.cl");
-                    correo.Subject = "Asunto del correo";
-                    // Crea el cuerpo del correo con un enlace
-                    string linkRecuperar = $"http://localhost:3000/NewPassword?token={uniqueCode}"; // Cambia esto al enlace correcto
-                    string cuerpoCorreo = "Para recuperar la contraseña, haga clic en el siguiente enlace: " + linkRecuperar;
-
-                    correo.Body = cuerpoCorreo;
-
-                    try
-                    {
-                        // Envía el correo
-                        smtpClient.Send(correo);
-                        using (DbContextInventario db = new DbContextInventario())
-                        {
-                            PasswordToken token = new PasswordToken();
-                            token.id_usuario = correo_electronico;
-                            token.token = uniqueCodeString;
-                            token.fecha_creacion = DateTime.Now;
-                            db.Add(token);
-                            db.SaveChanges();
-                        }
-                    
-                        Console.WriteLine("Correo enviado con éxito.");
-                        return Ok();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error al enviar el correo: " + ex.Message);
-                        return BadRequest(ex.Message);
-                    }
-
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet("validateToken")]
-        public bool ValidateToken(string token)
-        {
-            using (DbContextInventario context = new DbContextInventario())
-            {
-                var resultado = context.passwordtokens.Where(r => r.token == token).FirstOrDefault();
-                if (resultado.usado == true)
-                {
-                    return false;
-                }
-                if (resultado == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    var fecha_limite = resultado.fecha_creacion.AddHours(2);
-                    if (DateTime.Now > fecha_limite)
-                    {
-                        return false;
-                    }
-                    return true;
-                }
-            }
-        }
-        [AllowAnonymous]
-        [HttpPost("changePassword")]
-        public ActionResult ChangePassword([FromBody] PasswordRecovery password_recovery)
-        {
-            if (password_recovery.password == password_recovery.password_confirm)
-            {
-                using (DbContextInventario context = new DbContextInventario())
-                {
-                    var query_token = context.passwordtokens.Where(r => r.token == password_recovery.token).FirstOrDefault();
-                    if (query_token.usado == true)
-                    {
-                        return BadRequest();
-                    }
-                    var usuario = context.usuariosSistema.Where(r => r.email == query_token.id_usuario).FirstOrDefault();
-                    usuario.password = password_recovery.password;
-                    query_token.usado = true;
-                    context.SaveChanges();
-                    return Ok();
-                }
-            }
-            else
-            {
-                return BadRequest();
-            }
-      
-        }
-=======
                 return context.usuariosSistema.Include(r=>r.rolNavigation).ToList();
             }
         }
->>>>>>> main
         //[HttpPost("add")]
         //[Authorize]
         //public ActionResult Add([FromBody] UsuariosViewModel usuario)

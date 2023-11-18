@@ -12,11 +12,7 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-<<<<<<< HEAD
     [Authorize]
-=======
-
->>>>>>> main
     public class CategoriasController : ControllerBase
     {
         [HttpGet]
@@ -54,24 +50,11 @@ namespace gestion_inventario.Controllers
                         // Maneja la excepción si el token no es válido
                     }
                 }
-<<<<<<< HEAD
-                return context.categorias.ToList().OrderBy(r => {
-                    if (int.TryParse(r.id_categoria, out int result))
-                    {
-                        return result;
-                    }
-                    else
-                    {
-                        return int.MaxValue;
-                    }
-                }).ToList();
-=======
                 return context.categorias.ToList();
->>>>>>> main
             }
         }
         [HttpGet("api/categoria/get_by_categoria")]
-        public Categoria Get_by_id(string id_categoria)
+        public Categoria Get_by_id(int id_categoria)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
@@ -98,7 +81,7 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpDelete("{id_categoria}")]
-        public ActionResult Delete(string id_categoria)
+        public ActionResult Delete(int id_categoria)
         {
             try
             {

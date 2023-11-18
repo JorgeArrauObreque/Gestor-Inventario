@@ -7,7 +7,7 @@ namespace gestion_inventario.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string id_tipo_producto { get; set; }
+        public int id_tipo_producto { get; set; }
         [Required]
         [MaxLength(30)]
         [Column(TypeName ="varchar(30)")]

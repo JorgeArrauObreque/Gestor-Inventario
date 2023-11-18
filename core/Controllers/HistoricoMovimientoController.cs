@@ -1,39 +1,12 @@
 ﻿using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
-<<<<<<< HEAD
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-=======
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
->>>>>>> main
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-<<<<<<< HEAD
-    [Authorize]
-    public class HistoricoMovimientoController : ControllerBase
-    {
-        [HttpGet("all")]
-        public dynamic Get_all()
-        {
-            using (DbContextInventario context = new DbContextInventario())
-            {
-                var query = (from movimientos in context.historico_movimientos
-                            join tipo in context.movimiento_tipos on movimientos.id_tipo_movimiento equals tipo.id_movimiento_tipo
-                            join inventario in context.inventario on movimientos.id_inventario equals inventario.id_inventario
-                            join producto in context.productos on inventario.id_producto equals producto.id_producto
-                            join categoria in context.categorias on producto.id_categoria equals categoria.id_categoria
-                            select new { id_movimiento = movimientos.id_movimiento, nombre_movimiento = tipo.nombre_movimiento_tipo, fecha_creacion = movimientos.fecha_creacion.ToString("dd-MM-yyyy HH:mm"),
-                            id_inventario = inventario.id_inventario, nombre_producto = producto.nombre_producto, marca = producto.marca, categoria =  categoria.nombre_categoria}).OrderBy(r=>r.id_movimiento).ToList();
-
-
-                return query;
-=======
     public class HistoricoMovimientoController : ControllerBase
     {
         [HttpGet("api/historicoMovimiento/all")]
@@ -42,7 +15,6 @@ namespace gestion_inventario.Controllers
             using (DbContextInventario context = new DbContextInventario())
             {
                 return context.historico_movimientos.ToList ();
->>>>>>> main
             }
         }
         [HttpGet("api/historicoMovimiento/get_by_id")]

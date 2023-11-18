@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 namespace gestion_inventario.ViewModels{
     public class PrestamoViewModel{
 
-        public long id_prestamo { get; set; }
-
+        public long id_prestamo{ get; set; }
+ 
         public string user { get; set; }
 
         public string rut { get; set; }

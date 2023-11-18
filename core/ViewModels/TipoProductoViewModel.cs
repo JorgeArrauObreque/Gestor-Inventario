@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace gestion_inventario.ViewModels{
     public class TipoProductoViewModel{
  
-        public string id_tipo_producto { get; set; }
+        public int id_tipo_producto { get; set; }
   
         public string nombre_tipo_producto { get; set; }
         

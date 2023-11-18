@@ -7,7 +7,7 @@ namespace gestion_inventario.Models
     {
         [Required]
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_user { get; set; }
         [Required]
         [MaxLength(200)]
