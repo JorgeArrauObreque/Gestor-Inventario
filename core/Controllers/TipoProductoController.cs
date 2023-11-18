@@ -14,7 +14,20 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                return context.tipos_producto.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_tipo_producto, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
+=======
                 return context.tipos_producto.ToList();
+>>>>>>> main
             }
         }
         [HttpGet("api/tipoProducto/get_by_id")]

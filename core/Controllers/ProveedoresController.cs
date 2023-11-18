@@ -15,7 +15,21 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                var query = context.proveedores.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_proveedor, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
+                return query;
+=======
                 return context.proveedores.ToList();
+>>>>>>> main
             }
         }
         [HttpGet("api/proveedor/get_by_id")]

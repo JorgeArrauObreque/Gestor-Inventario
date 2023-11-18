@@ -14,7 +14,11 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                return context.prestamo_detalles.OrderBy(r=>r.id_prestamo_detalle).ToList();
+=======
                 return context.prestamo_detalles.ToList();
+>>>>>>> main
             }
         }
         [HttpGet("api/prestamoDetalle/get_by_id")]

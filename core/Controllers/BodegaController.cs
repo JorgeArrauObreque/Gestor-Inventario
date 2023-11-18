@@ -8,7 +8,11 @@ namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+<<<<<<< HEAD
+    [Authorize]
+=======
 
+>>>>>>> main
     public class BodegaController : ControllerBase
     {
         [HttpGet]
@@ -16,10 +20,30 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                int result;
+                return context.bodegas.ToList().OrderBy(r => {
+                    if (int.TryParse(r.id_bodega, out int result))
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return int.MaxValue;
+                    }
+                }).ToList();
+
+
+
+            }
+        }
+        [HttpGet("get_by_id")]
+=======
                 return context.bodegas.ToList();
             }
         }
         [HttpGet("api/bodega/get_by_id")]
+>>>>>>> main
         public Bodega Get_by_id(string id)
         {
             using (DbContextInventario context = new DbContextInventario())
@@ -29,6 +53,25 @@ namespace gestion_inventario.Controllers
         }
         [HttpDelete("{id_bodega}")]
         public ActionResult Delete(string id_bodega){
+<<<<<<< HEAD
+            try
+            {
+                using (DbContextInventario context = new DbContextInventario())
+                {
+                    var query = context.bodegas.Where(r => r.id_bodega == id_bodega).FirstOrDefault();
+                    if (query == null) return NotFound();
+                    context.bodegas.Remove(query);
+                    context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest();
+            }
+  
+=======
             using (DbContextInventario context = new DbContextInventario())
             {
                 var query =context.bodegas.Where(r=>r.id_bodega == id_bodega).FirstOrDefault();
@@ -37,6 +80,7 @@ namespace gestion_inventario.Controllers
                 context.SaveChanges();
                 return Ok();
             }
+>>>>>>> main
         }
         [HttpPut]
         public ActionResult Update([FromBody]BodegaViewModel bodega){

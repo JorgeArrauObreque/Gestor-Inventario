@@ -13,7 +13,11 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                return context.movimiento_tipos.OrderBy(r=>r.id_movimiento_tipo).ToList();
+=======
                 return context.movimiento_tipos.ToList();
+>>>>>>> main
             }
         }
         [HttpGet("api/MovimientoTipo/get_by_id")]

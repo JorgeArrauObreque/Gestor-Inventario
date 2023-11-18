@@ -13,15 +13,28 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                return context.personas.OrderBy(r=>r.rut).ToList();
+            }
+        }
+        [HttpGet("get_by_rut")]
+=======
                 return context.personas.ToList();
             }
         }
         [HttpGet("api/personas/get_by_rut")]
+>>>>>>> main
         public Persona Get_by_rut(string rut)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+<<<<<<< HEAD
+                var query = context.personas.Where(r => r.rut == rut).FirstOrDefault();
+             
+                return query;
+=======
                 return context.personas.Where(r => r.rut == rut).FirstOrDefault();
+>>>>>>> main
             }
         }
         [HttpDelete("{rut}")]

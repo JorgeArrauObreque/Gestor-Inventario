@@ -189,6 +189,36 @@ namespace gestion_inventario.Migrations
                     b.ToTable("movimiento_tipos");
                 });
 
+<<<<<<< HEAD
+            modelBuilder.Entity("gestion_inventario.Models.PasswordToken", b =>
+                {
+                    b.Property<long>("id_token_password")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_token_password"));
+
+                    b.Property<DateTime>("fecha_creacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("id_usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("usado")
+                        .HasColumnType("bit");
+
+                    b.HasKey("id_token_password");
+
+                    b.ToTable("passwordtokens");
+                });
+
+=======
+>>>>>>> main
             modelBuilder.Entity("gestion_inventario.Models.Persona", b =>
                 {
                     b.Property<string>("rut")
@@ -280,6 +310,15 @@ namespace gestion_inventario.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id_prestamo_detalle"));
 
+<<<<<<< HEAD
+                    b.Property<bool>("entregado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("fecha_entrega")
+                        .HasColumnType("datetime2");
+
+=======
+>>>>>>> main
                     b.Property<string>("id_inventario")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
