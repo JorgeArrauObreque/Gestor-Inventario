@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using gestion_inventario.ViewModels;
+using Microsoft.EntityFrameworkCore;
 namespace gestion_inventario.Controllers
 {
     [Route("api/[controller]")]
@@ -17,12 +18,13 @@ namespace gestion_inventario.Controllers
             }
         }
         [HttpGet("get_by_rut")]
-        public Persona Get_by_rut(string rut)
+        public dynamic Get_by_rut(string rut)
         {
             using (DbContextInventario context = new DbContextInventario())
             {
-                var query = context.personas.Where(r => r.rut == rut).FirstOrDefault();
-             
+                var query = context.personas.Include(r=>r.TipoPersonaNavegation).Where(r => r.rut == rut)
+                    .Select(r => new {rut = r.rut, nombres=r.nombres, apellidos = r.apellidos, carrera = r.carrera, tipo= r.TipoPersonaNavegation.nombre_tipo_persona }).FirstOrDefault();
+                
                 return query;
             }
         }

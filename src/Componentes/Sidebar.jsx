@@ -19,30 +19,51 @@ export default function Sidebar() {
     <div className="d-flex flex-column flex-shrink-0 p-3 sidebar" style={{ width: "100%", height: "90vh" }}>
       {user.rol === "Administrador" ? (
         <ul className="nav nav-pills flex-column mb-auto">
+
+
+          <li>
+            <Link to="/registeractive" className={activeTab === "registeractive" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+              <i class="fa-solid fa-cart-shopping mx-2"></i>
+              Registrar Prestamos
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/actives" className={activeTab === "actives" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+              <i class="fa-solid fa-folder mx-2"></i>
+              Registrar Activo Pañol
+            </Link>
+          </li>
+
+
+
+
           <li>
             <Link to="/DevolucionPrestamo" className={activeTab === "DevolucionPrestamo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-              <i class="fa-solid fa-barcode mx-2"></i>
+              <i class="fa-solid fa-hand mx-2"></i>
               Devolver Prestamo
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
+            {/* <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
               <i className="fa fa-book mx-2"></i> Registrar Activo Pañol
-            </Link>
+            </Link> */}
             <Link to="/InventarioActivos" className={activeTab === "InventarioActivos" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-              <i className="fa fa-book mx-2"></i> Inventario Pañol
+              <i className="fa fa-list mx-2"></i> Inventario Pañol
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
               <i class="fa-solid fa-barcode mx-2"></i>
               Registrar Prestamo
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/stock" className={activeTab === "stock" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
@@ -151,35 +172,50 @@ export default function Sidebar() {
         </ul>
       ) : (
         <ul className="nav nav-pills flex-column mb-auto">
-                 <li>
+          <li>
             <Link to="/stock" className={activeTab === "stock" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-              <i class="fa-solid fa-barcode mx-2"></i>
+              <i class="fa-solid fa-list mx-2"></i>
               Stock Pañol
             </Link>
           </li>
           <li>
             <Link to="/DevolucionPrestamo" className={activeTab === "DevolucionPrestamo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
-              <i class="fa-solid fa-barcode mx-2"></i>
+              <i class="fa-solid fa-hand mx-2"></i>
               Devolver Prestamo
             </Link>
           </li>
           <li>
+            <Link to="/registeractive" className={activeTab === "registeractive" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+              <i class="fa-solid fa-cart-shopping mx-2"></i>
+              Registrar Prestamos
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/actives" className={activeTab === "actives" ? "nav-link active" : "nav-link text-dark"}>
+              <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
+              <i class="fa-solid fa-folder mx-2"></i>
+              Registrar Activo Pañol
+            </Link>
+          </li>
+          {/* <li>
             <Link to="/registrarPrestamo" className={activeTab === "registrarPrestamo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
               <i class="fa-solid fa-barcode mx-2"></i>
               Registrar Prestamo
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
-            <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
+            {/* <Link to="/RegistrarActivo" className={activeTab === "RegistrarActivo" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
               <i className="fa fa-book mx-2"></i> Registrar Activo Pañol
-            </Link>
+            </Link> */}
             <Link to="/InventarioActivos" className={activeTab === "InventarioActivos" ? "nav-link active" : "nav-link text-dark"}>
               <svg className="bi me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-              <i className="fa fa-book mx-2"></i> Inventario Pañol
+              <i className="fa fa-list mx-2"></i> Inventario Pañol
             </Link>
           </li>
         </ul>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { Get_all as get_all_productos } from "../../Servicios/ProductoService";
@@ -8,12 +8,8 @@ import { ModalBody, ModalHeader, ModalTitle, Modal, Button } from 'react-bootstr
 import Swal from "sweetalert2";
 
 
-
-
-
-
 export default function RegistrarActivo() {
- const [idInventario,setIdInventario] = useState();
+  const [idInventario, setIdInventario] = useState();
   const [showModal, setShowModal] = useState(false);
   const inputIdInventario = useRef(0);
   const handleBarcodeInput = (event) => {
@@ -26,12 +22,12 @@ export default function RegistrarActivo() {
 
 
   const handleShowModal = () => {
-   console.log(inputIdInventario);
-      setShowModal(true);
+    console.log(inputIdInventario);
+    setShowModal(true);
   };
 
   const handleCloseModal = () => {
-      setShowModal(false);
+    setShowModal(false);
   };
 
   const {
@@ -89,7 +85,7 @@ export default function RegistrarActivo() {
   };
 
   useEffect(() => {
-    
+
     async function fetchData() {
       try {
         const productos_get = await get_all_productos();
@@ -135,9 +131,9 @@ export default function RegistrarActivo() {
         title: response.data,
         showConfirmButton: false,
         timer: 3000,
-    });
+      });
 
-  
+
     } else {
       const activo = {
         id_inventario: data.id_inventario,
@@ -156,8 +152,8 @@ export default function RegistrarActivo() {
         title: response.data,
         showConfirmButton: false,
         timer: 3000,
-    });
- 
+      });
+
     }
 
     reset({
@@ -175,7 +171,7 @@ export default function RegistrarActivo() {
     if (event.key === 'Enter') {
       // Obtén el valor del campo de entrada
       const barcodeValue = event.target.value;
-  
+
       // Realiza acciones adicionales con el código de barras si es necesario
       console.log('Código de barras escaneado:', barcodeValue);
       setIdInventario(barcodeValue);
@@ -210,7 +206,7 @@ export default function RegistrarActivo() {
                   <div className="col">
                     <label htmlFor="">Identificador Activo</label>
                     <input id="id_inventario"
-                      type="text"  
+                      type="text"
                       {...register("id_inventario", { required: true })}
                       className="form-control" value={idInventario}
                     />
@@ -312,16 +308,16 @@ export default function RegistrarActivo() {
         </div>
       </form>
       <Modal show={showModal} onHide={handleCloseModal} size="lg" >
-             
-                <Modal.Body>
-                  <h1 className="text-center">Escanee el codigo de barras </h1>
-                  <div className="justify-content-center d-flex">
-                     <img src="https://codigodebarra.com.ar/wp-content/uploads/2018/08/entre-rios-codigos-de-barra-ean.png" style={{width: "500px"}} />
-                  
-                     
-                  </div>
-                  <input type="text" name="" id="" autoFocus className="form-control" onKeyDown={onScan} />
-                </ Modal.Body>
+
+        <Modal.Body>
+          <h1 className="text-center">Escanee el codigo de barras </h1>
+          <div className="justify-content-center d-flex">
+            <img src="https://codigodebarra.com.ar/wp-content/uploads/2018/08/entre-rios-codigos-de-barra-ean.png" style={{ width: "500px" }} />
+
+
+          </div>
+          <input type="text" name="" id="" autoFocus className="form-control" onKeyDown={onScan} />
+        </ Modal.Body>
       </ Modal>
     </>
 

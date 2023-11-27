@@ -34,6 +34,8 @@ import HistoricoMovimientos from './Componentes/Administrador/HistoricoMovimient
 import RegistrarPrestamo from './Componentes/Bodeguero/RegistrarPrestamo';
 import DevolucionPrestamo from './Componentes/Bodeguero/DevolucionPrestamo';
 import Stock from './Componentes/Bodeguero/Stock';
+import RegisterPrestamo from './Componentes/Bodeguero/RegisterPrestamo';
+import RegisterActive from './Componentes/Bodeguero/RegisterActive';
 
 function App() {
   const { user, setUser } = useUser();  // Usa useUser para obtener el usuario desde el contexto
@@ -81,6 +83,10 @@ function App() {
                   <Route path='RegistrarPrestamo' element={<RegistrarPrestamo />} />
                   {/* <Route path='*' element={<Bodegas />} /> */}
                   <Route path='historicoMovimientos' element={<HistoricoMovimientos />} />
+
+
+                  <Route path='registeractive' element={<RegisterPrestamo />} />
+                  <Route path='actives' element={<RegisterActive />} />
                 </Routes>
               </div>
             </div>

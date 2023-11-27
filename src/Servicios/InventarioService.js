@@ -41,6 +41,15 @@ export async function Create(inventario_guardar) {
   }
 }
 
+export async function exists(id_inventario){
+  try {
+    const response = await axios.get(`${baseURL}/api/Inventario/exists?id_inventario=${id_inventario}`, getHeaders());
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+    return [];
+  }
+}
 
 
 export async function Update(inventario_guardar) {

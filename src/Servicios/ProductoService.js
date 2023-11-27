@@ -61,7 +61,16 @@ export async function Create(producto_guardar) {
   }
 }
 
-
+export async function Create2(producto_guardar) {
+  try {
+    const response = await axios.post(`${baseURL}/api/Productos`,producto_guardar, getHeaders());
+    return response;
+    
+  } catch (error) {
+    handleRequestError(error);
+    return 0;
+  }
+}
 
 export async function Update(producto_guardar) {
   try {

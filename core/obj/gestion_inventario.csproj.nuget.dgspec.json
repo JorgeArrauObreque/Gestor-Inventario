@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj": {}
+    "C:\\Users\\nacho\\Documents\\GitHub\\clonGestorInventario\\Gestor-Inventario\\core\\gestion_inventario.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj": {
+    "C:\\Users\\nacho\\Documents\\GitHub\\clonGestorInventario\\Gestor-Inventario\\core\\gestion_inventario.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\GitHub\\clonGestorInventario\\Gestor-Inventario\\core\\gestion_inventario.csproj",
         "projectName": "gestion_inventario",
-        "projectPath": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\gestion_inventario.csproj",
+        "projectPath": "C:\\Users\\nacho\\Documents\\GitHub\\clonGestorInventario\\Gestor-Inventario\\core\\gestion_inventario.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nacho\\Documents\\GitHub\\Gestor-Inventario\\core\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\GitHub\\clonGestorInventario\\Gestor-Inventario\\core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config",

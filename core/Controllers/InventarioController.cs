@@ -66,6 +66,17 @@ namespace gestion_inventario.Controllers
             }
 
         }
+        [HttpGet("exists")]
+        public ActionResult Exists(string id_inventario)
+        {
+            using (DbContextInventario context = new DbContextInventario())
+            {
+                return Ok( new { resultado = context.inventario.Where(r => r.id_inventario == id_inventario).Any() , inventario = 
+                    context.inventario.Include(r=>r.productoNavigation).Include(r=>r.productoNavigation.tipoProductoNavigation).Where(r => r.id_inventario == id_inventario)
+                    .Select(r=> new {  id_producto = r.id_producto, id_inventario = r.id_inventario, nombre_producto = r.productoNavigation.nombre_producto, marca = r.productoNavigation.marca, 
+                        tipo_producto = r.productoNavigation.tipoProductoNavigation.nombre_tipo_producto }).FirstOrDefault() }) ;
+            }
+        }
         [HttpPost]
         public ActionResult Add([FromBody] InventarioViewModel inventario){
             using (DbContextInventario context = new DbContextInventario())
@@ -133,7 +144,7 @@ namespace gestion_inventario.Controllers
                 if (activo.id_producto == "0")
                 {
                     Producto producto = new Producto();
-                    producto.id_producto = string.Concat(activo.marca.Substring(0, 2), " ", DateTime.Now.ToString("ddMMyyyyHHmmss"));
+                    producto.id_producto = string.Concat(activo.marca.Substring(0, 1), " ", DateTime.Now.ToString("ddMMyyyyHHmmss"));
                     producto.marca = activo.marca;
                     producto.descripcion = activo.descripcion;
                     producto.id_proveedor = "1";

@@ -1,5 +1,6 @@
 ﻿using gestion_inventario.Models;
 using gestion_inventario.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,12 +48,14 @@ namespace gestion_inventario.Controllers
         {
             using (DbContextInventario context = new DbContextInventario())
             {
+
+                string id_aux ="";
                 var query = context.productos.Where(r => r.id_producto == producto.id_producto).FirstOrDefault();
-                if (query != null) return BadRequest();
+                if (query != null || producto.id_producto == "0") id_aux = producto.nombre_producto.Substring(0, 1) + DateTime.Now.ToString("ddMMyyyymmss");
                 var validacion_nombre_marca = context.productos.Where(r => r.nombre_producto == producto.nombre_producto && r.marca == producto.marca  ).FirstOrDefault();
-                if (validacion_nombre_marca != null) return BadRequest();
+                if (validacion_nombre_marca != null) return Accepted(new { mensaje = "ya existe un producto con la marca y el nombre ingresado, producto no creado" });
                 Producto new_producto = new Producto();
-                new_producto.id_producto = producto.id_producto;
+                new_producto.id_producto = producto.id_producto == "0"? id_aux:producto.id_producto;
                 new_producto.id_proveedor = producto.id_proveedor;
                 new_producto.nombre_producto = producto.nombre_producto;
                 new_producto.fecha_creacion = DateTime.Now;
@@ -63,7 +66,7 @@ namespace gestion_inventario.Controllers
                 new_producto.marca = producto.marca;
                 context.productos.Add(new_producto);
                 context.SaveChanges();
-                return Ok();
+                return Ok(new { mensaje = "Producto añadido correctamente" , id_producto = new_producto.id_producto });
             }
 
         }

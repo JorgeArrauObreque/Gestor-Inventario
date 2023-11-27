@@ -298,26 +298,7 @@ const RegistrarPrestamo = () => {
                                                 <td>{producto.nombre_producto}</td>
                                                 <td>{producto.marca}</td>
                                                 <td>{producto.tipo_producto}</td>
-                                                {/* <td className='justify-content-center d-flex'>
-                        <input
-                            type="number"
-                            className='form-control'
-                            style={{ width: "200px" }}
-                            maxLength={3}
-                            value={producto.cantidad}
-                            min={1}
-                            max={10}
-                            onChange={(e) => {
-                                const nuevaCantidad = parseInt(e.target.value, 10);
-                                const nuevosProductos = productosSeleccionados.map((p) =>
-                                    p.id_producto === producto.id_producto
-                                        ? { ...p, cantidad: nuevaCantidad }
-                                        : p
-                                );
-                                setProductosSeleccionados(nuevosProductos);
-                            }}
-                        />
-                    </td> */}
+                                   
                                             </tr>
                                         ))}
                                     </tbody>

@@ -23,7 +23,7 @@ export default function Navbar() {
           <form class="d-flex">
           {user ? (
         <div>
-          <p className='text-light'>{user.username} - {user.rol}</p>
+          <p className='text-light mx-3 mt-2'>{user.username} | <strong>{user.rol}</strong></p>
           
           {/* Muestra cualquier otra información del usuario si la tienes */}
         </div>
